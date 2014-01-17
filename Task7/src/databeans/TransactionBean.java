@@ -13,8 +13,8 @@ public class TransactionBean {
 	private Date execute_date;
 	private double shares;
 	private String transaction_type;
-	private double amount;
-	String first = "hello world";
+	private double amount; 
+	String first = "hello world 4";
 	public int getTransaction_id() {
 		return transaction_id;
 	}
