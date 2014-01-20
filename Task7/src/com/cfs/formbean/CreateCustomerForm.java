@@ -46,7 +46,7 @@ public class CreateCustomerForm extends FormBean{
 		return state;
 	}
 	
-	public String geZipcode() {
+	public String getZipcode() {
 		return zipcode;
 	}
 	
