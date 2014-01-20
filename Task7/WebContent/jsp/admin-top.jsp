@@ -59,7 +59,7 @@
           </ul>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
-	</div><!-- /.navbar -->
+	</div> <!-- /.navbar -->
 
 	<div class="navbar navbar-inverse" role="navigation">
 	<div class="container">
