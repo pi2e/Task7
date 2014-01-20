@@ -41,14 +41,15 @@ public class LoginAction extends Action {
 		
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
+		
 
 		try {
 			LoginForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
-			
+			request.setAttribute("accountType", form.getAccountType());
 
 			if (!form.isPresent()) {
-				
+				System.out.println("errors");
 				return "home.jsp";
 			}
 
@@ -58,10 +59,10 @@ public class LoginAction extends Action {
 				return "home.jsp";
 			}
 
-			if(form.getType().equals("C")){
+			if(form.getAccountType().equals("C")){
 				Customer customer = customerDAO.checkUserExist(form.getUsername());
 			if (customer == null) {
-				errors.add("User Name not found");
+				errors.add("Username not found");
 				return "home.jsp";
 			}
 
@@ -81,7 +82,7 @@ public class LoginAction extends Action {
 				
 				Employee employee = employeeDAO.checkUserExist(form.getUsername());
 				if (employee == null) {
-					errors.add("User Name not found");
+					errors.add("Username not found");
 					return "home.jsp";
 				}
 
