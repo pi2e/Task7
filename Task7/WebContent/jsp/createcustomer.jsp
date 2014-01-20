@@ -13,7 +13,7 @@
 			<label for="inputUsername" class="control-label col-xs-2">Username*</label>
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="inputUsername"
-					placeholder="Username" name="username">
+					placeholder="Username" name="username" value="${form.username}">
 			</div>
 		</div>
 
@@ -21,7 +21,7 @@
 			<label for="inputLastName" class="control-label col-xs-2">First Name*</label>
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="inputLastName"
-					placeholder="First Name" name="firstName">
+					placeholder="First Name" name="firstName" value="${form.lastName}">
 			</div>
 		</div>
 
@@ -31,17 +31,17 @@
 				Name*</label>
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="inputfirstName"
-					placeholder="Last Name" name="lastName">
+					placeholder="Last Name" name="lastName" value="${form.firstName}">
 			</div>
 		</div>
-
+f
 
 		<div class="form-group">
 			<label for="inputAddressLine1" class="control-label col-xs-2">Address
 				Line 1*</label>
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="inputAddressLine1"
-					placeholder="Address Line 1" name="address1">
+					placeholder="Address Line 1" name="address1" value="${form.address1}">
 			</div>
 		</div>
 
@@ -51,14 +51,14 @@
 				Line 2</label>
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="inputAddressLine1"
-					placeholder="Address Line 2" name="address2">
+					placeholder="Address Line 2" name="address2" value="${form.address2}">
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="inputCity" class="control-label col-xs-2">City*</label>
 			<div class="col-xs-3">
-				<input type="text" class="form-control" id="city" placeholder="City" name="city">
+				<input type="text" class="form-control" id="city" placeholder="City" name="city" value="${form.city}">
 			</div>
 		</div>
 
@@ -66,7 +66,7 @@
 			<label for="inputState" class="control-label col-xs-2">State*</label>
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="inputState"
-					placeholder="State" name="state">
+					placeholder="State" name="state" value="${form.state}">
 			</div>
 		</div>
 
@@ -74,7 +74,7 @@
 			<label for="inputZip" class="control-label col-xs-2">Zip Code*</label>
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="inputZip"
-					placeholder="Zip Code" name="zipcode">
+					placeholder="Zip Code" name="zipcode" value="${form.zipcode}">
 			</div>
 		</div>
 
