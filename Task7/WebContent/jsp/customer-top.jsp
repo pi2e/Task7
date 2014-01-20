@@ -46,7 +46,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 				<span class="glyphicon glyphicon-user"></span>
-				My Account <b class="caret"></b></a>
+				${user.lastName}, ${user.firstName} <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#">View Account</a></li>
                 <li><a href="#">Change Password</a></li>
