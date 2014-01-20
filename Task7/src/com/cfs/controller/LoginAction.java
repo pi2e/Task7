@@ -21,7 +21,7 @@ public class LoginAction extends Action {
 
 	private FormBeanFactory<LoginForm> formBeanFactory = FormBeanFactory
 			.getInstance(LoginForm.class);
-	
+
 	private EmployeeDAO employeeDAO;
 	private CustomerDAO customerDAO;
 
@@ -29,7 +29,7 @@ public class LoginAction extends Action {
 		employeeDAO = model.getEmployeeDAO();
 		customerDAO = model.getCustomerDAO();
 	}
-	
+
 	@Override
 	public String getName() {
 
@@ -38,10 +38,10 @@ public class LoginAction extends Action {
 
 	@Override
 	public String perform(HttpServletRequest request) {
-		
+
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
-		
+
 
 		try {
 			LoginForm form = formBeanFactory.create(request);
@@ -61,25 +61,25 @@ public class LoginAction extends Action {
 
 			if(form.getAccountType().equals("C")){
 				Customer customer = customerDAO.checkUserExist(form.getUsername());
-			if (customer == null) {
-				errors.add("Username not found");
-				return "home.jsp";
-			}
+				if (customer == null) {
+					errors.add("Username not found");
+					return "home.jsp";
+				}
 
-			// Check the password
-			if (!customer.checkPassword(form.getPassword())) {
-				errors.add("Incorrect password");
-				return "home.jsp";
-			}
+				// Check the password
+				if (!customer.checkPassword(form.getPassword())) {
+					errors.add("Incorrect password");
+					return "home.jsp";
+				}
 
-			HttpSession session = request.getSession();
-			session.setAttribute("user", customer);
-			return "customer.do";
+				HttpSession session = request.getSession();
+				session.setAttribute("user", customer);
+				return "customer.do";
 
-		} 
-			
+			} 
+
 			else{
-				
+
 				Employee employee = employeeDAO.checkUserExist(form.getUsername());
 				if (employee == null) {
 					errors.add("Username not found");
@@ -94,7 +94,7 @@ public class LoginAction extends Action {
 
 				HttpSession session = request.getSession();
 				session.setAttribute("user", employee);
-				
+
 				return "employee.do";
 			}
 		}catch (DAOException e) {
@@ -104,11 +104,11 @@ public class LoginAction extends Action {
 			errors.add(e.getMessage());
 			return "home.jsp";
 		}
-		
+
 	}
-	
+
 }
-	
+
 
 
 
