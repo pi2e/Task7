@@ -76,7 +76,7 @@
 			<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Customer <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="addcustomer.do">Register Customer</a></li>
+                <li><a href="addCustomer.do">Register Customer</a></li>
 				<li><a href="#">Deposit Cash</a></li>
                 <li><a href="#">View Customers</a></li>
               </ul>
