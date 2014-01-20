@@ -8,7 +8,7 @@
 		<h3>New Customer</h3>
 	</div>
 
-	<form class="form-horizontal" action="createCustomer.do" method="post">
+	<form class="form-horizontal" action="addCustomer.do" method="post">
 		<div class="form-group">
 			<label for="inputUsername" class="control-label col-xs-2">Username*</label>
 			<div class="col-xs-3">
