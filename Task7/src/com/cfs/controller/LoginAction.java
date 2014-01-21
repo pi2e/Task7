@@ -95,7 +95,7 @@ public class LoginAction extends Action {
 				HttpSession session = request.getSession();
 				session.setAttribute("user", employee);
 
-				return "employee.do";
+				return "fundlist.jsp";
 			}
 		}catch (DAOException e) {
 			errors.add(e.getMessage());
