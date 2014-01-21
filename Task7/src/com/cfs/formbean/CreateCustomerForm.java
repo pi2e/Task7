@@ -46,7 +46,7 @@ public class CreateCustomerForm extends FormBean{
 		return state;
 	}
 	
-	public String geZipcode() {
+	public String getZipcode() {
 		return zipcode;
 	}
 	
@@ -88,6 +88,14 @@ public class CreateCustomerForm extends FormBean{
     
 	public void setZipcode(String e) { 
 		zipcode = trimAndConvert(e, "<>\""); 
+	}
+	
+	public void setPassword1(String e) {
+		password1 = e.trim();
+	}
+	
+	public void setPassword2(String e) {
+		password2 = e.trim();
 	}
 
     public ArrayList<String> getValidationErrors() {
