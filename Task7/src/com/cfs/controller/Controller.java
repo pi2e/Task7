@@ -18,13 +18,13 @@ public class Controller extends HttpServlet {
 		 Model model = new Model(getServletConfig());
 		 Action.add(new HomePageAction(model));
 		// Action.add(new ChangePwdAction(model));
-		// Action.add(new FundListAction(model));
+		Action.add(new ViewFundListAction(model));
 		Action.add(new LoginAction(model));
-		// Action.add(new LogoutAction(model));
+		Action.add(new LogoutAction(model));
 		 Action.add(new ViewCustomerAction(model));
 		 Action.add(new AddCustomerAction(model));
-		 Action.add(new AddEmployerAction(model));
-		// Action.add(new AddFundAction(model));
+		//Action.add(new AddEmployerAction(model));
+		Action.add(new AddFundAction(model));
 		// Action.add(new TransactionHistoryction(model));
 		// Action.add(new ResearchFundAction(model));
 		// Action.add(new BuyFundAction(model));

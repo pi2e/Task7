@@ -21,7 +21,7 @@
 			<label for="inputLastName" class="control-label col-xs-2">First Name*</label>
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="inputLastName"
-					placeholder="First Name" name="firstName" value="${form.lastName}">
+					placeholder="First Name" name="firstName" value="${form.firstName}">
 			</div>
 		</div>
 
@@ -31,10 +31,9 @@
 				Name*</label>
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="inputfirstName"
-					placeholder="Last Name" name="lastName" value="${form.firstName}">
+					placeholder="Last Name" name="lastName" value="${form.lastName}">
 			</div>
 		</div>
-f
 
 		<div class="form-group">
 			<label for="inputAddressLine1" class="control-label col-xs-2">Address

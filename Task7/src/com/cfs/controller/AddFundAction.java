@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.genericdao.RollbackException;
 import org.mybeans.form.FormBeanFactory;
@@ -34,29 +33,29 @@ public class AddFundAction extends Action{
 	@Override
 	public String perform(HttpServletRequest request) {
 		List<String> errors = new ArrayList<String>();
+		String success = null;
 		request.setAttribute("errors", errors);
+		request.setAttribute("success", success);
 		
 		try {
 			FundForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
 			
 			if (!form.isPresent()) {
-				System.out.println("errors");
-				return "home.jsp";
+				return "addFund.jsp";
 			}
 			
 			errors.addAll(form.getValidationErrors());
 			if (errors.size() != 0) {
-				return "home.jsp";
+				return "addFund.jsp";
 			}
 			
 			Fund fund = new Fund();
-			fund.setFundName(form.getFundname());
-			fund.setSymbol(form.getTickername());
+			fund.setFundName(form.getFundName());
+			fund.setSymbol(form.getTicker());
 			fundDAO.create(fund);
-			HttpSession session = request.getSession();
-			session.setAttribute("success", fund);	
-			return  "fundList.do";
+			success = fund.getFundName() + " created";
+			return "viewFundList.do";
 		
 		} catch (RollbackException e) {
 			errors.add(e.getMessage());

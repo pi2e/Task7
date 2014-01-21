@@ -15,8 +15,7 @@ import com.cfs.databean.Fund;
 			
 			super(Fund.class, tableName, cp);
 		}
-
-		
+	
 		public void create(Fund fund) throws RollbackException {
 
 			try {
@@ -27,6 +26,10 @@ import com.cfs.databean.Fund;
 				if (Transaction.isActive())
 					Transaction.rollback();
 			}
-
+		}
+		
+		public Fund[] getFunds() throws RollbackException {
+			Fund[] funds = match();
+			return funds;
 		}
 	}

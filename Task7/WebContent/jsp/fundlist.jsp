@@ -1,14 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<jsp:include page="${accountType == 'E' ? 'admin-top.jsp' : 'customer-top.jsp'}" />
+<jsp:include
+	page="${accountType == 'E' ? 'admin-top.jsp' : 'customer-top.jsp'}" />
 
 <div class="container">
+
+	<jsp:include page="success.jsp" />
+
 	<div class="page-header">
 		<h3>Available Funds</h3>
 	</div>
-	
-	
+
+
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Fund List</h3>
@@ -23,13 +27,20 @@
 						<th>Price</th>
 					</tr>
 				</thead>
+				
 				<tbody>
-
-
+					<c:forEach var="fund" items="${funds}">
+						<tr>
+							<td><a href="#">${fund.getSymbol()}</a></td>
+							<td>${fund.getFundName()}</td>
+							<td></td>
+						</tr>
+					</c:forEach>
 				</tbody>
+				
 			</table>
 		</div>
 	</div>
 </div>
 
-	<jsp:include page="bottom.jsp" />
+<jsp:include page="bottom.jsp" />

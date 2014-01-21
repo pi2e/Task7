@@ -59,12 +59,13 @@ public class CustomerForm extends FormBean{
 	}
 	
 	public void setPassword1(String e) { 
-		username = trimAndConvert(e, "<>\""); 
+		password1 = trimAndConvert(e, "<>\""); 
 	}
 	
 	public void setPassword2(String e) { 
-		username = trimAndConvert(e, "<>\""); 
+		password2 = trimAndConvert(e, "<>\""); 
 	}
+	
 	public void setUsername(String e) { 
 		username = trimAndConvert(e, "<>\""); 
 	}
@@ -145,11 +146,11 @@ public class CustomerForm extends FormBean{
         	errors.add("Username should contain at least 6 characters");
         }
         
-        if (username.length() < 6) {
+        if (password1.length() < 6) {
         	errors.add("Password should contain at least 6 characters");
         }
         
-        if (username.length() != 5) {
+        if (zipcode.length() != 5) {
         	errors.add("Zipcode should be 5 digits");
         }
         
@@ -158,9 +159,11 @@ public class CustomerForm extends FormBean{
         	return errors;
         }
         
-        if (Pattern.matches(username, "[a-zA-Z_0-9]")) {
+       /*
+        if (!Pattern.matches(username, "[\\w]+")) {
         	errors.add("Username should be alphanumeric");
         }
+        */
         
         if (Pattern.matches(password1,".*[<>\"].*")) {
 			errors.add("Password cannot contain brackets and quotes");

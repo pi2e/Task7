@@ -46,7 +46,7 @@ public class LoginAction extends Action {
 		try {
 			LoginForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
-			request.setAttribute("accountType", form.getAccountType());
+			//request.setAttribute("accountType", form.getAccountType());
 
 			if (!form.isPresent()) {
 				System.out.println("errors");
@@ -94,8 +94,9 @@ public class LoginAction extends Action {
 
 				HttpSession session = request.getSession();
 				session.setAttribute("user", employee);
+				session.setAttribute("accountType", form.getAccountType());
 
-				return "fundlist.jsp";
+				return "viewFundList.do";
 			}
 		}catch (DAOException e) {
 			errors.add(e.getMessage());

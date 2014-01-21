@@ -52,7 +52,7 @@
                 <li><a href="#">Change Password</a></li>
               </ul>
             </li>
-			<li><a href="#contact">Logout</a></li>
+			<li><a href="logout.do">Logout</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->

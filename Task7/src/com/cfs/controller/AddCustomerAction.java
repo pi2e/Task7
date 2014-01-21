@@ -24,7 +24,6 @@ public class AddCustomerAction extends Action {
 	public AddCustomerAction(Model model) {
 
 		customerDAO = model.getCustomerDAO();
-
 	}
 
 	@Override
@@ -37,25 +36,25 @@ public class AddCustomerAction extends Action {
 
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
+		
 		try {
 			Employee employee = (Employee) request.getSession().getAttribute(
 					"user");
 
 			CustomerForm form = formBeanFactory.create(request);
-
 			request.setAttribute("form", form);
-			System.out.println(form);
-			request.setAttribute("errors", errors);
 
 			if (employee == null) {
-				return "login.jsp";
+				return "home.jsp";
 			}
+			
 			if (!form.isPresent()) {
-
 				return "createcustomer.jsp";
 			}
+			
 			System.out.println("check errors");
 			errors.addAll(form.getValidationErrors());
+			
 			if (errors.size() != 0) {
 				return "createcustomer.jsp";
 			}
@@ -67,11 +66,11 @@ public class AddCustomerAction extends Action {
 			cust.setAddressLine1(form.getAddress1());
 			cust.setAddressLine2(form.getAddress2());
 			cust.setPassword(form.getPassword1());
-			cust.setState(cust.getState());
-			cust.setZipCode(cust.getZipCode());
+			cust.setPassword(form.getPassword2());
+			cust.setState(form.getState());
+			cust.setZipCode(Integer.parseInt(form.getZipcode()));
 
 			if (employee != null) {
-
 				customerDAO.create(cust);
 			}
 		} catch (RollbackException e) {

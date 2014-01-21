@@ -55,7 +55,7 @@
                 <li><a href="#">Change Password</a></li>
               </ul>
             </li>
-			<li><a href="#contact">Logout</a></li>
+			<li><a href="logout.do">Logout</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
@@ -78,14 +78,14 @@
               <ul class="dropdown-menu">
                 <li><a href="addCustomer.do">Register Customer</a></li>
 				<li><a href="#">Deposit Cash</a></li>
-                <li><a href="#">View Customers</a></li>
+                <li><a href="viewCustomerList.do">View Customers</a></li>
               </ul>
             </li>
 			<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fund <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Add New Fund</a></li>
-                <li><a href="#">View Funds</a></li>
+                <li><a href="addFund.do">Add New Fund</a></li>
+                <li><a href="viewFundList.do">View Funds</a></li>
               </ul>
             </li>
             <li><a href="#contact">Register Employee</a></li>
