@@ -17,6 +17,7 @@ public class LogoutAction extends Action {
 	public String perform(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.setAttribute("user",null);
+        session.setAttribute("accountType",null);
         session.invalidate();
         return "login.do";
     }

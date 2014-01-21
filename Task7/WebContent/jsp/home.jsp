@@ -63,8 +63,10 @@
         </div><!--/.navbar-collapse -->
       </div>
     </div>
-
-<jsp:include page="errors.jsp" />
+	
+	<div class="container">
+	<jsp:include page="errors.jsp" />
+	</div>
 	
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">

@@ -11,7 +11,6 @@ import org.mybeans.form.FormBeanFactory;
 
 import com.cfs.dao.CustomerDAO;
 import com.cfs.databean.Customer;
-import com.cfs.databean.Employee;
 import com.cfs.databean.Model;
 import com.cfs.formbean.CustomerForm;
 
@@ -38,15 +37,8 @@ public class AddCustomerAction extends Action {
 		request.setAttribute("errors", errors);
 		
 		try {
-			Employee employee = (Employee) request.getSession().getAttribute(
-					"user");
-
 			CustomerForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
-
-			if (employee == null) {
-				return "home.jsp";
-			}
 			
 			if (!form.isPresent()) {
 				return "createcustomer.jsp";
@@ -69,10 +61,9 @@ public class AddCustomerAction extends Action {
 			cust.setPassword(form.getPassword2());
 			cust.setState(form.getState());
 			cust.setZipCode(Integer.parseInt(form.getZipcode()));
-
-			if (employee != null) {
-				customerDAO.create(cust);
-			}
+				
+			customerDAO.create(cust);
+			
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

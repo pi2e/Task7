@@ -32,9 +32,11 @@ public class CustomerDAO extends GenericDAO<Customer> {
 
 	}
 
-	public Customer[] getAllCustomers() throws DAOException {
+	public Customer[] getAllCustomers() throws RollbackException {
 
-		Customer[] customers = null;
+		Customer[] customers = match();
+		
+		/*
 		try {
 			customers = match();
 
@@ -46,6 +48,8 @@ public class CustomerDAO extends GenericDAO<Customer> {
 		} catch (RollbackException e) {
 			throw new DAOException(e);
 		}
+		*/
+		
 		return customers;
 	}
 

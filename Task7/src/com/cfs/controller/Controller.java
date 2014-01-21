@@ -7,7 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.cfs.controller.Action;
+import com.cfs.databean.Customer;
+import com.cfs.databean.Employee;
 import com.cfs.databean.Model;
 
 public class Controller extends HttpServlet {
@@ -29,7 +33,7 @@ public class Controller extends HttpServlet {
 		// Action.add(new ResearchFundAction(model));
 		// Action.add(new BuyFundAction(model));
 		// Action.add(new SellFundAction(model));
-		// Action.add(new CustomerListAction(model));
+		Action.add(new ViewCustomerListAction(model));
 		// Action.add(new TransitionFundAction(model));
 		// Action.add(new DepositChecktAction(model));
 		// Action.add(new RequestCheckAction(model));
@@ -47,14 +51,14 @@ public class Controller extends HttpServlet {
 	}
 
 	private String performTheAction(HttpServletRequest request) {
-		// HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(true);
 		String servletPath = request.getServletPath();
 		String action = getActionName(servletPath);
 
-		if (action.equals("login.do")) {
-			return Action.perform(action, request);
+		if(session.getAttribute("user") == null) {
+			return Action.perform("login.do", request);
 		}
-
+		
 		return Action.perform(action, request);
 	}
 

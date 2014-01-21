@@ -1,7 +1,6 @@
 package com.cfs.formbean;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import org.mybeans.form.FormBean;
 
@@ -159,14 +158,12 @@ public class CustomerForm extends FormBean{
         	return errors;
         }
         
-       /*
-        if (!Pattern.matches(username, "[\\w]+")) {
+        if (!username.matches("[a-zA-Z0-9]+")) {
         	errors.add("Username should be alphanumeric");
         }
-        */
         
-        if (Pattern.matches(password1,".*[<>\"].*")) {
-			errors.add("Password cannot contain brackets and quotes");
+        if (!password1.matches("[a-zA-Z0-9]+")) {
+			errors.add("Password must be alphanumeric");
 		}
         
         try {

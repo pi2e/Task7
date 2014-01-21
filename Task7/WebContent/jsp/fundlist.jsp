@@ -8,14 +8,10 @@
 
 	<jsp:include page="success.jsp" />
 
-	<div class="page-header">
-		<h3>Available Funds</h3>
-	</div>
-
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Fund List</h3>
+			<h3 class="panel-title">Available Funds</h3>
 		</div>
 
 		<div class="panel-body">

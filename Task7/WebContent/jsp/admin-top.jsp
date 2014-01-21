@@ -77,7 +77,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Customer <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="addCustomer.do">Register Customer</a></li>
-				<li><a href="#">Deposit Cash</a></li>
+				<li><a href="#">Deposit Check</a></li>
                 <li><a href="viewCustomerList.do">View Customers</a></li>
               </ul>
             </li>

@@ -9,35 +9,34 @@ import javax.servlet.http.HttpSession;
 import org.genericdao.DAOException;
 import org.genericdao.RollbackException;
 
-import com.cfs.dao.FundDAO;
-import com.cfs.databean.Fund;
+import com.cfs.dao.CustomerDAO;
+import com.cfs.databean.Customer;
 import com.cfs.databean.Model;
 
-public class ViewFundListAction extends Action {
+public class ViewCustomerListAction extends Action {
 
-	private FundDAO fundDAO;
+	private CustomerDAO customerDAO;
 
-	public ViewFundListAction(Model model) {
-		fundDAO = model.getFundDAO();
+	public ViewCustomerListAction(Model model) {
+		customerDAO = model.getCustomerDAO();
 	}
 
 	@Override
 	public String getName() {
-		return "viewFundList.do";
+		return "viewCustomerList.do";
 	}
 
 	@Override
 	public String perform(HttpServletRequest request) {
 		
 		try {			
-			Fund[] funds = fundDAO.getFunds();
-			request.setAttribute("funds", funds);
-			
-			return "fundlist.jsp";
+			Customer[] customers = customerDAO.getAllCustomers();
+			request.setAttribute("customers", customers);
+			return "customerlist.jsp";
 			
 		} catch (RollbackException e) {
 			//create error list
-			return "fundlist.jsp";
+			return "customerlist.jsp";
 		}
 		
 
