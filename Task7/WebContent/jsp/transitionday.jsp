@@ -1,10 +1,14 @@
-<jsp:include page="admin-top.jsp" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<jsp:include
+	page="${accountType == 'E' ? 'admin-top.jsp' : 'customer-top.jsp'}" />
 
 
 
 	<div class="container">
 		
-		<form method="post" action="transitionFund.do">
+		<form method="post" action="transitionday.do">
 	
 	    <div class="panel panel-default">
 		
@@ -15,7 +19,7 @@
 			<div class="panel-body">	
 	          <h4>Latest Transaction Date: </h4>
 	          <h4>Input Next Transaction Date:</h4>              
-	          <input type="text" value="${nextDay}" name="dateInput"/>
+	          <input type="text" value="${nextDay}" name="inputdate"/>
 	          <i>*input format: yyyy/mm/dd</i>
 			</div>
 
@@ -41,9 +45,16 @@
 					</thead>
 
 						<tbody>
-
-
-						</tbody>
+					<c:forEach var="fund" items="${funds}">
+						<tr>
+							<td><a href="#">${fund.getSymbol()}</a></td>
+							<td>${fund.getFundName()}</td>
+							<td>
+							<input type="text" name="${fund.fundId}" value="" size="10">
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
 					</table>
 			 <div >
 				<input type="hidden" value="submitIn" name="requestedSubmit"/>

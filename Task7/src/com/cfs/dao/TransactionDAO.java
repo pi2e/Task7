@@ -29,6 +29,19 @@ import com.cfs.databean.FundTransaction;
 				throw new DAOException(e);
 			}
 		}
+		
+		public synchronized FundTransaction[] getPendingTransactions()
+				throws DAOException {
+			try {
+				FundTransaction[] transactionList = match(MatchArg.equals(
+						"executeDate", null));
+				
+				return transactionList;
+			} catch (RollbackException e) {
+				e.printStackTrace();
+				throw new DAOException(e);
+			}
+		}
 	
 
 }

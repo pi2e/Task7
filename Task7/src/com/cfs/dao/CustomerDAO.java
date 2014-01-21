@@ -10,6 +10,7 @@ import org.genericdao.RollbackException;
 import org.genericdao.Transaction;
 
 import com.cfs.databean.Customer;
+import com.cfs.databean.FundTransaction;
 
 
 public class CustomerDAO extends GenericDAO<Customer> {
@@ -75,6 +76,15 @@ public class CustomerDAO extends GenericDAO<Customer> {
 				Transaction.rollback();
 		}
 
+	}
+	
+	public synchronized void update(Customer bean) {
+		try {
+			super.update(bean);
+		} catch (RollbackException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public Customer getCustomerDetails(String userID) {
