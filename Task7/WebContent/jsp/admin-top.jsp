@@ -90,7 +90,7 @@
             </li>
             <li><a href="#contact">Register Employee</a></li>
 			<li><a href="#contact">Transaction History</a></li>
-			<li><a href="#contact">Transition</a></li>
+			<li><a href="transitionday.do">Transition</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
