@@ -61,6 +61,8 @@ public class TransitionDayAction extends Action{
 			
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 			
+			request.setAttribute("inputdate", request.getParameter("inputdate"));
+			
 			Fund[] funds = fundDAO.getFunds();
 			request.setAttribute("funds", funds);
 			

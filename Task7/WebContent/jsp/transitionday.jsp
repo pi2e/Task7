@@ -19,7 +19,7 @@
 			<div class="panel-body">	
 	          <h4>Latest Transaction Date: ${lastdate}</h4>
 	          <h4>Input Next Transaction Date: </h4>              
-	          <input type="text" value="${nextDay}" name="inputdate"/>
+	          <input type="text" value="${inputdate}" name="inputdate"/>
 	          <i>*input format: yyyy/mm/dd</i>
 			</div>
 
