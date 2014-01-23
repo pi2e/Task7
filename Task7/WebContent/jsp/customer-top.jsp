@@ -70,6 +70,7 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
+            <li><a href="viewcustomer.do">My Account</a></li>
 			<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Funds <b class="caret"></b></a>
               <ul class="dropdown-menu">
