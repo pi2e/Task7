@@ -33,6 +33,12 @@ public class CommonUtilities {
 		return (long) amount * 100;
 
 	}
+	
+	public static Long shareToLong(double share) {
+
+		return (long) share * 1000;
+
+	}
 
 	public static String formatPrice(double value) {
 
