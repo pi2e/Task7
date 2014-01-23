@@ -15,6 +15,19 @@ public class CommonUtilities {
 
 	}
 	
+	public static double longToMoney(long amount) {
+
+		return ((double)amount) / 100;
+
+	}
+	
+	public static double longToShares(long shares) {
+
+		return ((double)shares) / 1000;
+
+	}
+	
+	
 	public static Long moneyToLong(double amount) {
 
 		return (long) amount * 100;
@@ -41,5 +54,6 @@ public class CommonUtilities {
 		double position = (double)(shares * price) / 100000;
 		return formatPrice(position);
 	}
+	
 
 }
