@@ -11,40 +11,60 @@ import org.genericdao.Transaction;
 
 import com.cfs.databean.FundPriceData;
 
-public class FundPriceHistoryDAO extends GenericDAO<FundPriceData>{
+public class FundPriceHistoryDAO extends GenericDAO<FundPriceData> {
 
-	public FundPriceHistoryDAO(ConnectionPool cp, String tableName) throws DAOException {
-		
+	public FundPriceHistoryDAO(ConnectionPool cp, String tableName)
+			throws DAOException {
+
 		super(FundPriceData.class, tableName, cp);
-		
+
 	}
 
-	public FundPriceData fetchLatestPrice(long fundId) throws DAOException{
-		
+	public FundPriceData fetchLatestPrice(long fundId) throws DAOException {
+
 		try {
 			Transaction.begin();
 			FundPriceData fundPriceData = null;
 			FundPriceData[] fundPrice = match(MatchArg.equals("fundId", fundId));
-			
+
 			if (fundPrice.length == 0) {
 				fundPriceData = null;
-			}
-			else {
+			} else {
 				Arrays.sort(fundPrice);
 				fundPriceData = fundPrice[0];
 			}
-			
+
 			Transaction.commit();
 			return fundPriceData;
-		} 
-		catch (RollbackException e) {
+		} catch (RollbackException e) {
 			throw new DAOException(e);
-		}
-		finally {
+		} finally {
 			if (Transaction.isActive())
 				Transaction.rollback();
 		}
-		
-	}
-}
 
+	}
+	
+	//returns prices from newest to oldest
+	public FundPriceData[] fetchLatestPrices(long fundId) throws DAOException {
+
+		try {
+			Transaction.begin();
+			FundPriceData[] fundPrice = match(MatchArg.equals("fundId", fundId));
+
+			if(fundPrice.length > 1) {
+				Arrays.sort(fundPrice);
+			}
+
+			Transaction.commit();
+			return fundPrice;
+		} catch (RollbackException e) {
+			throw new DAOException(e);
+		} finally {
+			if (Transaction.isActive())
+				Transaction.rollback();
+		}
+
+	}
+
+}
