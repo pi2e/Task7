@@ -13,25 +13,41 @@
 
 		<div class="panel-body">
 			<table class="table">
-				<thead style="text-align: center;">
+				<thead style="text-align: right;">
 					<tr>
 						<th>Ticker</th>
 						<th>Fund Name</th>
 						<th>Current Price</th>
 					</tr>
 				</thead>
-				
+
 				<tbody>
 					<c:forEach var="fund" items="${funds}" varStatus="status">
 						<tr>
 							<td><a href="viewFund.do?fundId=${fund.fundId}">${fund.getSymbol()}</a></td>
 							<td>${fund.getFundName()}</td>
-							<td>$${fundPrices[status.index]}</td>
+							<td><c:choose>
+									<c:when test="${fundPrices[status.index] == ''}">
+									</c:when>
+									<c:otherwise>
+									&nbsp;<Strong> $${fundPrices[status.index]} </Strong>
+									</c:otherwise>
+								</c:choose><c:choose>
+									<c:when
+										test="${fn:startsWith(priceDifference[status.index], '-')}">
+										<span class="label label-danger">${priceDifference[status.index]}</span>
+									</c:when>
+									<c:when test="${priceDifference[status.index] == ''}">
+									</c:when>
+									<c:otherwise>
+										<span class="label label-success">+${priceDifference[status.index]}</span>
+									</c:otherwise>
+								</c:choose></td>
 							<td></td>
 						</tr>
 					</c:forEach>
 				</tbody>
-				
+
 			</table>
 		</div>
 	</div>

@@ -29,44 +29,65 @@ public class ViewFundListAction extends Action {
 
 	@Override
 	public String perform(HttpServletRequest request) {
-		
+
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
-		
+
 		if (request.getAttribute("success") != null) {
-		
+
 			request.setAttribute("success", "success");
 		}
-		
-		try {			
+
+		try {
 			Fund[] funds = fundDAO.getFunds();
 			List<String> fundPrices = new ArrayList<String>();
-			
-			for(int i=0; i<funds.length; i++) {	
-				FundPriceData fundData = fundPriceHistoryDAO.fetchLatestPrice(funds[i].getFundId());
-				
-				if(fundData == null) {
-					fundPrices.add(" NA");
+			List<String> priceDifference = new ArrayList<String>();
+
+			for (int i = 0; i < funds.length; i++) {
+				FundPriceData fundData = fundPriceHistoryDAO
+						.fetchLatestPrice(funds[i].getFundId());
+
+				if (fundData == null) {
+					fundPrices.add("");
+					priceDifference.add("");
 				} else {
-					fundPrices.add(CommonUtilities.convertToMoney((fundData.getPrice())));
+
+					fundPrices.add(CommonUtilities.convertToMoney((fundData
+							.getPrice())));
+
+					FundPriceData[] latestPrices = fundPriceHistoryDAO
+							.fetchLatestPrices(funds[i].getFundId());
+
+					if (latestPrices.length > 1) {
+						String price = CommonUtilities
+								.convertToMoney(latestPrices[0].getPrice()
+										- latestPrices[1].getPrice());
+						
+						String percentage = CommonUtilities.formatPrice((double)(((latestPrices[0].getPrice() - latestPrices[1].getPrice())*100 / 
+								latestPrices[1].getPrice())));
+						
+						priceDifference.add(price + "  (" + percentage +"%) ");
+						
+						System.out.println(fundData.getFundId() + " new " + latestPrices[0].getPrice() + " old " + latestPrices[1].getPrice());
+						System.out.println(percentage);
+					} else {
+						priceDifference.add("");
+					}
+
 				}
-				
+
 			}
-			
+
 			request.setAttribute("funds", funds);
 			request.setAttribute("fundPrices", fundPrices);
+			request.setAttribute("priceDifference", priceDifference);
 			return "fundlist.jsp";
-			
+
 		} catch (Exception e) {
 			errors.add(e.getMessage());
 			return "fundlist.jsp";
 		}
-		
 
 	}
 
 }
-
-
-
-
