@@ -65,14 +65,14 @@
 			</form>
 		</div>
 	</div>
-
+<c:if test="${accountType == 'E' }">
 	<ul class="nav nav-pills">
 		<li><a href="viewCustomerTransaction.do?custId=${customer.customerId}">Transaction History</a></li>
 		<li><a href="depositCheck.do?custId=${customer.customerId }">Deposit Check</a></li>
 		<li><a href="#">Change Password</a></li>
 	</ul>
 	<br/>
-	
+</c:if>
 	
 	<div class="panel panel-default">
 		<div class="panel-heading">

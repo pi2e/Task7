@@ -85,4 +85,3 @@
       </div><!-- /.container -->
     </div><!-- /.navbar -->
     
-<jsp:include page="customer-top.jsp" />
