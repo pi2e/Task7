@@ -4,7 +4,7 @@
 <jsp:include
 	page="${accountType == 'E' ? 'admin-top.jsp' : 'customer-top.jsp'}" />
 
-
+<jsp:include page="errors.jsp" />
 
 	<div class="container">
 		
@@ -17,8 +17,8 @@
 			</div>
 		
 			<div class="panel-body">	
-	          <h4>Latest Transaction Date: </h4>
-	          <h4>Input Next Transaction Date:</h4>              
+	          <h4>Latest Transaction Date: ${lastdate}</h4>
+	          <h4>Input Next Transaction Date: </h4>              
 	          <input type="text" value="${nextDay}" name="inputdate"/>
 	          <i>*input format: yyyy/mm/dd</i>
 			</div>
@@ -45,12 +45,12 @@
 					</thead>
 
 						<tbody>
-					<c:forEach var="fund" items="${funds}">
+					<c:forEach var="fund" items="${funds}" varStatus="status">
 						<tr>
 							<td><a href="#">${fund.getSymbol()}</a></td>
 							<td>${fund.getFundName()}</td>
 							<td>
-							<input type="text" name="${fund.fundId}" value="" size="10">
+							<input type="text" name="${fund.fundId}" value="${inputprice[status.index]}" size="10">
 							</td>
 						</tr>
 					</c:forEach>

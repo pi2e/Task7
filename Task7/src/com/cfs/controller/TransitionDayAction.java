@@ -3,7 +3,9 @@ package com.cfs.controller;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -52,9 +54,26 @@ public class TransitionDayAction extends Action{
 	@Override
 	public String perform(HttpServletRequest request) {
 		
+		List<String> errors = new ArrayList<String>();
+		request.setAttribute("errors", errors);
+		
 		try {			
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+			
 			Fund[] funds = fundDAO.getFunds();
-			request.setAttribute("funds", funds);	
+			request.setAttribute("funds", funds);
+			
+			String[] inputprice = new String[funds.length];
+			for(int i = 0; i < funds.length; i++) {
+				inputprice[i] = request.getParameter(Long.toString(funds[i].getFundId()));
+			}
+			request.setAttribute("inputprice", inputprice);
+			
+			
+			FundPriceData[] oldprices = fundpriceDAO.match();
+			Date lastdate = oldprices[oldprices.length - 1].getPriceDate();
+			request.setAttribute("lastdate", formatter.format(lastdate));
 			
 			TransitionDayForm form = formBeanFactory.create(request);
 			
@@ -63,9 +82,15 @@ public class TransitionDayAction extends Action{
 			}
 			
 			// Get the date of the transition day
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+			
 			java.util.Date date = formatter.parse(form.getInputdate());
 			Date newdate = new Date(date.getTime());
+			
+			if(newdate.compareTo(lastdate) < 1) {
+				errors.add("Inpute date must be after last date");
+			}
+			
+			
 			
 			LinkedList<FundPriceData> price = new LinkedList<FundPriceData>();
 			for(Fund fund : funds) {
@@ -136,12 +161,17 @@ public class TransitionDayAction extends Action{
 		} catch (FormBeanException e) {
 			
 			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+		} catch (NumberFormatException e) {
+			errors.add("Inpute price must be valid integer");
 			e.printStackTrace();
+			return "transitionday.jsp";
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ParseException e) {
+			errors.add("Inpute date is not a valid date format");
+			e.printStackTrace();
+			return "transitionday.jsp";
 		}
 		
 		
