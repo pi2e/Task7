@@ -3,6 +3,9 @@ package com.cfs.dao;
 import org.genericdao.ConnectionPool;
 import org.genericdao.DAOException;
 import org.genericdao.GenericDAO;
+import org.genericdao.MatchArg;
+import org.genericdao.RollbackException;
+
 import com.cfs.databean.Position;
 
 
@@ -12,6 +15,28 @@ import com.cfs.databean.Position;
 			
 			super(Position.class, tableName, cp);
 		}
-
+		
+		
+		public synchronized Position getPosition(long userId, long fundId) throws DAOException {
+			
+			try {
+				Position[] positions = match(MatchArg.and(MatchArg.equals("customerId", userId),MatchArg.equals("fundId", fundId)));
+				return positions[0];
+			} catch (RollbackException e) {
+				throw new DAOException(e);
+			}
+		}
+		
+		
+		public synchronized Position[] getCustomerFunds(long userId) throws DAOException {
+			
+			try {
+				Position[] positions = match(MatchArg.equals("customerId", userId));
+				return positions;
+			} catch (RollbackException e) {
+				e.printStackTrace();
+				throw new DAOException(e);
+			}
+		}
 	}
 

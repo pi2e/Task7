@@ -4,21 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.genericdao.DAOException;
-import org.genericdao.RollbackException;
 
 import com.cfs.dao.FundDAO;
+import com.cfs.dao.FundPriceHistoryDAO;
 import com.cfs.databean.Fund;
+import com.cfs.databean.FundPriceData;
 import com.cfs.databean.Model;
+import com.cfs.utility.CommonUtilities;
 
 public class ViewFundListAction extends Action {
 
 	private FundDAO fundDAO;
+	private FundPriceHistoryDAO fundPriceHistoryDAO;
 
 	public ViewFundListAction(Model model) {
 		fundDAO = model.getFundDAO();
+		fundPriceHistoryDAO = model.getFundPriceDAO();
 	}
 
 	@Override
@@ -29,14 +30,35 @@ public class ViewFundListAction extends Action {
 	@Override
 	public String perform(HttpServletRequest request) {
 		
+		List<String> errors = new ArrayList<String>();
+		request.setAttribute("errors", errors);
+		
+		if (request.getAttribute("success") != null) {
+		
+			request.setAttribute("success", "success");
+		}
+		
 		try {			
 			Fund[] funds = fundDAO.getFunds();
-			request.setAttribute("funds", funds);
+			List<String> fundPrices = new ArrayList<String>();
 			
+			for(int i=0; i<funds.length; i++) {	
+				FundPriceData fundData = fundPriceHistoryDAO.fetchLatestPrice(funds[i].getFundId());
+				
+				if(fundData == null) {
+					fundPrices.add(" NA");
+				} else {
+					fundPrices.add(CommonUtilities.convertToMoney((fundData.getPrice())));
+				}
+				
+			}
+			
+			request.setAttribute("funds", funds);
+			request.setAttribute("fundPrices", fundPrices);
 			return "fundlist.jsp";
 			
-		} catch (RollbackException e) {
-			//create error list
+		} catch (Exception e) {
+			errors.add(e.getMessage());
 			return "fundlist.jsp";
 		}
 		

@@ -2,8 +2,10 @@ package com.cfs.databean;
 
 import org.genericdao.PrimaryKey;
 
+import com.cfs.utility.CommonUtilities;
+
 @PrimaryKey("customerId")
-public class Customer {
+public class Customer implements Comparable<Customer>{
 
 	private long customerId;
 	private String username;
@@ -94,6 +96,11 @@ public class Customer {
 	}
 	public boolean checkPassword(String pwd) {
 		return password.equals(pwd);
+	}
+	@Override
+	public int compareTo(Customer cust) {
+		int retval = lastName.compareTo(cust.getLastName());
+		return retval;
 	}
 
 	

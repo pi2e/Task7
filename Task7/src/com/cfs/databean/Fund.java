@@ -3,7 +3,7 @@ package com.cfs.databean;
 import org.genericdao.PrimaryKey;
 
 @PrimaryKey("fundId")
-public class Fund {
+public class Fund implements Comparable<Fund>{
 
 	private long fundId;
 	private String fundName;
@@ -26,6 +26,11 @@ public class Fund {
 	}
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
+	}
+	@Override
+	public int compareTo(Fund fund) {
+		int retval = symbol.compareTo(fund.getSymbol());
+		return retval;
 	}
 	
 }

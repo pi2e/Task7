@@ -63,7 +63,8 @@
         </div><!--/.navbar-collapse -->
       </div>
     </div>
-	
+    
+	<br/>
 	<div class="container">
 	<jsp:include page="errors.jsp" />
 	</div>

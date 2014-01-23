@@ -29,13 +29,14 @@ public class Controller extends HttpServlet {
 		 Action.add(new AddCustomerAction(model));
 		//Action.add(new AddEmployerAction(model));
 		Action.add(new AddFundAction(model));
-		// Action.add(new TransactionHistoryction(model));
-		// Action.add(new ResearchFundAction(model));
+		Action.add(new ViewCustomerTransactionAction(model));
+		Action.add(new ViewFundAction(model));
 		// Action.add(new BuyFundAction(model));
 		// Action.add(new SellFundAction(model));
 		Action.add(new ViewCustomerListAction(model));
 		Action.add(new TransitionDayAction(model));
-		// Action.add(new DepositChecktAction(model));
+		Action.add(new DepositCheckAction(model));
+		Action.add(new DepositMultipleCheckAction(model));
 		// Action.add(new RequestCheckAction(model));
 	}
 

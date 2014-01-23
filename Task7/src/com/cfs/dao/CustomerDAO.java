@@ -10,7 +10,6 @@ import org.genericdao.RollbackException;
 import org.genericdao.Transaction;
 
 import com.cfs.databean.Customer;
-import com.cfs.databean.FundTransaction;
 
 
 public class CustomerDAO extends GenericDAO<Customer> {
@@ -33,26 +32,24 @@ public class CustomerDAO extends GenericDAO<Customer> {
 
 	}
 
-	public Customer[] getAllCustomers() throws RollbackException {
+	public Customer[] getAllCustomers() throws DAOException {
 
-		Customer[] customers = match();
+		Customer[] customers;
 		
-		/*
 		try {
 			customers = match();
 
-			if (customers != null || customers.length != 0) {
-
+			if (customers.length != 0) {
 				Arrays.sort(customers);
 			}
 
 		} catch (RollbackException e) {
 			throw new DAOException(e);
 		}
-		*/
 		
 		return customers;
 	}
+
 
 	public Customer checkUserExist(String username) throws DAOException {
 
@@ -87,9 +84,24 @@ public class CustomerDAO extends GenericDAO<Customer> {
 		
 	}
 
-	public Customer getCustomerDetails(String userID) {
-		return null;
+	public void updateCash(long userId, long amount) throws DAOException, RollbackException{
 
+		try {
+			Transaction.begin();
+			Customer[] customers = match(MatchArg.equals("customerId", userId));
+			Customer cust = customers[0];
+			cust.setCash(cust.getCash() + amount);
+			this.update(cust);
+			Transaction.commit();
+			
+		} catch (RollbackException e) {
+			throw new DAOException(e);
+		} finally {
+			if(Transaction.isActive()) {
+				Transaction.rollback();
+			}
+		}
+		
 	}
 
 }

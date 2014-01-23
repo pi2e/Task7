@@ -11,7 +11,9 @@ import org.genericdao.RollbackException;
 
 import com.cfs.dao.CustomerDAO;
 import com.cfs.databean.Customer;
+import com.cfs.databean.FundPriceData;
 import com.cfs.databean.Model;
+import com.cfs.utility.CommonUtilities;
 
 public class ViewCustomerListAction extends Action {
 
@@ -28,22 +30,31 @@ public class ViewCustomerListAction extends Action {
 
 	@Override
 	public String perform(HttpServletRequest request) {
-		
-		try {			
-			Customer[] customers = customerDAO.getAllCustomers();
+
+		try {
+			Customer[] customers;
+			customers = customerDAO.getAllCustomers();
+
+			List<String> cash = new ArrayList<String>();
+			List<String> balance = new ArrayList<String>();
+
+			for (int i = 0; i < customers.length; i++) {
+				
+				cash.add(CommonUtilities.convertToMoney(customers[i].getCash()));
+				balance.add(CommonUtilities.convertToMoney(customers[i].getBalance()));
+
+			}
+			
+			request.setAttribute("cash", cash);
+			request.setAttribute("balance", balance);
 			request.setAttribute("customers", customers);
 			return "customerlist.jsp";
-			
-		} catch (RollbackException e) {
-			//create error list
+
+		} catch (DAOException e) {
+
 			return "customerlist.jsp";
 		}
-		
 
 	}
 
 }
-
-
-
-

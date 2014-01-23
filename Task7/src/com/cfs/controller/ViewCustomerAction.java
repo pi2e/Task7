@@ -5,31 +5,35 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.genericdao.DAOException;
+import org.genericdao.RollbackException;
+
 import com.cfs.dao.CustomerDAO;
 import com.cfs.dao.FundDAO;
 import com.cfs.dao.FundPriceHistoryDAO;
 import com.cfs.dao.PositionDAO;
-import com.cfs.dao.TransactionDAO;
 import com.cfs.databean.Customer;
-import com.cfs.databean.FundTransaction;
+import com.cfs.databean.Fund;
+import com.cfs.databean.FundPriceData;
 import com.cfs.databean.Model;
-import com.cfs.formbean.CustomerForm;
+import com.cfs.databean.Position;
+import com.cfs.formbean.CustomerFundVO;
+//import com.cfs.formbean.TransactionVO;
+import com.cfs.utility.CommonUtilities;
 
 public class ViewCustomerAction extends Action {
-	
+
 	private CustomerDAO customerDAO;
 	private FundDAO fundDAO;
-	private TransactionDAO transactionDAO;
 	private PositionDAO positionDAO;
-	private FundPriceHistoryDAO fundPriceHistorDAO;
+	private FundPriceHistoryDAO fundPriceHistoryDAO;
 
 	public ViewCustomerAction(Model model) {
 
 		customerDAO = model.getCustomerDAO();
 		fundDAO = model.getFundDAO();
-		transactionDAO = model.getTransactionDAO();
 		positionDAO = model.getPositionDAO();
-		fundPriceHistorDAO = model.getFundPriceDAO();
+		fundPriceHistoryDAO = model.getFundPriceDAO();
 	}
 
 	@Override
@@ -40,31 +44,67 @@ public class ViewCustomerAction extends Action {
 
 	@Override
 	public String perform(HttpServletRequest request) {
-		
+
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
-
+		Customer customer  =  null;
 		
-		 Customer customer = (Customer) request.getSession().getAttribute("user");
-		 
-		 CustomerForm custForm = new  CustomerForm();
-		 
-		 custForm.setAddress1(customer.getAddressLine1());
-		 custForm.setAddress2(customer.getAddressLine2());
-		 custForm.setCity(customer.getCity());
-		 custForm.setFirstName(customer.getFirstName());
-		 custForm.setLastName(customer.getLastName());
-		 custForm.setState(customer.getState());
-		 custForm.setZipcode(String.valueOf(customer.getZipCode()));
-		 custForm.setUsername(customer.getUsername());
-		 
-		 request.setAttribute("customerForm", custForm);
-		 
-		 //FundTransaction[] fundTransaction = transactionDAO.getTransactions(customer.getCustomerId());
-		 
-		 
-		 
-		return null;
+		try {
+
+			if( request.getSession().getAttribute(
+					"user").getClass().equals("Customer")) {
+				
+				 customer = (Customer) request.getSession().getAttribute(
+						"user");
+			} else if (request.getParameter("custId") != null) {
+				
+				String userID = (String)request.getParameter("custId");
+				 customer = customerDAO.read(Long.parseLong(userID));
+			}
+		
+			request.setAttribute("customer", customer);
+			request.setAttribute("balance", CommonUtilities.convertToMoney((customer.getBalance())));
+			request.setAttribute("ledgerBalance", CommonUtilities.convertToMoney((customer.getCash())));
+			
+			
+			//get customer's funds
+			List<CustomerFundVO> fundVOList = new ArrayList<CustomerFundVO>();
+			Position[] positions = positionDAO.getCustomerFunds(customer.getCustomerId());
+			
+			for (int i = 0; i < positions.length; i++) {
+
+				CustomerFundVO fundVO = new CustomerFundVO();
+				long fundId = positions[i].getFundId();
+				
+				Fund fund = fundDAO.read(fundId);
+				
+				FundPriceData fundData = fundPriceHistoryDAO.fetchLatestPrice(fundId);
+				
+				fundVO.setFundId(fundId);
+				fundVO.setFundName(fund.getFundName());
+				fundVO.setTicker(fund.getSymbol());		
+				fundVO.setCurrentPrice(CommonUtilities.convertToMoney(fundData.getPrice()));
+				fundVO.setShares(CommonUtilities.convertToShare(positions[i].getShares()));
+				System.out.println(positions[i].getShares());
+				System.out.println(CommonUtilities.convertToShare(positions[i].getShares()));
+				fundVO.setPositionValue(CommonUtilities.calculatePosition(fundData.getPrice(),positions[i].getShares()));
+				
+				fundVOList.add(fundVO);
+			}
+
+			request.setAttribute("fundVOList", fundVOList);
+			
+		} catch (DAOException e) {
+			e.printStackTrace();
+			errors.add(e.getMessage());
+			return "customerinfo.jsp";
+		} catch (RollbackException e) {
+			e.printStackTrace();
+			errors.add(e.getMessage());
+			return "customerinfo.jsp";
+		}
+
+		return "customerinfo.jsp";
 	}
 
 }

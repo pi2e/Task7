@@ -14,7 +14,6 @@ public class FundTransaction {
 	private long shares;
 	private String transactionType;
 	private long amount;
-	private long availableShares;
 	
 	public long getTransactionId() {
 		return transactionId;
@@ -58,12 +57,6 @@ public class FundTransaction {
 	}
 	public void setAmount(long amount) {
 		this.amount = amount;
-	}
-	public long getAvailableShares() {
-		return availableShares;
-	}
-	public void setAvailableShares(long availableShares) {
-		this.availableShares = availableShares;
 	}
 	
 }

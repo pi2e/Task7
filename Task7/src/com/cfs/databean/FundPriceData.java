@@ -5,7 +5,7 @@ import java.sql.Date;
 import org.genericdao.PrimaryKey;
 
 @PrimaryKey("fundId,priceDate")
-public class FundPriceData {
+public class FundPriceData implements Comparable<FundPriceData>{
 
 	private long fundId;
 	private Date priceDate;
@@ -28,6 +28,11 @@ public class FundPriceData {
 	}
 	public void setPrice(long price) {
 		this.price = price;
+	}
+	@Override
+	public int compareTo(FundPriceData data) {
+		
+		return data.getPriceDate().compareTo(priceDate);
 	}
 	
 	

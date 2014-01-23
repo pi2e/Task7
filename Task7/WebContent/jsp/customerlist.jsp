@@ -5,7 +5,9 @@
 
 
 <div class="container">
-	<form method="post" action="depositCheck.do">
+	<jsp:include page="errors.jsp" />
+	<jsp:include page="success.jsp" />
+	<form method="post" action="depositMultipleCheck.do">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Customers</h3>
@@ -18,7 +20,7 @@
 							<th>Last Name</th>
 							<th>First Name</th>
 							<th>Username</th>
-							<th>Holdings</th>
+							<th>Ledger Balance</th>
 							<th>Available Balance</th>
 							<th>Deposit Check</th>
 						</tr>
@@ -26,29 +28,29 @@
 					</thead>
 
 					<tbody>
-						<c:forEach var="customer" items="${customers}">
-						<tr>
-							<td>${customer.lastName}</td>
-							<td>${customer.firstName}</td>
-							<td><a href="#">${customer.getUsername()}</a></td>
-							<td>xxx</td>
-							<td>${customer.balance}</td>
-							<td></td>
-						</tr>
-					</c:forEach>
+						<c:forEach var="customer" items="${customers}" varStatus="status">
+							<tr>
+								<td>${customer.lastName}</td>
+								<td>${customer.firstName}</td>
+								<td><a
+									href="viewcustomer.do?custId=${customer.customerId }">${customer.username}</a></td>
+								<td>${cash[status.index]}</td>
+								<td>${balance[status.index]}</td>
+								<td>$ <input type=text name="${customer.customerId}" value="${depositList[status.index]}"></td>
+							</tr>
+						</c:forEach>
 
 					</tbody>
 				</table>
 
 				<div>
-					<input type="hidden" value="submitIn" name="requestedSubmit" /> <input
-						type="submit" class="submit_btn" name="submit" id="submit"
-						value="Submit" />
+					<input type="submit" class="btn btn-primary" name="submit"
+						id="submit" value="Submit" />
 				</div>
 			</div>
 		</div>
 	</form>
-	
+
 </div>
 
 <jsp:include page="bottom.jsp" />

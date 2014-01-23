@@ -55,6 +55,7 @@ public class AddFundAction extends Action{
 			fund.setSymbol(form.getTicker());
 			fundDAO.create(fund);
 			success = fund.getFundName() + " created";
+
 			return "viewFundList.do";
 		
 		} catch (RollbackException e) {

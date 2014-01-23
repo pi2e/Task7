@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.mybeans.form.FormBean;
 
+import com.cfs.utility.CommonUtilities;
+
 public class CustomerForm extends FormBean{
 	private String username;
 	private String firstName;
@@ -15,10 +17,28 @@ public class CustomerForm extends FormBean{
 	private String zipcode;
 	private String password1;
 	private String password2;
+	private String balance;
+	private String ledgerBalance;
 	
 	
 	public String getUsername() {
 		return username;
+	}
+
+	public String getBalance() {
+		return balance;
+	}
+
+	public void setBalance(String balance) {
+		this.balance = balance;
+	}
+
+	public String getLedgerBalance() {
+		return ledgerBalance;
+	}
+
+	public void setLedgerBalance(String ledgerBalance) {
+		this.ledgerBalance = ledgerBalance;
 	}
 
 	public String getFirstName() {
