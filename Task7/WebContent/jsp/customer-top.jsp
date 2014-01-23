@@ -73,8 +73,8 @@
 			<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Funds <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="buyfund.do">Buy Funds</a></li>
-				<li><a href="sellfund.do">Sell Funds</a></li>
+                <li><a href="buyFund.do">Buy Funds</a></li>
+				<li><a href="sellFund.do">Sell Funds</a></li>
                 <li><a href="viewFundList.do">View Funds</a></li>
               </ul>
             </li>
