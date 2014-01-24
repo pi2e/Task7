@@ -75,7 +75,10 @@ public class TransitionDayAction extends Action{
 			
 			
 			FundPriceData[] oldprices = fundpriceDAO.match();
-			Date lastdate = oldprices[oldprices.length - 1].getPriceDate();
+			Date lastdate = null;
+			if(oldprices.length > 0) {
+			    lastdate = oldprices[oldprices.length - 1].getPriceDate();
+			}
 			request.setAttribute("lastdate", formatter.format(lastdate));
 			
 			TransitionDayForm form = formBeanFactory.create(request);
@@ -89,7 +92,7 @@ public class TransitionDayAction extends Action{
 			java.util.Date date = formatter.parse(form.getInputdate());
 			Date newdate = new Date(date.getTime());
 			
-			if(newdate.compareTo(lastdate) < 1) {
+			if(lastdate != null && newdate.compareTo(lastdate) < 1) {
 				errors.add("Inpute date must be after last date");
 			}
 			
