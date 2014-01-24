@@ -70,6 +70,9 @@ public class TransitionDayAction extends Action{
 			String[] inputprice = new String[funds.length];
 			for(int i = 0; i < funds.length; i++) {
 				inputprice[i] = request.getParameter(Long.toString(funds[i].getFundId()));
+				if( inputprice[i] == null || inputprice.length == 0) {
+					errors.add("Must input the price of every fund");
+				}
 			}
 			request.setAttribute("inputprice", inputprice);
 			
@@ -109,6 +112,7 @@ public class TransitionDayAction extends Action{
 				price.add(fundprice);
 			}
 			
+			if(errors.size() > 0) return "transitionday.jsp";
 			
 			for(FundPriceData data : price) {
 				fundpriceDAO.create(data);
@@ -176,6 +180,7 @@ public class TransitionDayAction extends Action{
 			request.setAttribute("lastdate", newdate);
 			request.setAttribute("inputdate", null);
 			request.setAttribute("inputprice", null);
+			errors.add("Prices have been updated!");
 			
 			return "transitionday.jsp";
 			
