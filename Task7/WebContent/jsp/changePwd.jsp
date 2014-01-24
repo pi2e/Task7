@@ -31,6 +31,7 @@
 			<div class="col-xs-3">
 				<input type="password" class="form-control" id="password"
 					placeholder="password" value="${form.newPassword}" name="newPassword">
+					<span class="help-block">At least 6 characters</span>
 			</div>
 		</div>
 		

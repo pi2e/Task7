@@ -14,6 +14,7 @@
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="inputUsername"
 					placeholder="Username" name="username" value="${form.username}">
+					<span class="help-block">At least 6 characters</span>
 			</div>
 		</div>
 
@@ -82,6 +83,7 @@
 			<div class="col-xs-3">
 				<input type="password" class="form-control" id="inputPassword"
 					placeholder="Password" name="password1">
+					<span class="help-block">At least 6 characters</span>
 			</div>
 		</div>
 
