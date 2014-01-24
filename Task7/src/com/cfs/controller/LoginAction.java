@@ -59,7 +59,7 @@ public class LoginAction extends Action {
 			}
 
 			if(form.getAccountType().equals("C")){
-				Customer customer = customerDAO.checkUserExist(form.getUsername());
+				Customer customer = customerDAO.getCustomer(form.getUsername());
 				if (customer == null) {
 					errors.add("Username not found");
 					return "home.jsp";

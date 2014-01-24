@@ -29,7 +29,21 @@ public class TransactionVO {
 		this.amount = CommonUtilities.convertToMoney((transaction.getAmount()));
 	}
 	
-	//for buy & sell
+	//for buy & sell (pending)
+		public TransactionVO(FundTransaction transaction, Fund fund) {
+			this.transactionId = transaction.getTransactionId();
+			this.customerId = transaction.getCustomerId();
+			this.fundId = transaction.getFundId();
+			this.executeDate = transaction.getExecuteDate();
+			this.shares = CommonUtilities.convertToShare(transaction.getShares());
+			this.transactionType = transaction.getTransactionType();
+			this.amount = CommonUtilities.convertToMoney(transaction.getAmount());
+			
+			this.fundName = fund.getFundName();
+			this.fundTicker = fund.getSymbol();
+		}
+	
+	//for buy & sell (executed)
 	public TransactionVO(FundTransaction transaction, Fund fund, long price) {
 		this.transactionId = transaction.getTransactionId();
 		this.customerId = transaction.getCustomerId();

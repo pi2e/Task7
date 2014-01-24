@@ -48,18 +48,25 @@ public class RequestCheckAction extends Action {
 		try {
 
 			customer = (Customer) request.getSession().getAttribute("user");
+			long userId = customer.getCustomerId();
+			//get latest customer from database
+			customer = customerDAO.read(userId);
+			
 			RequestCheckForm form = formBeanFactory.create(request);
-			request.setAttribute("availablebalance",
-					CommonUtilities.convertToMoney((customer.getBalance())));
-			System.out.println("balance"
-					+ CommonUtilities.convertToMoney((customer.getBalance())));
+			request.setAttribute("form", form);
+			
+			String balance = CommonUtilities.convertToMoney((customer.getBalance()));
+			request.setAttribute("availablebalance", balance);
+			
 			request.setAttribute("ledgerBalance",
 					CommonUtilities.convertToMoney((customer.getCash())));
-			request.setAttribute("form", form);
+			
 			request.setAttribute("customer", customer);
+			
 			if (!form.isPresent()) {
 				return "requestCheck.jsp";
 			}
+			
 			errors.addAll(form.getValidationErrors());
 
 			if (errors.size() != 0) {
@@ -67,9 +74,9 @@ public class RequestCheckAction extends Action {
 			}
 
 			//Check if the withdraw amount is more than the balance
-			if (customer.getBalance() < Double.parseDouble(form
-					.getWithdrawAmount())) {
-				errors.add("Withdraw amount must be less than Balance amount");
+			double amount = Double.parseDouble(form.getWithdrawAmount());
+			if (Double.parseDouble(balance) < amount) {
+				errors.add("You do not have sufficient balance");
 				return "requestCheck.jsp";
 			}
 
@@ -79,8 +86,12 @@ public class RequestCheckAction extends Action {
 			transaction.setCustomerId(customer.getCustomerId());
 			transaction.setAmount(CommonUtilities.moneyToLong(Double
 					.parseDouble(form.getWithdrawAmount())));
-			
 			transactionDAO.create(transaction);
+			
+			//update balance
+			customer.setBalance(customer.getBalance() - CommonUtilities.moneyToLong(amount));
+			customerDAO.update(customer);
+			
 			return "viewCustomerTransaction.do?custId="
 					+ customer.getCustomerId();
 		} catch (RollbackException e) {

@@ -6,9 +6,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.cfs.dao.CustomerDAO;
+import com.cfs.dao.FundDAO;
 import com.cfs.dao.FundPriceHistoryDAO;
 import com.cfs.dao.TransactionDAO;
 import com.cfs.databean.Customer;
+import com.cfs.databean.Fund;
 import com.cfs.databean.FundPriceData;
 import com.cfs.databean.FundTransaction;
 import com.cfs.databean.Model;
@@ -19,10 +21,12 @@ public class ViewCustomerTransactionAction extends Action {
 
 	private TransactionDAO transactionDAO;
 	private CustomerDAO customerDAO;
+	private FundDAO fundDAO;
 
 	public ViewCustomerTransactionAction(Model model) {
 		transactionDAO = model.getTransactionDAO();
 		customerDAO = model.getCustomerDAO();
+		fundDAO = model.getFundDAO();
 	}
 
 	@Override
@@ -40,8 +44,7 @@ public class ViewCustomerTransactionAction extends Action {
 
 		try {
 
-			if (request.getSession().getAttribute("user").getClass()
-					.equals("Customer")) {
+			if (request.getSession().getAttribute("user") instanceof Customer) {
 
 				customer = (Customer) request.getSession().getAttribute("user");
 			} else if (request.getParameter("custId") != null) {
@@ -73,9 +76,10 @@ public class ViewCustomerTransactionAction extends Action {
 
 				if (transaction.getTransactionType().equals("buy")
 						|| transaction.getTransactionType().equals("sell")) {
-					// TransactionVO t = new TransactionVO(transaction, fund,
-					// price);
-					// pendingTransactions.add(t);
+					Fund fund = fundDAO.read(transaction.getFundId());
+					
+					TransactionVO t = new TransactionVO(transaction,fund);
+					pendingTransactions.add(t);
 				}
 
 			}
@@ -87,7 +91,7 @@ public class ViewCustomerTransactionAction extends Action {
 
 				if (transaction.getTransactionType().equals("deposit")
 						|| transaction.getTransactionType()
-								.equals("withdrawal")) {
+								.equals("withdraw")) {
 
 					if (transaction.getExecuteDate() != null) {
 
@@ -95,12 +99,14 @@ public class ViewCustomerTransactionAction extends Action {
 						executedTransactions.add(t);
 
 					}
-
+					
 					if (transaction.getTransactionType().equals("buy")
 							|| transaction.getTransactionType().equals("sell")) {
-						// TransactionVO t = new TransactionVO(transaction,
-						// fund, price);
-						// executedTransactions.add(t);
+						
+						Fund fund = fundDAO.read(transaction.getFundId());
+						
+						TransactionVO t = new TransactionVO(transaction,fund);
+						executedTransactions.add(t);
 					}
 				}
 

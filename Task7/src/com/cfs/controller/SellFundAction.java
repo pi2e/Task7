@@ -13,33 +13,37 @@ import org.mybeans.form.FormBeanFactory;
 
 import com.cfs.dao.CustomerDAO;
 import com.cfs.dao.FundDAO;
+import com.cfs.dao.PositionDAO;
 import com.cfs.dao.TransactionDAO;
 import com.cfs.databean.Customer;
 import com.cfs.databean.Fund;
 import com.cfs.databean.FundTransaction;
 import com.cfs.databean.Model;
-import com.cfs.formbean.BuyFundForm;
+import com.cfs.formbean.SellFundForm;
 import com.cfs.utility.CommonUtilities;
+import com.cfs.databean.Position;;
 
-public class BuyFundAction extends Action {
+public class SellFundAction extends Action {
 
 	private CustomerDAO customerDAO;
 	private TransactionDAO transactionDAO;
 	private FundDAO fundDAO;
+	private PositionDAO positionDAO;
 	
-	private FormBeanFactory<BuyFundForm> formBeanFactory = FormBeanFactory
-			.getInstance(BuyFundForm.class);
+	private FormBeanFactory<SellFundForm> formBeanFactory = FormBeanFactory
+			.getInstance(SellFundForm.class);
 
-	public BuyFundAction(Model model) {
+	public SellFundAction(Model model) {
 
 		customerDAO = model.getCustomerDAO();
 		transactionDAO = model.getTransactionDAO();
 		fundDAO = model.getFundDAO();
+		positionDAO = model.getPositionDAO();
 	}
 
 	@Override
 	public String getName() {
-		return "buyFund.do";
+		return "sellFund.do";
 	}
 
 	@Override
@@ -58,30 +62,20 @@ public class BuyFundAction extends Action {
 			Long userID = customer.getCustomerId();
 			customer = customerDAO.read(userID);
 			
-			String balance = CommonUtilities.convertToMoney(customer.getBalance());
-			request.setAttribute("balance", balance);
-			
-			BuyFundForm form = formBeanFactory.create(request);
+			SellFundForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
 			
 			if (!form.isPresent()) {
-				return "buyfund.jsp";
+				return "sellfund.jsp";
 			}
 			
 			errors.addAll(form.getValidationErrors());
 			
 			if (errors.size() != 0) {
-				return "buyfund.jsp";
+				return "sellfund.jsp";
 			}
 			
-			//check balance
-			double amount = Double.parseDouble(form.getAmount());
-			if(amount > Double.parseDouble(balance)) {
-				errors.add("You do not have sufficient balance");
-			}
-			if(errors.size() != 0) {
-				return "buyfund.jsp";
-			}
+			double amount = Double.parseDouble(form.getShares());
 			
 			//find fund
 			Fund fund = fundDAO.getFund(form.getTicker());
@@ -90,20 +84,29 @@ public class BuyFundAction extends Action {
 				errors.add("Fund not found");
 			}
 			if(errors.size() != 0) {
-				return "buyfund.jsp";
+				return "sellfund.jsp";
+			}
+			
+			//check position
+			Position position = positionDAO.getPosition(userID, fund.getFundId());
+			if(amount > CommonUtilities.longToShares(position.getAvailableShares())) {
+				errors.add("You do not have sufficient shares");
+			}
+			if(errors.size() != 0) {
+				return "sellfund.jsp";
 			}
 			
 			//create transaction
 			FundTransaction transaction = new FundTransaction();
-			transaction.setTransactionType("buy");
+			transaction.setTransactionType("sell");
 			transaction.setCustomerId(customer.getCustomerId());
-			transaction.setAmount(CommonUtilities.moneyToLong(amount));
+			transaction.setShares(CommonUtilities.shareToLong(amount));
 			transaction.setFundId(fund.getFundId());
 			transactionDAO.create(transaction);
 			
-			//update balance
-			customer.setBalance(customer.getBalance() - CommonUtilities.moneyToLong(amount));
-			customerDAO.update(customer);
+			//update share balance
+			position.setAvailableShares(position.getAvailableShares() - CommonUtilities.shareToLong(amount));
+			positionDAO.update(position);
 			
 			request.setAttribute("successMessage", "Buy order queued successfully");
 			return "viewCustomerTransaction.do";

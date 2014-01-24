@@ -76,7 +76,7 @@ public class DepositMultipleCheckAction extends Action {
 
 			// if any errors, return 
 			if (inputError) {
-				errors.add("Deposits must be positive numeric amounts");
+				errors.add("Deposits must be positive numeric amounts with up to 2 decimal places");
 				return "customerlist.jsp";
 			}
 			
@@ -92,12 +92,17 @@ public class DepositMultipleCheckAction extends Action {
 					transaction.setCustomerId(id);
 					transaction.setAmount(CommonUtilities.moneyToLong(Double.parseDouble(amount)));
 					transactionDAO.create(transaction);
+					
+					//update balance
+					customers[i].setBalance(customers[i].getBalance()
+							+ CommonUtilities.moneyToLong(Double.parseDouble(amount)));
+					customerDAO.update(customers[i]);
 				}
 
 			}
 			
 			depositList.clear();
-			request.setAttribute("success", "Deposits queued successfully");
+			request.setAttribute("successMessage", "Deposits queued successfully");
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

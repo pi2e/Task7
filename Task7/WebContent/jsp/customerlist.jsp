@@ -20,7 +20,7 @@
 							<th>Last Name</th>
 							<th>First Name</th>
 							<th>Username</th>
-							<th>Ledger Balance</th>
+							<th>Cash</th>
 							<th>Available Balance</th>
 							<th>Deposit Check</th>
 						</tr>

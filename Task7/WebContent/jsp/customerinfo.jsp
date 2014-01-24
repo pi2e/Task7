@@ -28,13 +28,13 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Cash Balance</label>
+							<label class="col-md-4 control-label">Available Balance</label>
 							<div class="col-md-6">
 								<p class="form-control-static">$${balance}</p>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label">Ledger Balance</label>
+							<label class="col-md-4 control-label">Cash</label>
 							<div class="col-md-6">
 								<p class="form-control-static">$${ledgerBalance}</p>
 							</div>

@@ -99,7 +99,7 @@ public class Customer implements Comparable<Customer>{
 	}
 	@Override
 	public int compareTo(Customer cust) {
-		int retval = lastName.compareTo(cust.getLastName());
+		int retval = lastName.compareToIgnoreCase(cust.getLastName());
 		return retval;
 	}
 
