@@ -37,7 +37,7 @@ public class Controller extends HttpServlet {
 		Action.add(new TransitionDayAction(model));
 		Action.add(new DepositCheckAction(model));
 		Action.add(new DepositMultipleCheckAction(model));
-		// Action.add(new RequestCheckAction(model));
+		Action.add(new RequestCheckAction(model));
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
