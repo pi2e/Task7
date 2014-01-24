@@ -20,7 +20,7 @@ public class FundPriceHistoryDAO extends GenericDAO<FundPriceData> {
 
 	}
 
-	public FundPriceData fetchLatestPrice(long fundId) throws DAOException {
+	public FundPriceData fetchLatestPrice(int fundId) throws DAOException {
 
 		try {
 			Transaction.begin();
@@ -45,12 +45,11 @@ public class FundPriceHistoryDAO extends GenericDAO<FundPriceData> {
 	}
 	
 	//returns prices from newest to oldest
-	public FundPriceData[] fetchLatestPrices(long fundId) throws DAOException {
+	public FundPriceData[] fetchLatestPrices(int fundId) throws DAOException {
 
 		try {
 			Transaction.begin();
 			FundPriceData[] fundPrice = match(MatchArg.equals("fundId", fundId));
-			System.out.println(fundPrice.length);
 
 			if(fundPrice.length > 1) {
 				Arrays.sort(fundPrice);

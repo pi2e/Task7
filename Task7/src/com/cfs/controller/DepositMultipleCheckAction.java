@@ -82,7 +82,7 @@ public class DepositMultipleCheckAction extends Action {
 			
 			// if no errors, create transaction
 			for (int i = 0; i < customers.length; i++) {
-				long id = customers[i].getCustomerId();
+				int id = customers[i].getCustomerId();
 				String amount = request.getParameter(String.valueOf(id)).trim();
 				
 				if (!amount.equals("") && !amount.equals("0")) {
@@ -94,9 +94,11 @@ public class DepositMultipleCheckAction extends Action {
 					transactionDAO.create(transaction);
 					
 					//update balance
+					/*
 					customers[i].setBalance(customers[i].getBalance()
 							+ CommonUtilities.moneyToLong(Double.parseDouble(amount)));
 					customerDAO.update(customers[i]);
+					*/
 				}
 
 			}

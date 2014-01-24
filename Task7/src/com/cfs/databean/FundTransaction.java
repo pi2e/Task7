@@ -7,31 +7,31 @@ import org.genericdao.PrimaryKey;
 @PrimaryKey("transactionId")
 public class FundTransaction {
 	
-	private long transactionId;
-	private long customerId;
-	private long fundId;
+	private int transactionId;
+	private int customerId;
+	private int fundId;
 	private Date executeDate;
 	private long shares;
 	private String transactionType;
 	private long amount;
 	
-	public long getTransactionId() {
+	public int getTransactionId() {
 		return transactionId;
 	}
-	public void setTransactionId(long transactionId) {
+	public void setTransactionId(int transactionId) {
 		this.transactionId = transactionId;
 	}
 
-	public long getCustomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(long customerId) {
+	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
-	public long getFundId() {
+	public int getFundId() {
 		return fundId;
 	}
-	public void setFundId(long fundId) {
+	public void setFundId(int fundId) {
 		this.fundId = fundId;
 	}
 	public Date getExecuteDate() {

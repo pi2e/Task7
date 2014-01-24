@@ -7,7 +7,7 @@ import com.cfs.utility.CommonUtilities;
 @PrimaryKey("customerId")
 public class Customer implements Comparable<Customer>{
 
-	private long customerId;
+	private int customerId;
 	private String username;
 	private String password;
 	private String firstName;
@@ -20,10 +20,10 @@ public class Customer implements Comparable<Customer>{
 	private long balance;
 	private long cash;
 	
-	public long getCustomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(long customerId) {
+	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
 	

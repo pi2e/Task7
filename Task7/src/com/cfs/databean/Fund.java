@@ -5,14 +5,14 @@ import org.genericdao.PrimaryKey;
 @PrimaryKey("fundId")
 public class Fund implements Comparable<Fund>{
 
-	private long fundId;
+	private int fundId;
 	private String fundName;
 	private String symbol;
 	
-	public long getFundId() {
+	public int getFundId() {
 		return fundId;
 	}
-	public void setFundId(long fundId) {
+	public void setFundId(int fundId) {
 		this.fundId = fundId;
 	}
 	public String getFundName() {

@@ -46,7 +46,7 @@ public class ChangePwdAction extends Action {
 
 			String userID = (String) request.getParameter("custId");
 			System.out.println("user" + userID);
-			customer = customerDAO.read(Long.parseLong(userID));
+			customer = customerDAO.read(Integer.parseInt(userID));
 			request.setAttribute("customer", customer);
 			System.out.println(customer);
 			ChangePwdForm form = null;
@@ -81,6 +81,6 @@ public class ChangePwdAction extends Action {
 			e1.printStackTrace();
 		}
 
-		return "customerinfo.jsp";
+		return "changePwd.jsp";
 	}
 }

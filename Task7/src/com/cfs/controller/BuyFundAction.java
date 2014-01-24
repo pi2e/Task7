@@ -55,7 +55,7 @@ public class BuyFundAction extends Action {
 			HttpSession session = request.getSession();
 			customer = (Customer)session.getAttribute("user");
 			
-			Long userID = customer.getCustomerId();
+			int userID = customer.getCustomerId();
 			customer = customerDAO.read(userID);
 			
 			String balance = CommonUtilities.convertToMoney(customer.getBalance());

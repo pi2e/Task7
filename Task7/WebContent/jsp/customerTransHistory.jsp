@@ -5,6 +5,7 @@
 	page="${accountType == 'E' ? 'admin-top.jsp' : 'customer-top.jsp'}" />
 <div class="container">
 	<jsp:include page="success.jsp" />
+	<jsp:include page="errors.jsp" />
 	<div class="page-header">
 		<h3>
 			<a href="viewcustomer.do?custId=${customer.customerId}">${customer.lastName},

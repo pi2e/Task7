@@ -8,9 +8,9 @@ import com.cfs.utility.CommonUtilities;
 
 public class TransactionVO {
 
-	private long transactionId;
-	private long customerId;
-	private long fundId;
+	private int transactionId;
+	private int customerId;
+	private int fundId;
 	private String fundName;
 	private String fundTicker;
 	private Date executeDate;
@@ -44,7 +44,7 @@ public class TransactionVO {
 		}
 	
 	//for buy & sell (executed)
-	public TransactionVO(FundTransaction transaction, Fund fund, long price) {
+	public TransactionVO(FundTransaction transaction, Fund fund, int price) {
 		this.transactionId = transaction.getTransactionId();
 		this.customerId = transaction.getCustomerId();
 		this.fundId = transaction.getFundId();
@@ -65,22 +65,22 @@ public class TransactionVO {
 	public void setFundTicker(String fundTicker) {
 		this.fundTicker = fundTicker;
 	}
-	public long getTransactionId() {
+	public int getTransactionId() {
 		return transactionId;
 	}
-	public void setTransactionId(long transactionId) {
+	public void setTransactionId(int transactionId) {
 		this.transactionId = transactionId;
 	}
-	public long getCustomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(long customerId) {
+	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
-	public long getFundId() {
+	public int getFundId() {
 		return fundId;
 	}
-	public void setFundId(long fundId) {
+	public void setFundId(int fundId) {
 		this.fundId = fundId;
 	}
 	public String getFundName() {

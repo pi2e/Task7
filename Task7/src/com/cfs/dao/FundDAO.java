@@ -41,7 +41,7 @@ import com.cfs.databean.Fund;
 			return funds;
 		}
 		
-		public Fund getFund(long fundId) throws DAOException {
+		public Fund getFund(int fundId) throws DAOException {
 			Fund[] funds = null;
 			
 			try {

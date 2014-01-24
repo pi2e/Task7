@@ -17,7 +17,7 @@ import com.cfs.databean.Position;
 		}
 		
 		
-		public synchronized Position getPosition(long userId, long fundId) throws DAOException {
+		public synchronized Position getPosition(int userId, int fundId) throws DAOException {
 			
 			try {
 				Position[] positions = match(MatchArg.and(MatchArg.equals("customerId", userId),MatchArg.equals("fundId", fundId)));
@@ -33,7 +33,7 @@ import com.cfs.databean.Position;
 		}
 		
 		
-		public synchronized Position[] getCustomerFunds(long userId) throws DAOException {
+		public synchronized Position[] getCustomerFunds(int userId) throws DAOException {
 			
 			try {
 				Position[] positions = match(MatchArg.equals("customerId", userId));

@@ -48,7 +48,7 @@ public class RequestCheckAction extends Action {
 		try {
 
 			customer = (Customer) request.getSession().getAttribute("user");
-			long userId = customer.getCustomerId();
+			int userId = customer.getCustomerId();
 			//get latest customer from database
 			customer = customerDAO.read(userId);
 			

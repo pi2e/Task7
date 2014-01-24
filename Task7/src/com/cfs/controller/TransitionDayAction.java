@@ -115,9 +115,9 @@ public class TransitionDayAction extends Action{
 			for(FundTransaction tran : transctions) {
 				tran.setExecuteDate(newdate);
 				transactionDAO.update(tran);
-				long customerid = tran.getCustomerId();
+				int customerid = tran.getCustomerId();
 				double amount = CommonUtilities.longToMoney(tran.getAmount());
-				long fundid = tran.getFundId();
+				int fundid = tran.getFundId();
 				double shares = CommonUtilities.longToShares(tran.getShares());
 			
 				

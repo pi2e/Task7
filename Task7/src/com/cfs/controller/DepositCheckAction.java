@@ -45,7 +45,7 @@ public class DepositCheckAction extends Action {
 		try {
 
 			String userID = (String) request.getParameter("custId");
-			customer = customerDAO.read(Long.parseLong(userID));
+			customer = customerDAO.read(Integer.parseInt(userID));
 			request.setAttribute("customer", customer);
 
 			DepositCheckForm form = formBeanFactory.create(request);
@@ -70,10 +70,12 @@ public class DepositCheckAction extends Action {
 			transactionDAO.create(transaction);
 
 			// update balance
+			/*
 			customer.setBalance(customer.getBalance()
 					+ CommonUtilities.moneyToLong(Double.parseDouble(form
 							.getAmount())));
 			customerDAO.update(customer);
+			*/
 
 			return "viewCustomerTransaction.do?custId="
 					+ customer.getCustomerId();

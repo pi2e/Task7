@@ -2,14 +2,22 @@ package com.cfs.databean;
 
 import org.genericdao.PrimaryKey;
 
-@PrimaryKey("username")
+@PrimaryKey("userId")
 public class Employee {
 	
+	private int userId;
 	private String username;
 	private String firstName;
 	private String lastName;
 	private String password;
 	
+	
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 	public String getUsername() {
 		return username;
 	}

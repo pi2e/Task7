@@ -50,7 +50,7 @@ public class ViewCustomerTransactionAction extends Action {
 			} else if (request.getParameter("custId") != null) {
 
 				String userID = (String) request.getParameter("custId");
-				customer = customerDAO.read(Long.parseLong(userID));
+				customer = customerDAO.read(Integer.parseInt(userID));
 			}
 
 			FundTransaction[] pendingTransactionsAll = transactionDAO

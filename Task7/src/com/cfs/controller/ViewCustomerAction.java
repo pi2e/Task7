@@ -59,7 +59,7 @@ public class ViewCustomerAction extends Action {
 			} else if (request.getParameter("custId") != null) {
 
 				String userID = (String) request.getParameter("custId");
-				customer = customerDAO.read(Long.parseLong(userID));
+				customer = customerDAO.read(Integer.parseInt(userID));
 			}
 			if (customer == null) {
 				errors.add("Unexpected error occured.");
@@ -79,7 +79,7 @@ public class ViewCustomerAction extends Action {
 			for (int i = 0; i < positions.length; i++) {
 
 				CustomerFundVO fundVO = new CustomerFundVO();
-				long fundId = positions[i].getFundId();
+				int fundId = positions[i].getFundId();
 
 				Fund fund = fundDAO.read(fundId);
 

@@ -59,7 +59,7 @@ public class SellFundAction extends Action {
 			HttpSession session = request.getSession();
 			customer = (Customer)session.getAttribute("user");
 			
-			Long userID = customer.getCustomerId();
+			int userID = customer.getCustomerId();
 			customer = customerDAO.read(userID);
 			
 			SellFundForm form = formBeanFactory.create(request);

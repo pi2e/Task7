@@ -5,15 +5,15 @@ import org.genericdao.PrimaryKey;
 @PrimaryKey("customerId,fundId")
 public class Position {
 	
-	private long customerId;
-	private long fundId;
+	private int customerId;
+	private int fundId;
 	private long shares;
 	private long availableShares;
 	
-	public long getCustomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(long customerId) {
+	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
 	public long getAvailableShares() {
@@ -22,10 +22,10 @@ public class Position {
 	public void setAvailableShares(long availableShares) {
 		this.availableShares = availableShares;
 	}
-	public long getFundId() {
+	public int getFundId() {
 		return fundId;
 	}
-	public void setFundId(long fundId) {
+	public void setFundId(int fundId) {
 		this.fundId = fundId;
 	}
 	public long getShares() {

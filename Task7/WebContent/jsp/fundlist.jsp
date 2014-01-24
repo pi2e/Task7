@@ -5,7 +5,8 @@
 	page="${accountType == 'E' ? 'admin-top.jsp' : 'customer-top.jsp'}" />
 
 <div class="container">
-	<jsp:include page="success.jsp" />
+<jsp:include page="success.jsp" />
+	<jsp:include page="errors.jsp" />
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Available Funds</h3>

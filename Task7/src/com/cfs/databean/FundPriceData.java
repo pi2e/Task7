@@ -7,14 +7,14 @@ import org.genericdao.PrimaryKey;
 @PrimaryKey("fundId,priceDate")
 public class FundPriceData implements Comparable<FundPriceData>{
 
-	private long fundId;
+	private int fundId;
 	private Date priceDate;
 	private long price;
 	
-	public long getFundId() {
+	public int getFundId() {
 		return fundId;
 	}
-	public void setFundId(long fundId) {
+	public void setFundId(int fundId) {
 		this.fundId = fundId;
 	}
 	public Date getPriceDate() {

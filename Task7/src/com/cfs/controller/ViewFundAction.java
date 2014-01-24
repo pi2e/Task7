@@ -45,7 +45,7 @@ public class ViewFundAction extends Action {
 		String price = null;
 
 		try {
-			long fundId = Long.parseLong(request.getParameter("fundId")
+			int fundId = Integer.parseInt(request.getParameter("fundId")
 					.toString());
 			fund = fundDAO.getFund(fundId);
 			request.setAttribute("fund", fund);

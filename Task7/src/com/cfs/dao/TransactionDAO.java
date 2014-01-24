@@ -20,7 +20,7 @@ public class TransactionDAO extends GenericDAO<FundTransaction> {
 		createAutoIncrement(transaction);
 	}
 
-	public synchronized FundTransaction[] getTransactions(long customerID)
+	public synchronized FundTransaction[] getTransactions(int customerID)
 			throws DAOException {
 		try {
 			FundTransaction[] transactionList = match(MatchArg.equals(
@@ -33,7 +33,7 @@ public class TransactionDAO extends GenericDAO<FundTransaction> {
 		}
 	}
 
-	public FundTransaction[] getPendingTransaction(long customerID)
+	public FundTransaction[] getPendingTransaction(int customerID)
 			throws DAOException {
 
 		try {
