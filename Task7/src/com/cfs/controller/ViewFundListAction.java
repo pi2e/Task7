@@ -67,9 +67,6 @@ public class ViewFundListAction extends Action {
 								latestPrices[1].getPrice())));
 						
 						priceDifference.add(price + "  (" + percentage +"%) ");
-						
-						System.out.println(fundData.getFundId() + " new " + latestPrices[0].getPrice() + " old " + latestPrices[1].getPrice());
-						System.out.println(percentage);
 					} else {
 						priceDifference.add("");
 					}
