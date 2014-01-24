@@ -30,6 +30,7 @@
 				<input type="text" class="form-control" id="withdrawAmount"
 					placeholder="Amount" value="${form.withdrawAmount}"
 					name="withdrawAmount">
+					<span class="help-block">Up to 2 decimal palaces</span>
 			</div>
 		</div>
 

@@ -31,6 +31,7 @@
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="amount"
 					placeholder="Amount" value="${form.amount}" name="amount">
+					<span class="help-block">Up to 2 decimal places</span>
 			</div>
 		</div>
 

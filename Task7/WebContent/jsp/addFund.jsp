@@ -26,6 +26,7 @@
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="inputTickerName"
 					placeholder="Ticker Name " name="ticker" value="${form.ticker}">
+					<span class="help-block">Up to 5 characters</span>
 			</div>
 		</div>
 
