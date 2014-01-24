@@ -69,7 +69,7 @@
 	<ul class="nav nav-pills">
 		<li><a href="viewCustomerTransaction.do?custId=${customer.customerId}">Transaction History</a></li>
 		<li><a href="depositCheck.do?custId=${customer.customerId }">Deposit Check</a></li>
-		<li><a href="#">Change Password</a></li>
+		<li><a href="changePwd.do?custId=${customer.customerId }">Change Customer Password</a></li>
 	</ul>
 	<br/>
 	

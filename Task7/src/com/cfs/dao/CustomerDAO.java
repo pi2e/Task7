@@ -12,6 +12,7 @@ import org.genericdao.Transaction;
 import com.cfs.databean.Customer;
 
 
+
 public class CustomerDAO extends GenericDAO<Customer> {
 
 	public CustomerDAO(ConnectionPool cp, String tableName) throws DAOException {
@@ -103,5 +104,24 @@ public class CustomerDAO extends GenericDAO<Customer> {
 		}
 		
 	}
+	
+//	public void setPassword(String customerId, String password) throws RollbackException {
+//        try {
+//        	Transaction.begin();
+//			Customer cust = null;
+//			cust = read(customerId);
+//			
+//			if (cust == null) {
+//				throw new RollbackException("User no longer exists");
+//			}
+//			
+//			cust.setPassword(password);
+//			
+//			update(cust);
+//			Transaction.commit();
+//		} finally {
+//			if (Transaction.isActive()) Transaction.rollback();
+//		}
+//	}
 
 }
