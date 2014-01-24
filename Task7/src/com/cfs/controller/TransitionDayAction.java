@@ -70,9 +70,7 @@ public class TransitionDayAction extends Action{
 			String[] inputprice = new String[funds.length];
 			for(int i = 0; i < funds.length; i++) {
 				inputprice[i] = request.getParameter(Long.toString(funds[i].getFundId()));
-				if( inputprice[i] == null || inputprice.length == 0) {
-					errors.add("Must input the price of every fund");
-				}
+				
 			}
 			request.setAttribute("inputprice", inputprice);
 			
@@ -106,7 +104,12 @@ public class TransitionDayAction extends Action{
 			for(Fund fund : funds) {
 				FundPriceData fundprice = new FundPriceData();
 				fundprice.setFundId(fund.getFundId());
-				double tmp = Double.parseDouble(request.getParameter(Long.toString(fund.getFundId())));
+				String input = request.getParameter(Long.toString(fund.getFundId()));
+				if(input == null || input.length() == 0)  {
+					errors.add("Must input price of every fund");
+					break;
+				}
+				double tmp = Double.parseDouble(input);
 				fundprice.setPrice(CommonUtilities.moneyToLong(tmp));
 				fundprice.setPriceDate(newdate);
 				price.add(fundprice);
@@ -143,9 +146,8 @@ public class TransitionDayAction extends Action{
 				else if(tran.getTransactionType().equals("buy")) {
 					double fundprice = CommonUtilities.longToMoney(fundpriceDAO.fetchLatestPrice(fundid).getPrice());
 					long share = CommonUtilities.shareToLong(amount / fundprice);
-					Position bean;
-					Position[] beans = positionDAO.match(MatchArg.equals("fundId", fundid),MatchArg.equals("customerId", customerid));
-					if(beans == null) {
+					Position bean = positionDAO.getPosition(customerid, fundid);
+					if(bean == null) {
 						bean = new Position();
 						bean.setCustomerId(customerid);
 						bean.setAvailableShares(share);
@@ -153,7 +155,6 @@ public class TransitionDayAction extends Action{
 						bean.setShares(share);
 						positionDAO.create(bean);
 					} else {
-						bean = beans[0];
 						bean.setShares(bean.getShares() + share);
 						bean.setAvailableShares(bean.getAvailableShares() + share);
 						positionDAO.update(bean);

@@ -22,7 +22,7 @@ import com.cfs.databean.Position;
 			try {
 				Position[] positions = match(MatchArg.and(MatchArg.equals("customerId", userId),MatchArg.equals("fundId", fundId)));
 				
-				if(positions != null) {
+				if(positions.length != 0) {
 					return positions[0];
 				}
 				
