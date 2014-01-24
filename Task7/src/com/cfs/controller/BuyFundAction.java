@@ -76,7 +76,8 @@ public class BuyFundAction extends Action {
 			
 			//check balance
 			double amount = Double.parseDouble(form.getAmount());
-			if(amount > Double.parseDouble(balance)) {
+			String balanceStr = CommonUtilities.removeCommas(balance);
+			if(amount > Double.parseDouble(balanceStr)) {
 				errors.add("You do not have sufficient balance");
 			}
 			if(errors.size() != 0) {

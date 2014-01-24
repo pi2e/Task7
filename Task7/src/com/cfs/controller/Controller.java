@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.cfs.controller.Action;
-import com.cfs.databean.Customer;
-import com.cfs.databean.Employee;
 import com.cfs.databean.Model;
 
 public class Controller extends HttpServlet {

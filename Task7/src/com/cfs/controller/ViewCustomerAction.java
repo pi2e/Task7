@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.Session;
 
 import org.genericdao.DAOException;
 import org.genericdao.RollbackException;
@@ -54,6 +55,8 @@ public class ViewCustomerAction extends Action {
 			if (request.getSession().getAttribute("user") instanceof Customer) {
 				
 				customer = (Customer) request.getSession().getAttribute("user");
+				customer = customerDAO.read(customer.getCustomerId());
+				
 				System.out.println(customer);
 				
 			} else if (request.getParameter("custId") != null) {

@@ -89,7 +89,7 @@ public class SellFundAction extends Action {
 			
 			//check position
 			Position position = positionDAO.getPosition(userID, fund.getFundId());
-			if(amount > CommonUtilities.longToShares(position.getAvailableShares())) {
+			if(position == null || amount > CommonUtilities.longToShares(position.getAvailableShares())) {
 				errors.add("You do not have sufficient shares");
 			}
 			if(errors.size() != 0) {

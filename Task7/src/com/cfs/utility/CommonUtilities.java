@@ -46,7 +46,7 @@ public class CommonUtilities {
 
 	public static String convertToShare(long amount) {
 
-		return formatShare((double) (amount / 1000));
+		return formatShare((double) (amount) / 1000);
 
 	}
 
@@ -58,6 +58,14 @@ public class CommonUtilities {
 	public static String calculatePosition(long shares, long price) {
 		double position = (double) (shares * price) / 100000;
 		return formatPrice(position);
+	}
+
+	public static String removeCommas(String data) {
+		String balanceStr = "";
+		if (data != null) {
+			balanceStr = data.replace(",", "");
+		}
+		return balanceStr;
 	}
 
 }

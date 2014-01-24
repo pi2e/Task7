@@ -49,35 +49,40 @@ public class RequestCheckAction extends Action {
 
 			customer = (Customer) request.getSession().getAttribute("user");
 			int userId = customer.getCustomerId();
-			//get latest customer from database
+			// get latest customer from database
 			customer = customerDAO.read(userId);
-			
+
 			RequestCheckForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
-			
-			String balance = CommonUtilities.convertToMoney((customer.getBalance()));
+
+			String balance = CommonUtilities.convertToMoney((customer
+					.getBalance()));
 			request.setAttribute("availablebalance", balance);
-			
+
 			request.setAttribute("ledgerBalance",
 					CommonUtilities.convertToMoney((customer.getCash())));
-			
+
 			request.setAttribute("customer", customer);
-			
+
 			if (!form.isPresent()) {
 				return "requestCheck.jsp";
 			}
-			
+
 			errors.addAll(form.getValidationErrors());
 
 			if (errors.size() != 0) {
 				return "requestCheck.jsp";
 			}
 
-			//Check if the withdraw amount is more than the balance
 			double amount = Double.parseDouble(form.getWithdrawAmount());
-			if (Double.parseDouble(balance) < amount) {
-				errors.add("You do not have sufficient balance");
-				return "requestCheck.jsp";
+			// Check if the withdraw amount is more than the balance
+			if (balance != null) {
+				String balanceStr = CommonUtilities.removeCommas(balance);
+				
+				if (Double.parseDouble(balanceStr) < amount) {
+					errors.add("You do not have sufficient balance");
+					return "requestCheck.jsp";
+				}
 			}
 
 			// create transaction
@@ -87,11 +92,12 @@ public class RequestCheckAction extends Action {
 			transaction.setAmount(CommonUtilities.moneyToLong(Double
 					.parseDouble(form.getWithdrawAmount())));
 			transactionDAO.create(transaction);
-			
-			//update balance
-			customer.setBalance(customer.getBalance() - CommonUtilities.moneyToLong(amount));
+
+			// update balance
+			customer.setBalance(customer.getBalance()
+					- CommonUtilities.moneyToLong(amount));
 			customerDAO.update(customer);
-			
+
 			return "viewCustomerTransaction.do?custId="
 					+ customer.getCustomerId();
 		} catch (RollbackException e) {

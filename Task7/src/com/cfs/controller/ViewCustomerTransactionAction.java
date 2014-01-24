@@ -111,11 +111,15 @@ public class ViewCustomerTransactionAction extends Action {
 					
 					Fund fund = fundDAO.read(transaction.getFundId());
 					
-					Date date = transaction.getExecuteDate();
-					FundPriceData fundPrice = fundPriceHistoryDAO.read(fund.getFundId(), date);
+					if (transaction.getExecuteDate() != null) {
 					
-					TransactionVO t = new TransactionVO(transaction, fund, fundPrice.getPrice());
-					executedTransactions.add(t);
+						Date date = transaction.getExecuteDate();
+						System.out.println(date);
+						FundPriceData fundPrice = fundPriceHistoryDAO.read(fund.getFundId(), date);
+						
+						TransactionVO t = new TransactionVO(transaction, fund, fundPrice.getPrice());
+						executedTransactions.add(t);
+					}
 				}
 
 			}
