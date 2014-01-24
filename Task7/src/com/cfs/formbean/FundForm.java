@@ -44,7 +44,7 @@ public class FundForm extends FormBean{
 		}
 		
 		if (!ticker.matches("[A-Z]+")) {
-			errors.add("Tickername must be capatal letter only");
+			errors.add("Tickername must be capital letters only");
 		}
 		
 		return errors;
