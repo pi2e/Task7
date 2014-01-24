@@ -125,7 +125,7 @@ public class TransitionDayAction extends Action{
 			
 			for(FundTransaction tran : transctions) {
 				tran.setExecuteDate(newdate);
-				transactionDAO.update(tran);
+				
 				int customerid = tran.getCustomerId();
 				double amount = CommonUtilities.longToMoney(tran.getAmount());
 				int fundid = tran.getFundId();
@@ -134,7 +134,7 @@ public class TransitionDayAction extends Action{
 				
 				if(tran.getTransactionType().equals("sell")) {
 					double fundprice = CommonUtilities.longToMoney(fundpriceDAO.fetchLatestPrice(fundid).getPrice());
-					Position bean = positionDAO.match(MatchArg.equals("fundId", fundid),MatchArg.equals("customerId", customerid))[0];
+					Position bean = positionDAO.getPosition(customerid, fundid);
 					bean.setShares(bean.getShares() - tran.getShares());
 					positionDAO.update(bean);
 					
@@ -142,6 +142,7 @@ public class TransitionDayAction extends Action{
 					cbean.setCash(cbean.getCash() + CommonUtilities.moneyToLong(shares*fundprice));
 					cbean.setBalance(cbean.getBalance() + CommonUtilities.moneyToLong(shares*fundprice));
 					customerDAO.update(cbean);
+					tran.setAmount(CommonUtilities.moneyToLong(shares*fundprice));
 				}
 				else if(tran.getTransactionType().equals("buy")) {
 					double fundprice = CommonUtilities.longToMoney(fundpriceDAO.fetchLatestPrice(fundid).getPrice());
@@ -163,6 +164,7 @@ public class TransitionDayAction extends Action{
 					Customer cbean = customerDAO.match(MatchArg.equals("customerId", customerid))[0];
 					cbean.setCash(cbean.getCash() - tran.getAmount());
 					customerDAO.update(cbean);
+					tran.setShares(share);
 				}
 				else if (tran.getTransactionType().equals("check")) {
 					Customer cbean = customerDAO.match(MatchArg.equals("customerId", customerid))[0];
@@ -175,6 +177,7 @@ public class TransitionDayAction extends Action{
 					cbean.setBalance(cbean.getBalance() + tran.getAmount());
 					customerDAO.update(cbean);
 				}
+				transactionDAO.update(tran);
 			}
 			
 			
