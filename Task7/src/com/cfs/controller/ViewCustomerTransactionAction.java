@@ -1,5 +1,6 @@
 package com.cfs.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +23,13 @@ public class ViewCustomerTransactionAction extends Action {
 	private TransactionDAO transactionDAO;
 	private CustomerDAO customerDAO;
 	private FundDAO fundDAO;
+	private FundPriceHistoryDAO fundPriceHistoryDAO;
 
 	public ViewCustomerTransactionAction(Model model) {
 		transactionDAO = model.getTransactionDAO();
 		customerDAO = model.getCustomerDAO();
 		fundDAO = model.getFundDAO();
+		fundPriceHistoryDAO = model.getFundPriceDAO();
 	}
 
 	@Override
@@ -88,7 +91,9 @@ public class ViewCustomerTransactionAction extends Action {
 			for (int i = 0; i < executedTransactionsAll.length; i++) {
 
 				FundTransaction transaction = executedTransactionsAll[i];
-
+				System.out.println(transaction.getTransactionType());
+				
+				
 				if (transaction.getTransactionType().equals("deposit")
 						|| transaction.getTransactionType()
 								.equals("withdraw")) {
@@ -99,15 +104,18 @@ public class ViewCustomerTransactionAction extends Action {
 						executedTransactions.add(t);
 
 					}
+				}
+				
+				if (transaction.getTransactionType().equals("buy")
+						|| transaction.getTransactionType().equals("sell")) {
 					
-					if (transaction.getTransactionType().equals("buy")
-							|| transaction.getTransactionType().equals("sell")) {
-						
-						Fund fund = fundDAO.read(transaction.getFundId());
-						
-						TransactionVO t = new TransactionVO(transaction,fund);
-						executedTransactions.add(t);
-					}
+					Fund fund = fundDAO.read(transaction.getFundId());
+					
+					Date date = transaction.getExecuteDate();
+					FundPriceData fundPrice = fundPriceHistoryDAO.read(fund.getFundId(), date);
+					
+					TransactionVO t = new TransactionVO(transaction, fund, fundPrice.getPrice());
+					executedTransactions.add(t);
 				}
 
 			}
