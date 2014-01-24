@@ -21,7 +21,7 @@ public class Controller extends HttpServlet {
 	public void init() throws ServletException {
 		 Model model = new Model(getServletConfig());
 		 Action.add(new HomePageAction(model));
-		// Action.add(new ChangePwdAction(model));
+		 Action.add(new ChangePwdAction(model));
 		Action.add(new ViewFundListAction(model));
 		Action.add(new LoginAction(model));
 		Action.add(new LogoutAction(model));
@@ -31,13 +31,13 @@ public class Controller extends HttpServlet {
 		Action.add(new AddFundAction(model));
 		Action.add(new ViewCustomerTransactionAction(model));
 		Action.add(new ViewFundAction(model));
-		// Action.add(new BuyFundAction(model));
-		// Action.add(new SellFundAction(model));
+		Action.add(new BuyFundAction(model));
+		Action.add(new SellFundAction(model));
 		Action.add(new ViewCustomerListAction(model));
 		Action.add(new TransitionDayAction(model));
 		Action.add(new DepositCheckAction(model));
 		Action.add(new DepositMultipleCheckAction(model));
-		// Action.add(new RequestCheckAction(model));
+		Action.add(new RequestCheckAction(model));
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -48,6 +48,11 @@ public class DepositCheckForm extends FormBean{
         		errors.add("Amount must be positive");
         	}
         	
+        	int decimal = amount.lastIndexOf('.');
+			if (decimal != -1 && amount.length() - decimal > 3) {
+				errors.add("You can not specify more the two decimal");
+			}
+        	
 		} catch (NumberFormatException e) { 
 			errors.add("Amount must be numeric");
 		}

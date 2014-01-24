@@ -79,7 +79,7 @@
                 <li><a href="viewFundList.do">View Funds</a></li>
               </ul>
             </li>
-            <li><a href="#contact">Request Check</a></li>
+            <li><a href="requestCheck.do">Request Check</a></li>
 			<li><a href="viewCustomerTransaction.do">Transaction History</a></li>
           </ul>
         </div><!-- /.nav-collapse -->

@@ -28,13 +28,13 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Cash Balance</label>
+							<label class="col-md-4 control-label">Available Balance</label>
 							<div class="col-md-6">
 								<p class="form-control-static">$${balance}</p>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label">Ledger Balance</label>
+							<label class="col-md-4 control-label">Cash</label>
 							<div class="col-md-6">
 								<p class="form-control-static">$${ledgerBalance}</p>
 							</div>
@@ -69,7 +69,7 @@
 	<ul class="nav nav-pills">
 		<li><a href="viewCustomerTransaction.do?custId=${customer.customerId}">Transaction History</a></li>
 		<li><a href="depositCheck.do?custId=${customer.customerId }">Deposit Check</a></li>
-		<li><a href="#">Change Password</a></li>
+		<li><a href="changePwd.do?custId=${customer.customerId }">Change Customer Password</a></li>
 	</ul>
 	<br/>
 </c:if>

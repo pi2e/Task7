@@ -33,7 +33,7 @@ import com.cfs.databean.Fund;
 		public Fund[] getFunds() throws RollbackException {
 			Fund[] funds = match();
 			
-			if (funds != null || funds.length != 0) {
+			if (funds != null) {
 
 				Arrays.sort(funds);
 			}
@@ -54,6 +54,24 @@ import com.cfs.databean.Fund;
 				
 			}
 			
+			return funds[0];
+		}
+		
+		public Fund getFund(String ticker) throws DAOException {
+			Fund[] funds;
+			
+			try {
+				funds = match(MatchArg.equals("symbol", ticker));
+
+			} catch (RollbackException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new DAOException(e);
+			}
+			
+			if(funds.length == 0 || funds == null) {
+				return null;
+			}
 			return funds[0];
 		}
 	}

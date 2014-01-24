@@ -4,8 +4,12 @@
 <jsp:include
 	page="${accountType == 'E' ? 'admin-top.jsp' : 'customer-top.jsp'}" />
 <div class="container">
+	<jsp:include page="success.jsp" />
 	<div class="page-header">
-		<h3><a href="viewcustomer.do?custId=${customer.customerId}">${customer.lastName}, ${customer.firstName} (${customer.username})</a></h3>
+		<h3>
+			<a href="viewcustomer.do?custId=${customer.customerId}">${customer.lastName},
+				${customer.firstName} (${customer.username})</a>
+		</h3>
 	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -18,22 +22,41 @@
 						<th>Type</th>
 						<th>Ticker</th>
 						<th>Fund Name</th>
-						<th>Amount</th>
-						<th>Fund Price</th>
 						<th>Shares</th>
+						<th>Date</th>
+						<th>Dollar Amount</th>
 					</tr>
 				</thead>
 
 				<tbody>
 					<c:forEach var="trans" items="${pendingTransactions}">
 						<tr>
-							<td>${trans.transactionType}</td>
-							<td>${trans.fundTicker}</td>
-							<td>${trans.fundName}</td>
-							<td>$${trans.amount}</td>
-							<td>$${trans.price}</td>
-							<td>${trans.shares}</td>
-							<td></td>
+							<c:choose>
+								<c:when test="${trans.transactionType == 'buy'}">
+									<td>${trans.transactionType}</td>
+									<td>${trans.fundTicker}</td>
+									<td>${trans.fundName}</td>
+									<td></td>
+									<td></td>
+									<td>$${trans.amount}</td>
+								</c:when>
+								<c:when test="${trans.transactionType == 'sell'}">
+									<td>${trans.transactionType}</td>
+									<td>${trans.fundTicker}</td>
+									<td>${trans.fundName}</td>
+									<td>${trans.shares}</td>
+									<td></td>
+									<td></td>
+								</c:when>
+								<c:otherwise>
+									<td>${trans.transactionType}</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>$${trans.amount}</td>
+								</c:otherwise>
+							</c:choose>
 						</tr>
 					</c:forEach>
 
@@ -53,10 +76,10 @@
 						<th>Type</th>
 						<th>Ticker</th>
 						<th>Fund Name</th>
-						<th>Amount</th>
 						<th>Fund Price</th>
 						<th>Shares</th>
-						<th>Date</th>
+						<th>Execution Date</th>
+						<th>Dollar Amount</th>
 					</tr>
 				</thead>
 
@@ -64,14 +87,35 @@
 
 					<c:forEach var="trans" items="${executedTransactions}">
 						<tr>
-							<td>${trans.transactionType}</td>
-							<td>${trans.fundTicker}</td>
-							<td>${trans.fundName}</td>
-							<td>$${trans.amount}</td>
-							<td>$${trans.price}</td>
-							<td>${trans.shares}</td>
-							<td>${trans.executeDate}</td>
-							<td></td>
+							<c:choose>
+								<c:when test="${trans.transactionType == 'buy'}">
+									<td>${trans.transactionType}</td>
+									<td>${trans.fundTicker}</td>
+									<td>${trans.fundName}</td>	
+									<td>$${trans.price}</td>
+									<td>${trans.shares}</td>
+									<td>${trans.executeDate}</td>
+									<td>$${trans.amount}</td>
+								</c:when>
+								<c:when test="${trans.transactionType == 'sell'}">
+									<td>${trans.transactionType}</td>
+									<td>${trans.fundTicker}</td>
+									<td>${trans.fundName}</td>	
+									<td>$${trans.price}</td>
+									<td>${trans.shares}</td>
+									<td>${trans.executeDate}</td>
+									<td>$${trans.amount}</td>
+								</c:when>
+								<c:otherwise>
+									<td>${trans.transactionType}</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>${trans.executeDate}</td>
+									<td>$${trans.amount}</td>
+								</c:otherwise>
+							</c:choose>
 						</tr>
 					</c:forEach>
 				</tbody>

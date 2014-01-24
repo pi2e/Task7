@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.genericdao.DAOException;
 import org.genericdao.RollbackException;
 import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
@@ -50,6 +51,11 @@ public class AddCustomerAction extends Action {
 			if (errors.size() != 0) {
 				return "createcustomer.jsp";
 			}
+			
+			if (customerDAO.getCustomer(form.getUsername()) != null) {
+				errors.add("Username has already been registered");
+				return "createcustomer.jsp";
+			}
 
 			Customer cust = new Customer();
 			cust.setFirstName(form.getFirstName());
@@ -67,10 +73,15 @@ public class AddCustomerAction extends Action {
 			
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			errors.add(e.getMessage());
+			return "createcustomer.jsp";
 		} catch (FormBeanException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			errors.add(e.getMessage());
+			return "createcustomer.jsp";
+		} catch (DAOException e) {
+			errors.add(e.getMessage());
+			return "createcustomer.jsp";
 		}
 		return "viewCustomerList.do";
 	}

@@ -21,7 +21,12 @@ import com.cfs.databean.Position;
 			
 			try {
 				Position[] positions = match(MatchArg.and(MatchArg.equals("customerId", userId),MatchArg.equals("fundId", fundId)));
-				return positions[0];
+				
+				if(positions != null) {
+					return positions[0];
+				}
+				
+				return null;
 			} catch (RollbackException e) {
 				throw new DAOException(e);
 			}
