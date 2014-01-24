@@ -21,7 +21,7 @@ import com.cfs.formbean.CustomerFundVO;
 import com.cfs.utility.CommonUtilities;
 
 public class ViewFundAction extends Action {
-	
+
 	private FundDAO fundDAO;
 	private FundPriceHistoryDAO fundPriceHistoryDAO;
 
@@ -40,22 +40,61 @@ public class ViewFundAction extends Action {
 
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
-		
-		Fund fund  =  null;
-		
+
+		Fund fund = null;
+		String price = null;
+
 		try {
-			long fundId = Long.parseLong(request.getParameter("fundId").toString());
+			long fundId = Long.parseLong(request.getParameter("fundId")
+					.toString());
 			fund = fundDAO.getFund(fundId);
 			request.setAttribute("fund", fund);
-			
-			String price = CommonUtilities.convertToMoney(fundPriceHistoryDAO.fetchLatestPrice(fundId).getPrice());
+
+			if (fundPriceHistoryDAO.fetchLatestPrice(fundId) == null) {
+				price = "price unavailable";
+			} else {
+				price = CommonUtilities.convertToMoney(fundPriceHistoryDAO
+						.fetchLatestPrice(fundId).getPrice());
+			}
 			request.setAttribute("price", price);
+
+			//price difference
+			String priceDifference = null;
+			request.setAttribute("priceDifference", priceDifference);
 			
+			FundPriceData fundData = fundPriceHistoryDAO
+					.fetchLatestPrice(fund.getFundId());
+
+			if (fundData == null) {
+				priceDifference = "";
+			} else {
+
+				FundPriceData[] latestPrices = fundPriceHistoryDAO
+						.fetchLatestPrices(fund.getFundId());
+
+				if (latestPrices.length > 1) {
+					String priceDif = CommonUtilities
+							.convertToMoney(latestPrices[0].getPrice()
+									- latestPrices[1].getPrice());
+
+					String percentage = CommonUtilities
+							.formatPrice((double) (((latestPrices[0].getPrice() - latestPrices[1]
+									.getPrice()) * 100 / latestPrices[1]
+									.getPrice())));
+
+					priceDifference = (priceDif + "  (" + percentage + "%) ");
+
+				} else {
+					priceDifference = "";
+				}
+
+			}
+
 		} catch (DAOException e) {
 			e.printStackTrace();
 			errors.add(e.getMessage());
 			return "customerinfo.jsp";
-		} 
+		}
 
 		return "fundinfo.jsp";
 	}

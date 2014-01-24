@@ -48,7 +48,7 @@
 				<span class="glyphicon glyphicon-user"></span>
 				${user.lastName}, ${user.firstName} <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#">View Account</a></li>
+                <li><a href="viewcustomer.do">View Account</a></li>
                 <li><a href="#">Change Password</a></li>
               </ul>
             </li>
@@ -70,19 +70,19 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
+            <li><a href="viewcustomer.do">My Account</a></li>
 			<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Funds <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Buy Funds</a></li>
-				<li><a href="#">Sell Funds</a></li>
-                <li><a href="#">View Funds</a></li>
+                <li><a href="buyFund.do">Buy Funds</a></li>
+				<li><a href="sellFund.do">Sell Funds</a></li>
+                <li><a href="viewFundList.do">View Funds</a></li>
               </ul>
             </li>
-            <li><a href="#contact">Request Check</a></li>
-			<li><a href="#contact">Transaction History</a></li>
+            <li><a href="requestCheck.do">Request Check</a></li>
+			<li><a href="viewCustomerTransaction.do">Transaction History</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
     </div><!-- /.navbar -->
     
-<jsp:include page="customer-top.jsp" />

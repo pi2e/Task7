@@ -27,6 +27,7 @@ import com.cfs.databean.FundTransaction;
 import com.cfs.databean.Model;
 import com.cfs.databean.Position;
 import com.cfs.formbean.*;
+import com.cfs.utility.CommonUtilities;
 
 public class TransitionDayAction extends Action{
 	
@@ -98,12 +99,12 @@ public class TransitionDayAction extends Action{
 			for(Fund fund : funds) {
 				FundPriceData fundprice = new FundPriceData();
 				fundprice.setFundId(fund.getFundId());
-				fundprice.setPrice(Long.parseLong(request.getParameter(Long.toString(fund.getFundId()))));
+				double tmp = Double.parseDouble(request.getParameter(Long.toString(fund.getFundId())));
+				fundprice.setPrice(CommonUtilities.moneyToLong(tmp));
 				fundprice.setPriceDate(newdate);
 				price.add(fundprice);
 			}
 			
-			System.out.println(price.size());
 			
 			for(FundPriceData data : price) {
 				fundpriceDAO.create(data);
@@ -115,23 +116,25 @@ public class TransitionDayAction extends Action{
 				tran.setExecuteDate(newdate);
 				transactionDAO.update(tran);
 				long customerid = tran.getCustomerId();
-				long amount = tran.getAmount();
+				double amount = CommonUtilities.longToMoney(tran.getAmount());
 				long fundid = tran.getFundId();
-				long shares = tran.getShares();
-				long fundprice = Long.parseLong(request.getParameter(Long.toString(fundid)));
-
+				double shares = CommonUtilities.longToShares(tran.getShares());
+			
+				
 				if(tran.getTransactionType().equals("sell")) {
+					double fundprice = CommonUtilities.longToMoney(fundpriceDAO.fetchLatestPrice(fundid).getPrice());
 					Position bean = positionDAO.match(MatchArg.equals("fundId", fundid),MatchArg.equals("customerId", customerid))[0];
-					bean.setShares(bean.getShares() - shares);
+					bean.setShares(bean.getShares() - tran.getShares());
 					positionDAO.update(bean);
 					
 					Customer cbean = customerDAO.match(MatchArg.equals("customerId", customerid))[0];
-					cbean.setCash(cbean.getCash() + shares*fundprice);
-					cbean.setBalance(cbean.getCash());
+					cbean.setCash(cbean.getCash() + CommonUtilities.moneyToLong(shares*fundprice));
+					cbean.setBalance(cbean.getBalance() + CommonUtilities.moneyToLong(shares*fundprice));
 					customerDAO.update(cbean);
 				}
-				else {
-					long share = amount / fundprice;
+				else if(tran.getTransactionType().equals("buy")) {
+					double fundprice = CommonUtilities.longToMoney(fundpriceDAO.fetchLatestPrice(fundid).getPrice());
+					long share = CommonUtilities.shareToLong(amount / fundprice);
 					Position bean;
 					Position[] beans = positionDAO.match(MatchArg.equals("fundId", fundid),MatchArg.equals("customerId", customerid));
 					if(beans == null) {
@@ -147,22 +150,30 @@ public class TransitionDayAction extends Action{
 					}
 					
 					Customer cbean = customerDAO.match(MatchArg.equals("customerId", customerid))[0];
-					cbean.setCash(cbean.getCash() - share*fundprice);
-					cbean.setBalance(cbean.getCash());
+					cbean.setCash(cbean.getCash() - tran.getAmount());
+					customerDAO.update(cbean);
+				}
+				else {
+					Customer cbean = customerDAO.match(MatchArg.equals("customerId", customerid))[0];
+					cbean.setCash(cbean.getCash() + tran.getAmount());
+					cbean.setBalance(cbean.getBalance() + tran.getAmount());
 					customerDAO.update(cbean);
 				}
 			}
 			
-			System.out.println("success");
 			
+			request.setAttribute("lastdate", newdate);
+			request.setAttribute("inputdate", null);
+			request.setAttribute("inputprice", null);
 			
-			
+			return "transitionday.jsp";
 			
 		} catch (RollbackException e) {
 			return "transitionday.jsp";
 		} catch (FormBeanException e) {
 			
 			e.printStackTrace();
+			return "transitionday.jsp";
 		} catch (NumberFormatException e) {
 			errors.add("Inpute price must be valid integer");
 			e.printStackTrace();
@@ -170,6 +181,7 @@ public class TransitionDayAction extends Action{
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "transitionday.jsp";
 		} catch (ParseException e) {
 			errors.add("Inpute date is not a valid date format");
 			e.printStackTrace();
@@ -178,7 +190,6 @@ public class TransitionDayAction extends Action{
 		
 		
 		
-		return "transitionday.jsp";
 	}
 
 }

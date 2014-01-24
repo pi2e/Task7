@@ -26,7 +26,6 @@ public class FundPriceHistoryDAO extends GenericDAO<FundPriceData> {
 			Transaction.begin();
 			FundPriceData fundPriceData = null;
 			FundPriceData[] fundPrice = match(MatchArg.equals("fundId", fundId));
-
 			if (fundPrice.length == 0) {
 				fundPriceData = null;
 			} else {
@@ -51,6 +50,7 @@ public class FundPriceHistoryDAO extends GenericDAO<FundPriceData> {
 		try {
 			Transaction.begin();
 			FundPriceData[] fundPrice = match(MatchArg.equals("fundId", fundId));
+			System.out.println(fundPrice.length);
 
 			if(fundPrice.length > 1) {
 				Arrays.sort(fundPrice);

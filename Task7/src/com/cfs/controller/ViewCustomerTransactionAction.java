@@ -66,7 +66,7 @@ public class ViewCustomerTransactionAction extends Action {
 				// deposits and withdrawals
 				if (transaction.getTransactionType().equals("deposit")
 						|| transaction.getTransactionType()
-								.equals("withdrawal")) {
+								.equals("withdraw")) {
 					TransactionVO t = new TransactionVO(transaction);
 					pendingTransactions.add(t);
 				}

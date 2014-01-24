@@ -60,6 +60,7 @@ public class AddCustomerAction extends Action {
 			cust.setPassword(form.getPassword1());
 			cust.setPassword(form.getPassword2());
 			cust.setState(form.getState());
+			cust.setCity(form.getCity());
 			cust.setZipCode(Integer.parseInt(form.getZipcode()));
 				
 			customerDAO.create(cust);

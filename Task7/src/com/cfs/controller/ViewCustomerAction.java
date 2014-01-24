@@ -47,53 +47,63 @@ public class ViewCustomerAction extends Action {
 
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
-		Customer customer  =  null;
-		
-		try {
+		Customer customer = null;
 
-			if( request.getSession().getAttribute(
-					"user").getClass().equals("Customer")) {
+		try {
+			
+			if (request.getSession().getAttribute("user") instanceof Customer) {
 				
-				 customer = (Customer) request.getSession().getAttribute(
-						"user");
+				customer = (Customer) request.getSession().getAttribute("user");
+				System.out.println(customer);
+				
 			} else if (request.getParameter("custId") != null) {
-				
-				String userID = (String)request.getParameter("custId");
-				 customer = customerDAO.read(Long.parseLong(userID));
+
+				String userID = (String) request.getParameter("custId");
+				customer = customerDAO.read(Long.parseLong(userID));
 			}
-		
+			if (customer == null) {
+				errors.add("Unexpected error occured.");
+				return "home.jsp";
+			}
 			request.setAttribute("customer", customer);
-			request.setAttribute("balance", CommonUtilities.convertToMoney((customer.getBalance())));
-			request.setAttribute("ledgerBalance", CommonUtilities.convertToMoney((customer.getCash())));
-			
-			
-			//get customer's funds
+			request.setAttribute("balance",
+					CommonUtilities.convertToMoney((customer.getBalance())));
+			request.setAttribute("ledgerBalance",
+					CommonUtilities.convertToMoney((customer.getCash())));
+
+			// get customer's funds
 			List<CustomerFundVO> fundVOList = new ArrayList<CustomerFundVO>();
-			Position[] positions = positionDAO.getCustomerFunds(customer.getCustomerId());
-			
+			Position[] positions = positionDAO.getCustomerFunds(customer
+					.getCustomerId());
+
 			for (int i = 0; i < positions.length; i++) {
 
 				CustomerFundVO fundVO = new CustomerFundVO();
 				long fundId = positions[i].getFundId();
-				
+
 				Fund fund = fundDAO.read(fundId);
-				
-				FundPriceData fundData = fundPriceHistoryDAO.fetchLatestPrice(fundId);
-				
+
+				FundPriceData fundData = fundPriceHistoryDAO
+						.fetchLatestPrice(fundId);
+
 				fundVO.setFundId(fundId);
 				fundVO.setFundName(fund.getFundName());
-				fundVO.setTicker(fund.getSymbol());		
-				fundVO.setCurrentPrice(CommonUtilities.convertToMoney(fundData.getPrice()));
-				fundVO.setShares(CommonUtilities.convertToShare(positions[i].getShares()));
+				fundVO.setTicker(fund.getSymbol());
+				fundVO.setCurrentPrice(CommonUtilities.convertToMoney(fundData
+						.getPrice()));
+				fundVO.setShares(CommonUtilities.convertToShare(positions[i]
+						.getShares()));
 				System.out.println(positions[i].getShares());
-				System.out.println(CommonUtilities.convertToShare(positions[i].getShares()));
-				fundVO.setPositionValue(CommonUtilities.calculatePosition(fundData.getPrice(),positions[i].getShares()));
-				
+				System.out.println(CommonUtilities.convertToShare(positions[i]
+						.getShares()));
+				fundVO.setPositionValue(CommonUtilities.calculatePosition(
+						fundData.getPrice(), positions[i].getShares()));
+
 				fundVOList.add(fundVO);
 			}
 
 			request.setAttribute("fundVOList", fundVOList);
-			
+
 		} catch (DAOException e) {
 			e.printStackTrace();
 			errors.add(e.getMessage());

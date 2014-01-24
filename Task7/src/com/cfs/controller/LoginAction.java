@@ -49,7 +49,6 @@ public class LoginAction extends Action {
 			//request.setAttribute("accountType", form.getAccountType());
 
 			if (!form.isPresent()) {
-				System.out.println("errors");
 				return "home.jsp";
 			}
 
@@ -74,7 +73,7 @@ public class LoginAction extends Action {
 
 				HttpSession session = request.getSession();
 				session.setAttribute("user", customer);
-				return "customer.do";
+				return "viewcustomer.do";
 
 			} 
 

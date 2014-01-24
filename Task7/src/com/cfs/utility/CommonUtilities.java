@@ -11,26 +11,31 @@ public class CommonUtilities {
 
 	public static String convertToMoney(long amount) {
 
-		return formatPrice((double)amount / 100);
+		return formatPrice((double) amount / 100);
 
 	}
-	
+
 	public static double longToMoney(long amount) {
 
-		return ((double)amount) / 100;
+		return ((double) amount) / 100;
 
 	}
-	
+
 	public static double longToShares(long shares) {
 
-		return ((double)shares) / 1000;
+		return ((double) shares) / 1000;
 
 	}
-	
-	
+
 	public static Long moneyToLong(double amount) {
 
-		return (long) amount * 100;
+		return (long) (amount * 100);
+
+	}
+
+	public static long shareToLong(double share) {
+
+		return (long) (share * 1000);
 
 	}
 
@@ -41,7 +46,7 @@ public class CommonUtilities {
 
 	public static String convertToShare(long amount) {
 
-		return formatShare((double)amount / 1000);
+		return formatShare((double) (amount / 1000));
 
 	}
 
@@ -49,11 +54,10 @@ public class CommonUtilities {
 
 		return shareFormat.format(value);
 	}
-	
+
 	public static String calculatePosition(long shares, long price) {
-		double position = (double)(shares * price) / 100000;
+		double position = (double) (shares * price) / 100000;
 		return formatPrice(position);
 	}
-	
 
 }
