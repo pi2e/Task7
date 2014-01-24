@@ -140,15 +140,22 @@ public class TransitionDayAction extends Action{
 					if(beans == null) {
 						bean = new Position();
 						bean.setCustomerId(customerid);
+						bean.setAvailableShares(share);
 						bean.setFundId(fundid);
 						bean.setShares(share);
 						positionDAO.create(bean);
 					} else {
 						bean = beans[0];
 						bean.setShares(bean.getShares() + share);
+						bean.setAvailableShares(bean.getAvailableShares() + share);
 						positionDAO.update(bean);
 					}
 					
+					Customer cbean = customerDAO.match(MatchArg.equals("customerId", customerid))[0];
+					cbean.setCash(cbean.getCash() - tran.getAmount());
+					customerDAO.update(cbean);
+				}
+				else if (tran.getTransactionType().equals("check")) {
 					Customer cbean = customerDAO.match(MatchArg.equals("customerId", customerid))[0];
 					cbean.setCash(cbean.getCash() - tran.getAmount());
 					customerDAO.update(cbean);
