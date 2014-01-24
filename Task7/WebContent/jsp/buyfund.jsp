@@ -1,24 +1,31 @@
 <jsp:include page="customer-top.jsp" />
 
 <div class="container">
+		<jsp:include page="errors.jsp"/>
     	<div class="page-header">
     		<h3>Buy Fund</h3>
     	</div>
 
-    	<form class="form-horizontal">
+    	<form class="form-horizontal" action="buyFund.do" method="post">
 
-
+		 <div class="form-group">
+            <label for="inputTicker" class="control-label col-xs-2">Available Balance</label>
+            <div class="col-xs-3">
+                <p class="form-control-static">$${balance}</p>
+            </div>
+        </div>
+		
         <div class="form-group">
             <label for="inputTicker" class="control-label col-xs-2">Ticker</label>
             <div class="col-xs-3">
-                <input type="text" class="form-control" id="inputTicker" placeholder="Ticker">
+                <input type="text" class="form-control" placeholder="Ticker" name="ticker" value="${form.ticker}">
             </div>
         </div>
 
   <div class="form-group">
             <label for="inputDollar" class="control-label col-xs-2">Dollar Amount</label>
             <div class="col-xs-3">
-                <input type="number" class="form-control" id="inputDollarAmount" placeholder="Dollar Amount">
+                <input type="text" class="form-control" placeholder="Dollar Amount" name="amount" value="${form.amount}">
             </div>
         </div>
 
