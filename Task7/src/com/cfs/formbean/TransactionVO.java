@@ -44,7 +44,7 @@ public class TransactionVO {
 		}
 	
 	//for buy & sell (executed)
-	public TransactionVO(FundTransaction transaction, Fund fund, int price) {
+	public TransactionVO(FundTransaction transaction, Fund fund, long price) {
 		this.transactionId = transaction.getTransactionId();
 		this.customerId = transaction.getCustomerId();
 		this.fundId = transaction.getFundId();
@@ -56,7 +56,7 @@ public class TransactionVO {
 		this.fundName = fund.getFundName();
 		this.fundTicker = fund.getSymbol();
 		
-		this.price = CommonUtilities.convertToMoney(transaction.getAmount());
+		this.price = CommonUtilities.convertToMoney(price);
 	}
 	
 	public String getFundTicker() {
