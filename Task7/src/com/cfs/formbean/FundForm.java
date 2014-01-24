@@ -32,11 +32,11 @@ public class FundForm extends FormBean{
 		}
 		
 		if (ticker == null || ticker.length() == 0) {
-			errors.add("Tickername is required");
+			errors.add("Ticker is required");
 		}
 		
 		if (ticker.length() > 5) {
-			errors.add("Tickername can only be up to 5 characters");
+			errors.add("Ticker can only be up to 5 characters");
 		}
 		
 		if(errors.size() != 0) {
@@ -44,7 +44,7 @@ public class FundForm extends FormBean{
 		}
 		
 		if (!ticker.matches("[A-Z]+")) {
-			errors.add("Tickername must be capital letters only");
+			errors.add("Ticker must be capital letters only");
 		}
 		
 		return errors;
