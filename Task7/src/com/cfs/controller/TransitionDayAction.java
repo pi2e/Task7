@@ -53,7 +53,7 @@ public class TransitionDayAction extends Action{
 	}
 
 	@Override
-	public String perform(HttpServletRequest request) {
+	public synchronized String perform(HttpServletRequest request) {
 		
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
@@ -78,8 +78,9 @@ public class TransitionDayAction extends Action{
 			Date lastdate = null;
 			if(oldprices.length > 0) {
 			    lastdate = oldprices[oldprices.length - 1].getPriceDate();
+			    request.setAttribute("lastdate", formatter.format(lastdate));
 			}
-			request.setAttribute("lastdate", formatter.format(lastdate));
+			
 			
 			TransitionDayForm form = formBeanFactory.create(request);
 			
