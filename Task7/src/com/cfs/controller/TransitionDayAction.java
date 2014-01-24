@@ -166,7 +166,7 @@ public class TransitionDayAction extends Action{
 					customerDAO.update(cbean);
 					tran.setShares(share);
 				}
-				else if (tran.getTransactionType().equals("check")) {
+				else if (tran.getTransactionType().equals("withdraw")) {
 					Customer cbean = customerDAO.match(MatchArg.equals("customerId", customerid))[0];
 					cbean.setCash(cbean.getCash() - tran.getAmount());
 					customerDAO.update(cbean);
