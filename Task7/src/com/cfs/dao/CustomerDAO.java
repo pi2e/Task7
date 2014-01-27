@@ -67,6 +67,29 @@ public class CustomerDAO extends GenericDAO<Customer> {
 		
 		return cust;
 	}
+	
+	public synchronized boolean update(int customerId, long balance, long cash) throws DAOException {
+		try {
+			Customer[] customers = match(MatchArg.equals("customerId", customerId));
+			Customer customer;
+			
+			if(customers == null || customers.length == 0) return false;
+			else customer = customers[0];
+			
+			customer.setBalance(customer.getBalance() + balance);
+			customer.setCash(customer.getCash() + cash);
+			
+			if(customer.getBalance() < 0 || customer.getCash() < 0) return false;
+			else {
+				update(customer);
+				return true;
+			}
+		} catch (RollbackException e) {
+			throw new DAOException(e);
+		}
+		
+		
+	}
 
 	public synchronized void update(Customer bean) {
 		try {

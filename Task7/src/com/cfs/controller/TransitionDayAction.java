@@ -136,13 +136,11 @@ public class TransitionDayAction extends Action{
 					double fundprice = CommonUtilities.longToMoney(fundpriceDAO.fetchLatestPrice(fundid).getPrice());
 					Position bean = positionDAO.getPosition(customerid, fundid);
 					bean.setShares(bean.getShares() - tran.getShares());
-					positionDAO.update(bean);
+					positionDAO.update(customerid, fundid, 0, -tran.getShares());
 					
-					Customer cbean = customerDAO.match(MatchArg.equals("customerId", customerid))[0];
-					cbean.setCash(cbean.getCash() + CommonUtilities.moneyToLong(shares*fundprice));
-					cbean.setBalance(cbean.getBalance() + CommonUtilities.moneyToLong(shares*fundprice));
-					customerDAO.update(cbean);
-					tran.setAmount(CommonUtilities.moneyToLong(shares*fundprice));
+					Long change = CommonUtilities.moneyToLong(shares*fundprice);
+					customerDAO.update(customerid, change, change);
+					tran.setAmount(change);
 				}
 				else if(tran.getTransactionType().equals("buy")) {
 					double fundprice = CommonUtilities.longToMoney(fundpriceDAO.fetchLatestPrice(fundid).getPrice());
@@ -156,26 +154,17 @@ public class TransitionDayAction extends Action{
 						bean.setShares(share);
 						positionDAO.create(bean);
 					} else {
-						bean.setShares(bean.getShares() + share);
-						bean.setAvailableShares(bean.getAvailableShares() + share);
-						positionDAO.update(bean);
+						positionDAO.update(customerid, fundid, share, share);
 					}
 					
-					Customer cbean = customerDAO.match(MatchArg.equals("customerId", customerid))[0];
-					cbean.setCash(cbean.getCash() - tran.getAmount());
-					customerDAO.update(cbean);
+					customerDAO.update(customerid, 0, -tran.getAmount());
 					tran.setShares(share);
 				}
 				else if (tran.getTransactionType().equals("withdraw")) {
-					Customer cbean = customerDAO.match(MatchArg.equals("customerId", customerid))[0];
-					cbean.setCash(cbean.getCash() - tran.getAmount());
-					customerDAO.update(cbean);
+					customerDAO.update(customerid, 0, -tran.getAmount());
 				}
 				else {
-					Customer cbean = customerDAO.match(MatchArg.equals("customerId", customerid))[0];
-					cbean.setCash(cbean.getCash() + tran.getAmount());
-					cbean.setBalance(cbean.getBalance() + tran.getAmount());
-					customerDAO.update(cbean);
+					customerDAO.update(customerid, tran.getAmount(), tran.getAmount());
 				}
 				transactionDAO.update(tran);
 			}

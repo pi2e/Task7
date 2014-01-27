@@ -16,6 +16,28 @@ import com.cfs.databean.Position;
 			super(Position.class, tableName, cp);
 		}
 		
+		public synchronized boolean update(int customerId, int fundId, long availableShares, long shares) throws DAOException {
+			try {
+				Position[] positions = match(MatchArg.and(MatchArg.equals("customerId", customerId),MatchArg.equals("fundId", fundId)));
+				
+				if(positions == null || positions.length == 0) {
+					return false;
+				}
+				
+				Position position = positions[0];
+				position.setAvailableShares(position.getAvailableShares() + availableShares);
+				position.setShares(position.getShares() + shares);
+				if(position.getAvailableShares() < 0 || position.getShares() < 0) return false;
+				else {
+					update(position);
+					return true;
+				}
+	
+			} catch (RollbackException e) {
+				throw new DAOException(e);
+			}
+		}
+		
 		
 		public synchronized Position getPosition(int userId, int fundId) throws DAOException {
 			
