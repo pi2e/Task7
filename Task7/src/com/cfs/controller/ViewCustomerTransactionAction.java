@@ -89,7 +89,6 @@ public class ViewCustomerTransactionAction extends Action {
 			for (int i = 0; i < executedTransactionsAll.length; i++) {
 
 				FundTransaction transaction = executedTransactionsAll[i];
-				System.out.println(transaction.getTransactionType());
 
 				if (transaction.getTransactionType().equals("deposit")
 						|| transaction.getTransactionType().equals("withdraw")) {
@@ -104,10 +103,10 @@ public class ViewCustomerTransactionAction extends Action {
 								"sell cancelled")) {
 
 					Fund fund = fundDAO.read(transaction.getFundId());
-					System.out.println(fund.getFundName());
+					
 
 					Date date = transaction.getExecuteDate();
-					System.out.println(date);
+
 					FundPriceData fundPrice = fundPriceHistoryDAO.read(
 							fund.getFundId(), date);
 
