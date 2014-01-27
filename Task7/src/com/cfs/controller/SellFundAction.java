@@ -103,7 +103,13 @@ public class SellFundAction extends Action {
 
 			SellFundForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
-
+			
+			if(request.getParameter("sellFund") != null) {
+				form.setTicker(request.getParameter("sellFund").toString());
+				form.setShares("");
+				form.setPresent(true);
+			}
+			
 			if (!form.isPresent()) {
 				return "sellfund.jsp";
 			}

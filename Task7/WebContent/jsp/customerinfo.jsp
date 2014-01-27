@@ -83,7 +83,6 @@
 			<h3 class="panel-title">Funds</h3>
 		</div>
 		<div class="panel-body">
-		<form method="post" action="sellFund.do">
 			<table class="table">
 				<thead style="text-align: center;">
 
@@ -112,16 +111,20 @@
 									<c:when test="${accountType == 'E'}">
 									</c:when>
 									<c:otherwise>
-										<input type="submit" class="btn btn-primary" name="submit"
-						id="submit" value="Sell" />
+										<form method="post" action="sellFund.do">
+											<input type="hidden" name="sellFund" value="${fundVO.ticker}" /> 
+											<input
+												type="submit" class="btn btn-primary" name="submit"
+												id="submit" value="Sell"/>
+										</form>
 									</c:otherwise>
 								</c:choose></td>
 						</tr>
 					</c:forEach>
 				</tbody>
-				
+
 			</table>
-			</form>
+
 		</div>
 	</div>
 
