@@ -88,7 +88,7 @@
               </ul>
             </li>
             <li><a href="addEmployee.do">Register Employee</a></li>
-			<li><a href="#contact">Transaction History</a></li>
+			<li><a href="viewAllTransactions.do">Transaction History</a></li>
 			<li><a href="transitionday.do">Transition</a></li>
           </ul>
         </div><!-- /.nav-collapse -->

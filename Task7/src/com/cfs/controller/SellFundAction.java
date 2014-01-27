@@ -24,7 +24,9 @@ import com.cfs.databean.Model;
 import com.cfs.formbean.CustomerFundVO;
 import com.cfs.formbean.SellFundForm;
 import com.cfs.utility.CommonUtilities;
-import com.cfs.databean.Position;;
+import com.cfs.databean.Position;
+
+;
 
 public class SellFundAction extends Action {
 
@@ -33,7 +35,7 @@ public class SellFundAction extends Action {
 	private FundDAO fundDAO;
 	private PositionDAO positionDAO;
 	private FundPriceHistoryDAO fundPriceHistoryDAO;
-	
+
 	private FormBeanFactory<SellFundForm> formBeanFactory = FormBeanFactory
 			.getInstance(SellFundForm.class);
 
@@ -52,22 +54,22 @@ public class SellFundAction extends Action {
 	}
 
 	@Override
-	public String perform(HttpServletRequest request){
+	public String perform(HttpServletRequest request) {
 
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
-		
+
 		Customer customer = null;
-		
+
 		try {
-			
+
 			HttpSession session = request.getSession();
-			customer = (Customer)session.getAttribute("user");
-			
+			customer = (Customer) session.getAttribute("user");
+
 			int userID = customer.getCustomerId();
 			customer = customerDAO.read(userID);
-			
-			//get funds
+
+			// get funds
 			List<CustomerFundVO> fundVOList = new ArrayList<CustomerFundVO>();
 			Position[] positions = positionDAO.getCustomerFunds(customer
 					.getCustomerId());
@@ -89,65 +91,78 @@ public class SellFundAction extends Action {
 						.getPrice()));
 				fundVO.setShares(CommonUtilities.convertToShare(positions[i]
 						.getShares()));
-				fundVO.setAvailableShares(CommonUtilities.convertToShare(positions[i]
-						.getAvailableShares()));
+				fundVO.setAvailableShares(CommonUtilities
+						.convertToShare(positions[i].getAvailableShares()));
 				fundVO.setPositionValue(CommonUtilities.calculatePosition(
 						fundData.getPrice(), positions[i].getShares()));
 
 				fundVOList.add(fundVO);
 			}
-			
+
 			request.setAttribute("fundVOList", fundVOList);
-			
+
 			SellFundForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
-			
+
 			if (!form.isPresent()) {
 				return "sellfund.jsp";
 			}
-			
+
 			errors.addAll(form.getValidationErrors());
-			
+
 			if (errors.size() != 0) {
 				return "sellfund.jsp";
 			}
-			
+
 			double amount = Double.parseDouble(form.getShares());
-			
-			//find fund
+
+			// find fund
 			Fund fundSell = fundDAO.getFund(form.getTicker());
 			request.setAttribute("fund", fundSell);
-			if(fundSell == null) {
+			if (fundSell == null) {
 				errors.add("Fund not found");
 			}
-			if(errors.size() != 0) {
+			if (errors.size() != 0) {
 				return "sellfund.jsp";
 			}
-			
-			//check position
-			Position position = positionDAO.getPosition(userID, fundSell.getFundId());
-			if(position == null || amount > CommonUtilities.longToShares(position.getAvailableShares())) {
+
+			// check position
+			/*
+			Position position = positionDAO.getPosition(userID,
+					fundSell.getFundId());
+			if (position == null
+					|| amount > CommonUtilities.longToShares(position
+							.getAvailableShares())) {
 				errors.add("You do not have sufficient shares");
 			}
-			if(errors.size() != 0) {
+			if (errors.size() != 0) {
 				return "sellfund.jsp";
 			}
-			
-			//create transaction
+			*/
+
+			// update share balance
+			if (!positionDAO.update(customer.getCustomerId(),
+					fundSell.getFundId(), -CommonUtilities.shareToLong(amount),
+					0)) {
+				errors.add("You do not have sufficient shares");
+				return "sellfund.jsp";
+			}
+			//	position.setAvailableShares(position.getAvailableShares()
+			//			- CommonUtilities.shareToLong(amount));
+			//positionDAO.update(position);
+
+			// create transaction
 			FundTransaction transaction = new FundTransaction();
 			transaction.setTransactionType("sell");
 			transaction.setCustomerId(customer.getCustomerId());
 			transaction.setShares(CommonUtilities.shareToLong(amount));
 			transaction.setFundId(fundSell.getFundId());
 			transactionDAO.create(transaction);
-			
-			//update share balance
-			position.setAvailableShares(position.getAvailableShares() - CommonUtilities.shareToLong(amount));
-			positionDAO.update(position);
-			
-			request.setAttribute("successMessage", "Buy order queued successfully");
+
+			request.setAttribute("successMessage",
+					"Sell order queued successfully");
 			return "viewCustomerTransaction.do";
-			
+
 		} catch (DAOException e) {
 			errors.add(e.toString());
 			return "buyfund.jsp";

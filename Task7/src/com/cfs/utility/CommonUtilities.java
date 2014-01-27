@@ -31,7 +31,7 @@ public class CommonUtilities {
 	public static Long moneyToLong(double amount) {
 
 		BigDecimal value = BigDecimal.valueOf(amount);
-		value = value.setScale(2, BigDecimal.ROUND_CEILING); 
+		value = value.setScale(2, BigDecimal.ROUND_HALF_UP); 
 		return (long) (value.doubleValue() * 1000 / 10);
 
 	}
@@ -39,7 +39,7 @@ public class CommonUtilities {
 	public static long shareToLong(double share) {
 
 		BigDecimal value = BigDecimal.valueOf(share);
-		value = value.setScale(3, BigDecimal.ROUND_CEILING); 
+		value = value.setScale(3, BigDecimal.ROUND_HALF_UP); 
 		return (long) (value.doubleValue() * 1000);
 
 	}

@@ -75,14 +75,17 @@ public class BuyFundAction extends Action {
 			}
 			
 			//check balance
+			
 			double amount = Double.parseDouble(form.getAmount());
-			String balanceStr = CommonUtilities.removeCommas(balance);
+			//String balanceStr = CommonUtilities.removeCommas(balance);
+			/*
 			if(amount > Double.parseDouble(balanceStr)) {
 				errors.add("You do not have sufficient balance");
 			}
 			if(errors.size() != 0) {
 				return "buyfund.jsp";
 			}
+			*/
 			
 			//find fund
 			Fund fund = fundDAO.getFund(form.getTicker());
@@ -94,6 +97,15 @@ public class BuyFundAction extends Action {
 				return "buyfund.jsp";
 			}
 			
+			//update balance
+			//customer.setBalance(customer.getBalance() - CommonUtilities.moneyToLong(amount));
+			//customerDAO.update(customer);
+			if (!customerDAO.update(customer.getCustomerId(), -CommonUtilities.moneyToLong(amount), 0)) {
+				
+				errors.add("You do not have sufficient balance");
+				return "buyfund.jsp";
+			}
+			
 			//create transaction
 			FundTransaction transaction = new FundTransaction();
 			transaction.setTransactionType("buy");
@@ -101,10 +113,6 @@ public class BuyFundAction extends Action {
 			transaction.setAmount(CommonUtilities.moneyToLong(amount));
 			transaction.setFundId(fund.getFundId());
 			transactionDAO.create(transaction);
-			
-			//update balance
-			customer.setBalance(customer.getBalance() - CommonUtilities.moneyToLong(amount));
-			customerDAO.update(customer);
 			
 			request.setAttribute("successMessage", "Buy order queued successfully");
 			return "viewCustomerTransaction.do";

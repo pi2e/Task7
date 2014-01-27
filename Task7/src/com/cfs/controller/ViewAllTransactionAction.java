@@ -17,14 +17,14 @@ import com.cfs.databean.FundTransaction;
 import com.cfs.databean.Model;
 import com.cfs.formbean.TransactionVO;
 
-public class ViewCustomerTransactionAction extends Action {
+public class ViewAllTransactionAction extends Action {
 
 	private TransactionDAO transactionDAO;
 	private CustomerDAO customerDAO;
 	private FundDAO fundDAO;
 	private FundPriceHistoryDAO fundPriceHistoryDAO;
 
-	public ViewCustomerTransactionAction(Model model) {
+	public ViewAllTransactionAction(Model model) {
 		transactionDAO = model.getTransactionDAO();
 		customerDAO = model.getCustomerDAO();
 		fundDAO = model.getFundDAO();
@@ -33,7 +33,7 @@ public class ViewCustomerTransactionAction extends Action {
 
 	@Override
 	public String getName() {
-		return "viewCustomerTransaction.do";
+		return "viewAllTransactions.do";
 	}
 
 	@Override
@@ -46,22 +46,14 @@ public class ViewCustomerTransactionAction extends Action {
 
 		try {
 
-			if (request.getSession().getAttribute("user") instanceof Customer) {
-
-				customer = (Customer) request.getSession().getAttribute("user");
-			} else if (request.getParameter("custId") != null) {
-
-				String userID = (String) request.getParameter("custId");
-				customer = customerDAO.read(Integer.parseInt(userID));
-			}
-
 			FundTransaction[] pendingTransactionsAll = transactionDAO
-					.getPendingTransaction(customer.getCustomerId());
+					.getPendingTransactions();
 			FundTransaction[] executedTransactionsAll = transactionDAO
-					.getExecutedTransactions(customer.getCustomerId());
+					.getExecutedTransactions();
 
 			List<TransactionVO> pendingTransactions = new ArrayList<TransactionVO>();
 			List<TransactionVO> executedTransactions = new ArrayList<TransactionVO>();
+			List<Customer> customers = new ArrayList<Customer>();
 
 			// pending transactions
 			for (int i = 0; i < pendingTransactionsAll.length; i++) {
@@ -96,6 +88,7 @@ public class ViewCustomerTransactionAction extends Action {
 
 					TransactionVO t = new TransactionVO(transaction);
 					executedTransactions.add(t);
+
 				}
 
 				if (transaction.getTransactionType().equals("buy")
@@ -120,11 +113,11 @@ public class ViewCustomerTransactionAction extends Action {
 			request.setAttribute("executedTransactions", executedTransactions);
 			request.setAttribute("customer", customer);
 
-			return "customerTransHistory.jsp";
+			return "adminTransHistory.jsp";
 
 		} catch (Exception e) {
 			errors.add(e.getMessage());
-			return "customerTransHistory.jsp";
+			return "adminTransHistory.jsp";
 		}
 
 	}
