@@ -100,6 +100,7 @@ public class RequestCheckAction extends Action {
 
 			return "viewCustomerTransaction.do?custId="
 					+ customer.getCustomerId();
+			
 		} catch (RollbackException e) {
 			errors.add(e.toString());
 			return "requestCheck.jsp";

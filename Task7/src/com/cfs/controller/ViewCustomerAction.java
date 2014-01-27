@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.Session;
 
 import org.genericdao.DAOException;
 import org.genericdao.RollbackException;
@@ -19,7 +18,6 @@ import com.cfs.databean.FundPriceData;
 import com.cfs.databean.Model;
 import com.cfs.databean.Position;
 import com.cfs.formbean.CustomerFundVO;
-//import com.cfs.formbean.TransactionVO;
 import com.cfs.utility.CommonUtilities;
 
 public class ViewCustomerAction extends Action {
@@ -96,9 +94,8 @@ public class ViewCustomerAction extends Action {
 						.getPrice()));
 				fundVO.setShares(CommonUtilities.convertToShare(positions[i]
 						.getShares()));
-				System.out.println(positions[i].getShares());
-				System.out.println(CommonUtilities.convertToShare(positions[i]
-						.getShares()));
+				fundVO.setAvailableShares(CommonUtilities.convertToShare(positions[i]
+						.getAvailableShares()));
 				fundVO.setPositionValue(CommonUtilities.calculatePosition(
 						fundData.getPrice(), positions[i].getShares()));
 

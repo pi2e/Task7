@@ -43,12 +43,18 @@ public class AddEmployeeAction extends Action{
 			if (!form.isPresent()) {
 				return "createEmployee.jsp";
 			}
-			System.out.println("check errors");
+			
 			errors.addAll(form.getValidationErrors());
 
 			if (errors.size() != 0) {
 				return "createEmployee.jsp";
 			}
+			
+			if (employeeDAO.checkUserExist(form.getUsername()) != null) {
+				errors.add("Username has already been registered");
+				return "createEmployee.jsp";
+			}
+			
 			Employee employee = new Employee();
 			employee.setFirstName(form.getFirstName());
 			employee.setLastName(form.getLastName());
@@ -56,6 +62,9 @@ public class AddEmployeeAction extends Action{
 			employee.setUsername(form.getUsername());
 			
 			employeeDAO.create(employee);
+			
+			request.setAttribute("successMessage", "Employee " + employee.getUsername() + " created successfully");
+			
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
 			errors.add(e.getMessage());
@@ -64,10 +73,10 @@ public class AddEmployeeAction extends Action{
 			// TODO Auto-generated catch block
 			errors.add(e.getMessage());
 			return "createEmployee.jsp";
+		} catch (DAOException e) {
+			errors.add(e.getMessage());
+			return "createEmployee.jsp";
 		}
-		return "viewCustomerList.do";
+		return "createEmployee.jsp";
 	}
-	
-	
-
 }

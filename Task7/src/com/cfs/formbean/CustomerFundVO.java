@@ -6,8 +6,16 @@ public class CustomerFundVO {
 	private String fundName;
 	private String ticker;
 	private String shares;
+	private String availableShares;
 	private String currentPrice;
 	private String positionValue;
+	
+	public String getAvailableShares() {
+		return availableShares;
+	}
+	public void setAvailableShares(String availableShares) {
+		this.availableShares = availableShares;
+	}
 	
 	public long getFundId() {
 		return fundId;

@@ -5,7 +5,7 @@
 	page="${accountType == 'E' ? 'admin-top.jsp' : 'customer-top.jsp'}" />
 
 <div class="container">
-<jsp:include page="success.jsp" />
+	<jsp:include page="success.jsp" />
 	<jsp:include page="errors.jsp" />
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -33,7 +33,8 @@
 									<c:otherwise>
 									&nbsp;<Strong> $${fundPrices[status.index]} </Strong>
 									</c:otherwise>
-								</c:choose><c:choose>
+								</c:choose>
+								<c:choose>
 									<c:when
 										test="${fn:startsWith(priceDifference[status.index], '-')}">
 										<span class="label label-danger">${priceDifference[status.index]}</span>

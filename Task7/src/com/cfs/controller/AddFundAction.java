@@ -35,7 +35,6 @@ public class AddFundAction extends Action{
 		List<String> errors = new ArrayList<String>();
 		String success = null;
 		request.setAttribute("errors", errors);
-		request.setAttribute("success", success);
 		
 		try {
 			FundForm form = formBeanFactory.create(request);
@@ -54,7 +53,8 @@ public class AddFundAction extends Action{
 			fund.setFundName(form.getFundName());
 			fund.setSymbol(form.getTicker());
 			fundDAO.create(fund);
-			success = fund.getFundName() + " created";
+			
+			request.setAttribute("successMessage", fund.getFundName() + " created");
 
 			return "viewFundList.do";
 		

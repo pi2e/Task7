@@ -6,18 +6,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.genericdao.DAOException;
-import org.genericdao.RollbackException;
 
-import com.cfs.dao.CustomerDAO;
 import com.cfs.dao.FundDAO;
 import com.cfs.dao.FundPriceHistoryDAO;
-import com.cfs.dao.PositionDAO;
-import com.cfs.databean.Customer;
 import com.cfs.databean.Fund;
 import com.cfs.databean.FundPriceData;
 import com.cfs.databean.Model;
-import com.cfs.databean.Position;
-import com.cfs.formbean.CustomerFundVO;
 import com.cfs.utility.CommonUtilities;
 
 public class ViewFundAction extends Action {

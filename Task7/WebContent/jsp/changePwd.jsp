@@ -3,6 +3,7 @@
 <div class="container">
 
 	<jsp:include page="errors.jsp" />
+	<jsp:include page="success.jsp" />
 
 	<div class="page-header">
 		<h3>Change Customer Password</h3>

@@ -16,7 +16,6 @@ import com.cfs.databean.FundPriceData;
 import com.cfs.databean.FundTransaction;
 import com.cfs.databean.Model;
 import com.cfs.formbean.TransactionVO;
-import com.cfs.utility.CommonUtilities;
 
 public class ViewCustomerTransactionAction extends Action {
 

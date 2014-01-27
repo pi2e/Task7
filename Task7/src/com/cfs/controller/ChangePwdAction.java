@@ -10,12 +10,9 @@ import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
 
 import com.cfs.dao.CustomerDAO;
-import com.cfs.dao.TransactionDAO;
 import com.cfs.databean.Customer;
-import com.cfs.databean.FundTransaction;
 import com.cfs.databean.Model;
 import com.cfs.formbean.ChangePwdForm;
-import com.cfs.utility.CommonUtilities;
 
 public class ChangePwdAction extends Action {
 
@@ -70,6 +67,9 @@ public class ChangePwdAction extends Action {
 
 			customer.setPassword(form.getNewPassword());
 			customerDAO.update(customer);
+			
+			request.setAttribute("successMessage", "Password changed successfully");
+			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

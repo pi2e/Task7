@@ -2,8 +2,6 @@ package com.cfs.databean;
 
 import org.genericdao.PrimaryKey;
 
-import com.cfs.utility.CommonUtilities;
-
 @PrimaryKey("customerId")
 public class Customer implements Comparable<Customer>{
 

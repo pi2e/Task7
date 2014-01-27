@@ -2,8 +2,8 @@
 
 <div class="container">
 
-<jsp:include page="errors.jsp" />
-
+	<jsp:include page="errors.jsp" />
+	<jsp:include page="success.jsp" />
 
 	<div class="page-header">
 		<h3>New Employee</h3>
@@ -23,7 +23,7 @@
 				Name*</label>
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="inputFirstName"
-					placeholder="First Name" name="firstName" value="${form.firstname}">
+					placeholder="First Name" name="firstName" value="${form.firstName}">
 			</div>
 		</div>
 
@@ -32,7 +32,7 @@
 				Name*</label>
 			<div class="col-xs-3">
 				<input type="text" class="form-control" id="inputLastName"
-					placeholder="Last Name" name="LastName" value="${form.lastname}">
+					placeholder="Last Name" name="lastName" value="${form.lastName}">
 			</div>
 		</div>
 

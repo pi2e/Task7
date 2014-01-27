@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.genericdao.DAOException;
-import org.genericdao.RollbackException;
 
 import com.cfs.dao.CustomerDAO;
 import com.cfs.databean.Customer;
-import com.cfs.databean.FundPriceData;
 import com.cfs.databean.Model;
 import com.cfs.utility.CommonUtilities;
 

@@ -17,15 +17,15 @@ public class Controller extends HttpServlet {
 	private static final long serialVersionUID = -3816380241319936080L;
 
 	public void init() throws ServletException {
-		 Model model = new Model(getServletConfig());
-		 Action.add(new HomePageAction(model));
-		 Action.add(new ChangePwdAction(model));
+		Model model = new Model(getServletConfig());
+		Action.add(new HomePageAction(model));
+		Action.add(new ChangePwdAction(model));
 		Action.add(new ViewFundListAction(model));
 		Action.add(new LoginAction(model));
 		Action.add(new LogoutAction(model));
-		 Action.add(new ViewCustomerAction(model));
-		 Action.add(new AddCustomerAction(model));
-		//Action.add(new AddEmployerAction(model));
+		Action.add(new ViewCustomerAction(model));
+		Action.add(new AddCustomerAction(model));
+		Action.add(new AddEmployeeAction(model));
 		Action.add(new AddFundAction(model));
 		Action.add(new ViewCustomerTransactionAction(model));
 		Action.add(new ViewFundAction(model));
@@ -54,10 +54,10 @@ public class Controller extends HttpServlet {
 		String servletPath = request.getServletPath();
 		String action = getActionName(servletPath);
 
-		if(session.getAttribute("user") == null) {
+		if (session.getAttribute("user") == null) {
 			return Action.perform("login.do", request);
 		}
-		
+
 		return Action.perform(action, request);
 	}
 
@@ -70,7 +70,8 @@ public class Controller extends HttpServlet {
 		}
 
 		if (nextPage.endsWith(".do")) {
-			response.sendRedirect(nextPage);
+			request.getRequestDispatcher(nextPage).forward(request, response);
+			//response.sendRedirect(nextPage);
 			return;
 		}
 

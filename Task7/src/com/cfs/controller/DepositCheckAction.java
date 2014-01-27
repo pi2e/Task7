@@ -68,17 +68,10 @@ public class DepositCheckAction extends Action {
 			transaction.setAmount(CommonUtilities.moneyToLong(Double
 					.parseDouble(form.getAmount())));
 			transactionDAO.create(transaction);
-
-			// update balance
-			/*
-			customer.setBalance(customer.getBalance()
-					+ CommonUtilities.moneyToLong(Double.parseDouble(form
-							.getAmount())));
-			customerDAO.update(customer);
-			*/
-
-			return "viewCustomerTransaction.do?custId="
-					+ customer.getCustomerId();
+			
+			request.setAttribute("successMessage", "Deposit queued successfully.");
+			
+			return "viewCustomerTransaction.do?custId=" + customer.getCustomerId();
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

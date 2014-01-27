@@ -42,7 +42,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-flash purple"></span> Carnegie Financial Services</a>
+          <a class="navbar-brand" href="viewFundList.do"><span class="glyphicon glyphicon-flash purple"></span> Carnegie Financial Services</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -88,7 +88,7 @@
                 <li><a href="viewFundList.do">View Funds</a></li>
               </ul>
             </li>
-            <li><a href="#contact">Register Employee</a></li>
+            <li><a href="addEmployee.do">Register Employee</a></li>
 			<li><a href="#contact">Transaction History</a></li>
 			<li><a href="transitionday.do">Transition</a></li>
           </ul>

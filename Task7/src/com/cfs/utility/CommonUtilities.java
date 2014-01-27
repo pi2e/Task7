@@ -11,7 +11,7 @@ public class CommonUtilities {
 
 	public static String convertToMoney(long amount) {
 
-		return formatPrice((double) amount / 100);
+		return formatPrice((double)amount / 100);
 
 	}
 
@@ -29,7 +29,7 @@ public class CommonUtilities {
 
 	public static Long moneyToLong(double amount) {
 
-		return (long) (amount * 100);
+		return (long) (amount * 1000 / 10);
 
 	}
 

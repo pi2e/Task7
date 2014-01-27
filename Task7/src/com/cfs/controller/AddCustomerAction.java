@@ -71,6 +71,8 @@ public class AddCustomerAction extends Action {
 				
 			customerDAO.create(cust);
 			
+			request.setAttribute("successMessage", "Customer " + cust.getUsername() + " created successfully");
+			
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block
 			errors.add(e.getMessage());

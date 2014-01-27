@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.mybeans.form.FormBean;
 
-import com.cfs.utility.CommonUtilities;
-
 public class CustomerForm extends FormBean{
 	private String username;
 	private String firstName;

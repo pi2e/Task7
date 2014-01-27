@@ -87,6 +87,7 @@
 						<th>Fund Name</th>
 						<th>Current Price</th>
 						<th>Number of Shares</th>
+						<th>Available Shares</th>
 						<th>Position Value</th>
 					</tr>
 
@@ -99,6 +100,7 @@
 							<td>${fundVO.fundName}</td>
 							<td>$${fundVO.currentPrice}</td>
 							<td>${fundVO.shares}</td>
+							<td>${fundVO.availableShares}</td>
 							<td>$${fundVO.positionValue}</td>
 						</tr>
 					</c:forEach>
