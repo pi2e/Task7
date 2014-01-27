@@ -1,4 +1,7 @@
-<jsp:include page="admin-top.jsp" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<jsp:include
+	page="${accountType == 'E' ? 'admin-top.jsp' : 'customer-top.jsp'}" />
 
 <div class="container">
 
@@ -6,41 +9,54 @@
 	<jsp:include page="success.jsp" />
 
 	<div class="page-header">
-		<h3>Change Customer Password</h3>
+		<h3>Change Password</h3>
 	</div>
 
-	<form class="form-horizontal" method="post" action="changePwd.do?custId=${customer.customerId}">
+	<form class="form-horizontal" method="post"
+		action="${c == 'c' ? 'changePwd.do?custId=${customer.customerId}' : 'changePwd.do'}">
+
+		<c:choose>
+			<c:when test="${c == 'c'}">
+				<div class="form-group">
+					<label for="inputCustermerName" class="control-label col-xs-2">Customer
+						Name</label>
+					<div class="col-xs-3">
+						<p class="form-control-static">${customer.lastName},
+							${customer.firstName}</p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inputCustermerName" class="control-label col-xs-2">Username</label>
+					<div class="col-xs-3">
+						<p class="form-control-static">${customer.username}</p>
+						<input type="hidden" class="form-control" name="userId"
+							id="userId" value="${customer.customerId}">
+					</div>
+				</div>
+			</c:when>
+			<c:otherwise>
+			</c:otherwise>
+		</c:choose>
+
 		<div class="form-group">
-			<label for="inputCustermerName" class="control-label col-xs-2">Customer
-				Name</label>
+			<label for="password" class="control-label col-xs-2">New
+				Password</label>
 			<div class="col-xs-3">
-				<p class="form-control-static">${customer.lastName}, ${customer.firstName}</p>
+				<input type="password" class="form-control" id="password"
+					placeholder="password" value="${form.newPassword}"
+					name="newPassword"> <span class="help-block">At
+					least 6 characters</span>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="inputCustermerName" class="control-label col-xs-2">Username</label>
-			<div class="col-xs-3">
-				<p class="form-control-static">${customer.username}</p>
-				<input type="hidden" class="form-control"
-					name="userId" id="userId" value="${customer.customerId}">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="password" class="control-label col-xs-2">New Password</label>
+			<label for="password" class="control-label col-xs-2">Confirm
+				Password</label>
 			<div class="col-xs-3">
 				<input type="password" class="form-control" id="password"
-					placeholder="password" value="${form.newPassword}" name="newPassword">
-					<span class="help-block">At least 6 characters</span>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label for="password" class="control-label col-xs-2">Confirm Password</label>
-			<div class="col-xs-3">
-				<input type="password" class="form-control" id="password"
-					placeholder="password" value="${form.confirmPassword}" name="confirmPassword">
+					placeholder="password" value="${form.confirmPassword}"
+					name="confirmPassword">
 			</div>
 		</div>
 

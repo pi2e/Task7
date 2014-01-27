@@ -49,7 +49,7 @@
 				${user.lastName}, ${user.firstName} <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="viewcustomer.do">View Account</a></li>
-                <li><a href="#">Change Password</a></li>
+                <li><a href="changePwd.do">Change Password</a></li>
               </ul>
             </li>
 			<li><a href="logout.do">Logout</a></li>

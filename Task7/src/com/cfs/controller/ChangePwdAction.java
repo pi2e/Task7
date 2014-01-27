@@ -10,13 +10,16 @@ import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
 
 import com.cfs.dao.CustomerDAO;
+import com.cfs.dao.EmployeeDAO;
 import com.cfs.databean.Customer;
+import com.cfs.databean.Employee;
 import com.cfs.databean.Model;
 import com.cfs.formbean.ChangePwdForm;
 
 public class ChangePwdAction extends Action {
 
 	private CustomerDAO customerDAO;
+	private EmployeeDAO employeeDAO;
 
 	private FormBeanFactory<ChangePwdForm> formBeanFactory = FormBeanFactory
 			.getInstance(ChangePwdForm.class);
@@ -24,6 +27,7 @@ public class ChangePwdAction extends Action {
 	public ChangePwdAction(Model model) {
 
 		customerDAO = model.getCustomerDAO();
+		employeeDAO = model.getEmployeeDAO();
 
 	}
 
@@ -35,17 +39,38 @@ public class ChangePwdAction extends Action {
 	@Override
 	public String perform(HttpServletRequest request) {
 		Customer customer = null;
+		Employee employee = null;
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
 
 		// Load the form parameters into a form bean
 		try {
 
-			String userID = (String) request.getParameter("custId");
-			System.out.println("user" + userID);
-			customer = customerDAO.read(Integer.parseInt(userID));
-			request.setAttribute("customer", customer);
-			System.out.println(customer);
+			// customer changing own password
+			if (request.getSession().getAttribute("user") instanceof Customer) {
+
+				customer = (Customer) request.getSession().getAttribute("user");
+				customer = customerDAO.read(customer.getCustomerId());
+				request.setAttribute("customer", customer);
+				request.setAttribute("c", "c");
+
+				// employee changing customer password
+			} else if (request.getParameter("custId") != null) {
+
+				String userID = (String) request.getParameter("custId");
+				customer = customerDAO.read(Integer.parseInt(userID));
+				request.setAttribute("customer", customer);
+				request.setAttribute("c", "c");
+
+				// employee changing own password
+			} else if (request.getSession().getAttribute("user") instanceof Employee) {
+
+				employee = (Employee) request.getSession().getAttribute("user");
+				employee = employeeDAO.read(employee.getUserId());
+				request.setAttribute("employee", employee);
+				request.setAttribute("c", "");
+			}
+
 			ChangePwdForm form = null;
 			form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
@@ -65,11 +90,17 @@ public class ChangePwdAction extends Action {
 				return "changePwd.jsp";
 			}
 
-			customer.setPassword(form.getNewPassword());
-			customerDAO.update(customer);
-			
-			request.setAttribute("successMessage", "Password changed successfully");
-			
+			if (request.getAttribute("c").toString().equals("c")) {
+				customer.setPassword(form.getNewPassword());
+				customerDAO.update(customer);
+			} else {
+				employee.setPassword(form.getNewPassword());
+				employeeDAO.update(employee);
+			}
+
+			request.setAttribute("successMessage",
+					"Password changed successfully");
+
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
