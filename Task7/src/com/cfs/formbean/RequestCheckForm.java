@@ -25,7 +25,7 @@ public class RequestCheckForm extends FormBean {
 		}
 		 try {
 	        	
-	        	if(Double.parseDouble(withdrawAmount) < 0) {
+	        	if(Double.parseDouble(withdrawAmount) <= 0) {
 	        		errors.add("Amount must be positive");
 	        	}
 	        	

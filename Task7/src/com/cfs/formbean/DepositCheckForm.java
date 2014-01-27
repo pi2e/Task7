@@ -44,13 +44,16 @@ public class DepositCheckForm extends FormBean{
         
         try {
         	
-        	if(Double.parseDouble(amount) < 0) {
+        	if(Double.parseDouble(amount) <= 0) {
         		errors.add("Amount must be positive");
         	}
         	
         	int decimal = amount.lastIndexOf('.');
 			if (decimal != -1 && amount.length() - decimal > 3) {
 				errors.add("You can not specify more the two decimal");
+			}
+			if((decimal != -1 && decimal > 12) ||(decimal == -1 && amount.length() > 12)) {
+				errors.add("You can not deposit more than 1,000,000,000,000 dollars");
 			}
         	
 		} catch (NumberFormatException e) { 

@@ -42,8 +42,8 @@ public class BuyFundForm extends FormBean {
 		try {
 			double amt = Double.parseDouble(amount);
 
-			if (amt < 0) {
-				errors.add("Amount must be positive");
+			if (amt < 10) {
+				errors.add("Amount must be more than ten dollars");
 			}
 			
 			int decimal = amount.lastIndexOf('.');

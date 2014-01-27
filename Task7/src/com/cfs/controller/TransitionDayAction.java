@@ -105,11 +105,20 @@ public class TransitionDayAction extends Action{
 				FundPriceData fundprice = new FundPriceData();
 				fundprice.setFundId(fund.getFundId());
 				String input = request.getParameter(Long.toString(fund.getFundId()));
+				int decimal = input.lastIndexOf('.');
+				if (decimal != -1 && input.length() - decimal > 3) {
+					errors.add("You can not specify more the two decimal");
+					break;
+				}
 				if(input == null || input.length() == 0)  {
 					errors.add("Must input price of every fund");
 					break;
 				}
 				double tmp = Double.parseDouble(input);
+				if(tmp > 10000) {
+					errors.add("fund price can't be more than 10000 dollars");
+					break;
+				}
 				fundprice.setPrice(CommonUtilities.moneyToLong(tmp));
 				fundprice.setPriceDate(newdate);
 				price.add(fundprice);
@@ -134,13 +143,16 @@ public class TransitionDayAction extends Action{
 				
 				if(tran.getTransactionType().equals("sell")) {
 					double fundprice = CommonUtilities.longToMoney(fundpriceDAO.fetchLatestPrice(fundid).getPrice());
-					Position bean = positionDAO.getPosition(customerid, fundid);
-					bean.setShares(bean.getShares() - tran.getShares());
-					positionDAO.update(customerid, fundid, 0, -tran.getShares());
-					
 					Long change = CommonUtilities.moneyToLong(shares*fundprice);
-					customerDAO.update(customerid, change, change);
-					tran.setAmount(change);
+					if(change == 0) {
+						positionDAO.update(customerid, fundid, tran.getShares(), 0);
+						tran.setTransactionType("sell cancelled");
+					}
+					else {
+						positionDAO.update(customerid, fundid, 0, -tran.getShares());	
+						customerDAO.update(customerid, change, change);
+						tran.setAmount(change);
+					}	
 				}
 				else if(tran.getTransactionType().equals("buy")) {
 					double fundprice = CommonUtilities.longToMoney(fundpriceDAO.fetchLatestPrice(fundid).getPrice());

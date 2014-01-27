@@ -99,9 +99,12 @@ public class ViewCustomerTransactionAction extends Action {
 				}
 
 				if (transaction.getTransactionType().equals("buy")
-						|| transaction.getTransactionType().equals("sell")) {
+						|| transaction.getTransactionType().equals("sell")
+						|| transaction.getTransactionType().equals(
+								"sell cancelled")) {
 
 					Fund fund = fundDAO.read(transaction.getFundId());
+					System.out.println(fund.getFundName());
 
 					Date date = transaction.getExecuteDate();
 					System.out.println(date);
