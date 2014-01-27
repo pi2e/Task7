@@ -42,8 +42,6 @@ public class ViewAllTransactionAction extends Action {
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
 
-		Customer customer = null;
-
 		try {
 
 			FundTransaction[] pendingTransactionsAll = transactionDAO
@@ -53,7 +51,8 @@ public class ViewAllTransactionAction extends Action {
 
 			List<TransactionVO> pendingTransactions = new ArrayList<TransactionVO>();
 			List<TransactionVO> executedTransactions = new ArrayList<TransactionVO>();
-			List<Customer> customers = new ArrayList<Customer>();
+			List<Customer> customersPending = new ArrayList<Customer>();
+			List<Customer> customersExecuted = new ArrayList<Customer>();
 
 			// pending transactions
 			for (int i = 0; i < pendingTransactionsAll.length; i++) {
@@ -74,14 +73,14 @@ public class ViewAllTransactionAction extends Action {
 					TransactionVO t = new TransactionVO(transaction, fund);
 					pendingTransactions.add(t);
 				}
-
+				
+				customersPending.add(customerDAO.read(transaction.getCustomerId()));
 			}
 
 			// executed transactions
 			for (int i = 0; i < executedTransactionsAll.length; i++) {
 
 				FundTransaction transaction = executedTransactionsAll[i];
-				System.out.println(transaction.getTransactionType());
 
 				if (transaction.getTransactionType().equals("deposit")
 						|| transaction.getTransactionType().equals("withdraw")) {
@@ -97,7 +96,6 @@ public class ViewAllTransactionAction extends Action {
 					Fund fund = fundDAO.read(transaction.getFundId());
 
 					Date date = transaction.getExecuteDate();
-					System.out.println(date);
 					FundPriceData fundPrice = fundPriceHistoryDAO.read(
 							fund.getFundId(), date);
 
@@ -106,12 +104,15 @@ public class ViewAllTransactionAction extends Action {
 					executedTransactions.add(t);
 
 				}
+				
+				customersExecuted.add(customerDAO.read(transaction.getCustomerId()));
 
 			}
 
 			request.setAttribute("pendingTransactions", pendingTransactions);
 			request.setAttribute("executedTransactions", executedTransactions);
-			request.setAttribute("customer", customer);
+			request.setAttribute("customersPending", customersPending);
+			request.setAttribute("customersExecuted", customersExecuted);
 
 			return "adminTransHistory.jsp";
 

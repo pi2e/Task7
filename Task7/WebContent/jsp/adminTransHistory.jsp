@@ -21,40 +21,46 @@
 						<th>Customer</th>
 						<th>Ticker</th>
 						<th>Fund Name</th>
-						<th>Shares</th>
+						<th class="text-right">Shares</th>
 						<th>Date</th>
-						<th>Dollar Amount</th>
+						<th class="text-right">Dollar Amount</th>
 					</tr>
 				</thead>
 
 				<tbody>
-					<c:forEach var="trans" items="${pendingTransactions}">
+					<c:forEach var="trans" items="${pendingTransactions}"
+						varStatus="status">
 						<tr>
 							<c:choose>
 								<c:when test="${trans.transactionType == 'buy'}">
 									<td>${trans.transactionType}</td>
-									<td><a href="viewCustomer.do?custId=">username</a></td>
+									<td><a
+										href="viewcustomer.do?custId=${customersPending[status.index].customerId}">${customersPending[status.index].username}</a></td>
 									<td>${trans.fundTicker}</td>
 									<td>${trans.fundName}</td>
 									<td></td>
 									<td></td>
-									<td>$${trans.amount}</td>
+									<td class="text-right">$${trans.amount}</td>
 								</c:when>
 								<c:when test="${trans.transactionType == 'sell'}">
 									<td>${trans.transactionType}</td>
+									<td><a
+										href="viewcustomer.do?custId=${customersPending[status.index].customerId}">${customersPending[status.index].username}</a></td>
 									<td>${trans.fundTicker}</td>
 									<td>${trans.fundName}</td>
-									<td>${trans.shares}</td>
+									<td class="text-right">${trans.shares}</td>
 									<td></td>
 									<td></td>
 								</c:when>
 								<c:otherwise>
 									<td>${trans.transactionType}</td>
+									<td><a
+										href="viewcustomer.do?custId=${customersPending[status.index].customerId}">${customersPending[status.index].username}</a></td>
 									<td></td>
 									<td></td>
 									<td></td>
 									<td></td>
-									<td>$${trans.amount}</td>
+									<td class="text-right">$${trans.amount}</td>
 								</c:otherwise>
 							</c:choose>
 						</tr>
@@ -74,46 +80,53 @@
 				<thead>
 					<tr>
 						<th>Type</th>
+						<th>Customer</th>
 						<th>Ticker</th>
 						<th>Fund Name</th>
 						<th>Fund Price</th>
-						<th>Shares</th>
+						<th class="text-right">Shares</th>
 						<th>Execution Date</th>
-						<th>Dollar Amount</th>
+						<th class="text-right">Dollar Amount</th>
 					</tr>
 				</thead>
 
 				<tbody>
 
-					<c:forEach var="trans" items="${executedTransactions}">
+					<c:forEach var="trans" items="${executedTransactions}" varStatus="status">
 						<tr>
 							<c:choose>
 								<c:when test="${trans.transactionType == 'buy'}">
 									<td>${trans.transactionType}</td>
+									<td><a
+										href="viewcustomer.do?custId=${customersExecuted[status.index].customerId}">${customersExecuted[status.index].username}</a></td>
 									<td>${trans.fundTicker}</td>
-									<td>${trans.fundName}</td>	
-									<td>$${trans.price}</td>
-									<td>${trans.shares}</td>
+									<td>${trans.fundName}</td>
+									<td class="text-right">$${trans.price}</td>
+									<td class="text-right">${trans.shares}</td>
 									<td>${trans.executeDate}</td>
-									<td>$${trans.amount}</td>
+									<td class="text-right">$${trans.amount}</td>
 								</c:when>
 								<c:when test="${trans.transactionType == 'sell'}">
 									<td>${trans.transactionType}</td>
+									<td><a
+										href="viewcustomer.do?custId=${customersExecuted[status.index].customerId}">${customersExecuted[status.index].username}</a></td>
 									<td>${trans.fundTicker}</td>
-									<td>${trans.fundName}</td>	
-									<td>$${trans.price}</td>
-									<td>${trans.shares}</td>
+									<td>${trans.fundName}</td>
+									<td class="text-right">$${trans.price}</td>
+									<td class="text-right">${trans.shares}</td>
 									<td>${trans.executeDate}</td>
-									<td>$${trans.amount}</td>
+									<td class="text-right">$${trans.amount}</td>
 								</c:when>
 								<c:otherwise>
 									<td>${trans.transactionType}</td>
+									<td><a
+										href="viewcustomer.do?custId=${customersExecuted[status.index].customerId}">${customersExecuted[status.index].username}</a></td>
 									<td></td>
 									<td></td>
 									<td></td>
 									<td></td>
 									<td>${trans.executeDate}</td>
-									<td>$${trans.amount}</td>
+									<td class="text-right">$${trans.amount}</td>
 								</c:otherwise>
 							</c:choose>
 						</tr>

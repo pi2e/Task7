@@ -73,6 +73,7 @@ public class LoginAction extends Action {
 
 				HttpSession session = request.getSession();
 				session.setAttribute("user", customer);
+				session.setAttribute("accountType", form.getAccountType());
 				return "viewcustomer.do";
 
 			} 

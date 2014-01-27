@@ -65,30 +65,36 @@
 			</form>
 		</div>
 	</div>
-<c:if test="${accountType == 'E' }">
-	<ul class="nav nav-pills">
-		<li><a href="viewCustomerTransaction.do?custId=${customer.customerId}">Transaction History</a></li>
-		<li><a href="depositCheck.do?custId=${customer.customerId }">Deposit Check</a></li>
-		<li><a href="changePwd.do?custId=${customer.customerId }">Change Customer Password</a></li>
-	</ul>
-	<br/>
-</c:if>
-	
+	<c:if test="${accountType == 'E' }">
+		<ul class="nav nav-pills">
+			<li><a
+				href="viewCustomerTransaction.do?custId=${customer.customerId}">Transaction
+					History</a></li>
+			<li><a href="depositCheck.do?custId=${customer.customerId }">Deposit
+					Check</a></li>
+			<li><a href="changePwd.do?custId=${customer.customerId }">Change
+					Customer Password</a></li>
+		</ul>
+		<br />
+	</c:if>
+
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Funds</h3>
 		</div>
 		<div class="panel-body">
+		<form method="post" action="sellFund.do">
 			<table class="table">
 				<thead style="text-align: center;">
 
 					<tr>
 						<th>Fund Ticker</th>
 						<th>Fund Name</th>
-						<th>Current Price</th>
-						<th>Number of Shares</th>
-						<th>Available Shares</th>
-						<th>Position Value</th>
+						<th class="text-right">Current Price</th>
+						<th class="text-right">Number of Shares</th>
+						<th class="text-right">Available Shares</th>
+						<th class="text-right">Position Value</th>
+						<th></th>
 					</tr>
 
 				</thead>
@@ -98,14 +104,24 @@
 						<tr>
 							<td><a href="viewFund.do?fundId=${fundVO.fundId}">${fundVO.ticker}</a></td>
 							<td>${fundVO.fundName}</td>
-							<td>$${fundVO.currentPrice}</td>
-							<td>${fundVO.shares}</td>
-							<td>${fundVO.availableShares}</td>
-							<td>$${fundVO.positionValue}</td>
+							<td class="text-right">$${fundVO.currentPrice}</td>
+							<td class="text-right">${fundVO.shares}</td>
+							<td class="text-right">${fundVO.availableShares}</td>
+							<td class="text-right">$${fundVO.positionValue}</td>
+							<td class="text-right"><c:choose>
+									<c:when test="${accountType == 'E'}">
+									</c:when>
+									<c:otherwise>
+										<input type="submit" class="btn btn-primary" name="submit"
+						id="submit" value="Sell" />
+									</c:otherwise>
+								</c:choose></td>
 						</tr>
 					</c:forEach>
 				</tbody>
+				
 			</table>
+			</form>
 		</div>
 	</div>
 

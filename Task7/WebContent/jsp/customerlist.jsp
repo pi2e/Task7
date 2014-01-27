@@ -33,7 +33,7 @@
 								<td>${customer.lastName}</td>
 								<td>${customer.firstName}</td>
 								<td><a
-									href="viewcustomer.do?custId=${customer.customerId }">${customer.username}</a></td>
+									href="viewcustomer.do?custId=${customer.customerId}">${customer.username}</a></td>
 								<td>${cash[status.index]}</td>
 								<td>${balance[status.index]}</td>
 								<td>$ <input type=text name="${customer.customerId}" value="${depositList[status.index]}"></td>
