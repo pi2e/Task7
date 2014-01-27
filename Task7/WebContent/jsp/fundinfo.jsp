@@ -37,7 +37,7 @@
 		    <h3 class="panel-title">Price History</h3>
 		  </div>
 		  <div class="panel-body">
-		    	graph here..
+		    	<jsp:include page="fundChart.jsp" />
 		  </div>
 		</div>
 	
