@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.mybeans.form.FormBean;
 
+import com.cfs.utility.CommonUtilities;
+
 public class DepositCheckForm extends FormBean{
 	
 	private String userId;
@@ -30,6 +32,8 @@ public class DepositCheckForm extends FormBean{
 
 
 	public void setAmount(String amount) {
+		CommonUtilities.removeCommas(amount);
+		
 		this.amount = amount;
 	}
 
