@@ -32,9 +32,9 @@ public class DepositCheckForm extends FormBean{
 
 
 	public void setAmount(String amount) {
-		CommonUtilities.removeCommas(amount);
+		String amt = CommonUtilities.removeCommas(amount);
 		
-		this.amount = amount;
+		this.amount = amt;
 	}
 
 
