@@ -9,15 +9,18 @@
 
 	<form method="post" action="transitionday.do">
 
-		<div class="panel panel-default">
+		<div class="panel panel-primary">
 
 			<div class="panel-heading">
-				<h3>Transition Day</h3>
+				<h2 class="panel-title">Transition Day</h2>
 			</div>
 
 			<div class="panel-body">
-				<h4>Latest Transaction Date: ${lastdate}</h4>
-				<h4>Input Next Transaction Date:</h4>
+				<h5>
+					Latest Transition Day: <i>${lastdate}</i>
+				</h5>
+				<br />
+				<h5>Current Transition Day:</h5>
 				<input type="text" value="${inputdate}" name="inputdate" /> <i>*input
 					format: yyyy/mm/dd</i>
 			</div>
@@ -38,7 +41,8 @@
 
 							<th>Fund Ticker</th>
 							<th>Fund Name</th>
-							<th>Latest Price</th>
+							<th>Current Price</th>
+							<th>New Price</th>
 						</tr>
 
 					</thead>
@@ -48,6 +52,7 @@
 							<tr>
 								<td><a href="#">${fund.getSymbol()}</a></td>
 								<td>${fund.getFundName()}</td>
+								<td>current price</td>
 								<td><input type="text" name="${fund.fundId}"
 									value="${inputprice[status.index]}" size="10"></td>
 							</tr>
@@ -56,10 +61,11 @@
 				</table>
 				<div>
 					<input type="hidden" value="submitIn" name="requestedSubmit" /> <input
-						type="submit" class="submit_btn" name="submit" id="submit"
+						type="submit" class="btn btn-primary" name="submit" id="submit"
 						value="Submit" />
 				</div>
 			</div>
+		</div>
 	</form>
 
 </div>
