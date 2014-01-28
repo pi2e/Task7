@@ -87,7 +87,7 @@
 				<thead style="text-align: center;">
 
 					<tr>
-						<th>Fund Ticker</th>
+						<th>Ticker</th>
 						<th>Fund Name</th>
 						<th class="text-right">Current Price</th>
 						<th class="text-right">Number of Shares</th>

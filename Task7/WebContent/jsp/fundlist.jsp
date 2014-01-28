@@ -18,7 +18,8 @@
 					<tr>
 						<th>Ticker</th>
 						<th>Fund Name</th>
-						<th>Current Price</th>
+						<th class="text-right">Current Price</th>
+						<th></th>
 					</tr>
 				</thead>
 
@@ -27,14 +28,7 @@
 						<tr>
 							<td><a href="viewFund.do?fundId=${fund.fundId}">${fund.getSymbol()}</a></td>
 							<td>${fund.getFundName()}</td>
-							<td><c:choose>
-									<c:when test="${fundPrices[status.index] == ''}">
-									</c:when>
-									<c:otherwise>
-									&nbsp;<Strong> $${fundPrices[status.index]} </Strong>
-									</c:otherwise>
-								</c:choose>
-								<c:choose>
+							<td class="text-right"><c:choose>
 									<c:when
 										test="${fn:startsWith(priceDifference[status.index], '-')}">
 										<span class="label label-danger">${priceDifference[status.index]}</span>
@@ -44,8 +38,24 @@
 									<c:otherwise>
 										<span class="label label-success">+${priceDifference[status.index]}</span>
 									</c:otherwise>
+								</c:choose> <c:choose>
+									<c:when test="${fundPrices[status.index] == ''}">
+									</c:when>
+									<c:otherwise>
+									&nbsp;<Strong> $${fundPrices[status.index]} </Strong>
+									</c:otherwise>
 								</c:choose></td>
-							<td></td>
+							<td class="text-right"><c:choose>
+									<c:when test="${accountType == 'E'}">
+									</c:when>
+									<c:otherwise>
+										<form method="post" action="buyFund.do">
+											<input type="hidden" name="buyFund" value="${fund.fundName}" />
+											<input type="submit" class="btn btn-primary" name="submit"
+												id="submit" value="Buy" />
+										</form>
+									</c:otherwise>
+								</c:choose></td>
 						</tr>
 					</c:forEach>
 				</tbody>

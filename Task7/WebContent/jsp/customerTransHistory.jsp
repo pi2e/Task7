@@ -23,9 +23,8 @@
 						<th>Type</th>
 						<th>Ticker</th>
 						<th>Fund Name</th>
-						<th>Shares</th>
-						<th>Date</th>
-						<th>Dollar Amount</th>
+						<th class="text-right">Shares</th>
+						<th class="text-right">Dollar Amount</th>
 					</tr>
 				</thead>
 
@@ -38,15 +37,13 @@
 									<td>${trans.fundTicker}</td>
 									<td>${trans.fundName}</td>
 									<td></td>
-									<td></td>
-									<td>$${trans.amount}</td>
+									<td class="text-right">$${trans.amount}</td>
 								</c:when>
-								<c:when test="${trans.transactionType == 'sell'}">
+								<c:when test="${trans.transactionType == 'sell' }">
 									<td>${trans.transactionType}</td>
 									<td>${trans.fundTicker}</td>
 									<td>${trans.fundName}</td>
-									<td>${trans.shares}</td>
-									<td></td>
+									<td class="text-right">${trans.shares}</td>
 									<td></td>
 								</c:when>
 								<c:otherwise>
@@ -54,8 +51,7 @@
 									<td></td>
 									<td></td>
 									<td></td>
-									<td></td>
-									<td>$${trans.amount}</td>
+									<td class="text-right">$${trans.amount}</td>
 								</c:otherwise>
 							</c:choose>
 						</tr>
@@ -74,13 +70,13 @@
 			<table class="table">
 				<thead>
 					<tr>
+						<th>Execution Date</th>
 						<th>Type</th>
 						<th>Ticker</th>
 						<th>Fund Name</th>
-						<th>Fund Price</th>
-						<th>Shares</th>
-						<th>Execution Date</th>
-						<th>Dollar Amount</th>
+						<th class="text-right">Fund Price</th>
+						<th class="text-right">Shares</th>
+						<th class="text-right">Dollar Amount</th>
 					</tr>
 				</thead>
 
@@ -90,31 +86,40 @@
 						<tr>
 							<c:choose>
 								<c:when test="${trans.transactionType == 'buy'}">
+									<td>${trans.executeDate}</td>
 									<td>${trans.transactionType}</td>
 									<td>${trans.fundTicker}</td>
 									<td>${trans.fundName}</td>	
-									<td>$${trans.price}</td>
-									<td>${trans.shares}</td>
-									<td>${trans.executeDate}</td>
-									<td>$${trans.amount}</td>
+									<td class="text-right">$${trans.price}</td>
+									<td class="text-right">${trans.shares}</td>
+									<td class="text-right">$${trans.amount}</td>
 								</c:when>
 								<c:when test="${trans.transactionType == 'sell'}">
+									<td>${trans.executeDate}</td>
 									<td>${trans.transactionType}</td>
 									<td>${trans.fundTicker}</td>
 									<td>${trans.fundName}</td>	
-									<td>$${trans.price}</td>
-									<td>${trans.shares}</td>
+									<td class="text-right">$${trans.price}</td>
+									<td class="text-right">${trans.shares}</td>
+									<td class="text-right">$${trans.amount}</td>
+								</c:when>
+								<c:when test="${trans.transactionType == 'sell cancelled'}">
 									<td>${trans.executeDate}</td>
-									<td>$${trans.amount}</td>
+									<td>${trans.transactionType}</td>
+									<td>${trans.fundTicker}</td>
+									<td>${trans.fundName}</td>	
+									<td class="text-right">$${trans.price}</td>
+									<td class="text-right">${trans.shares}</td>
+									<td class="text-right">$${trans.amount}</td>
 								</c:when>
 								<c:otherwise>
+									<td>${trans.executeDate}</td>
 									<td>${trans.transactionType}</td>
 									<td></td>
 									<td></td>
 									<td></td>
 									<td></td>
-									<td>${trans.executeDate}</td>
-									<td>$${trans.amount}</td>
+									<td class="text-right">$${trans.amount}</td>
 								</c:otherwise>
 							</c:choose>
 						</tr>

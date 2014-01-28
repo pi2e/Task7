@@ -20,9 +20,9 @@
 							<th>Last Name</th>
 							<th>First Name</th>
 							<th>Username</th>
-							<th>Cash</th>
-							<th>Available Balance</th>
-							<th>Deposit Check</th>
+							<th class="text-right">Cash</th>
+							<th class="text-right">Available Balance</th>
+							<th class="text-right">Deposit Check</th>
 						</tr>
 
 					</thead>
@@ -34,9 +34,9 @@
 								<td>${customer.firstName}</td>
 								<td><a
 									href="viewcustomer.do?custId=${customer.customerId}">${customer.username}</a></td>
-								<td>${cash[status.index]}</td>
-								<td>${balance[status.index]}</td>
-								<td>$ <input type=text name="${customer.customerId}" value="${depositList[status.index]}"></td>
+								<td class="text-right">${cash[status.index]}</td>
+								<td class="text-right">${balance[status.index]}</td>
+								<td class="text-right">$ <input type=text name="${customer.customerId}" value="${depositList[status.index]}"></td>
 							</tr>
 						</c:forEach>
 

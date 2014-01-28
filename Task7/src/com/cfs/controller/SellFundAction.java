@@ -108,6 +108,8 @@ public class SellFundAction extends Action {
 				form.setTicker(request.getParameter("sellFund").toString());
 				form.setShares("");
 				form.setPresent(true);
+				
+				return "sellfund.jsp";
 			}
 			
 			if (!form.isPresent()) {

@@ -54,10 +54,11 @@ public class ViewFundListAction extends Action {
 
 					fundPrices.add(CommonUtilities.convertToMoney((fundData
 							.getPrice())));
-
+					
 					FundPriceData[] latestPrices = fundPriceHistoryDAO
 							.fetchLatestPrices(funds[i].getFundId());
-
+					
+					//get price difference
 					if (latestPrices.length > 1) {
 						String price = CommonUtilities
 								.convertToMoney(latestPrices[0].getPrice()

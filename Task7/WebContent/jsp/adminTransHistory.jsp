@@ -22,7 +22,6 @@
 						<th>Ticker</th>
 						<th>Fund Name</th>
 						<th class="text-right">Shares</th>
-						<th>Date</th>
 						<th class="text-right">Dollar Amount</th>
 					</tr>
 				</thead>
@@ -39,7 +38,6 @@
 									<td>${trans.fundTicker}</td>
 									<td>${trans.fundName}</td>
 									<td></td>
-									<td></td>
 									<td class="text-right">$${trans.amount}</td>
 								</c:when>
 								<c:when test="${trans.transactionType == 'sell'}">
@@ -50,13 +48,11 @@
 									<td>${trans.fundName}</td>
 									<td class="text-right">${trans.shares}</td>
 									<td></td>
-									<td></td>
 								</c:when>
 								<c:otherwise>
 									<td>${trans.transactionType}</td>
 									<td><a
 										href="viewcustomer.do?custId=${customersPending[status.index].customerId}">${customersPending[status.index].username}</a></td>
-									<td></td>
 									<td></td>
 									<td></td>
 									<td></td>
@@ -79,13 +75,13 @@
 			<table class="table">
 				<thead>
 					<tr>
+						<th>Execution Date</th>
 						<th>Type</th>
 						<th>Customer</th>
 						<th>Ticker</th>
 						<th>Fund Name</th>
-						<th>Fund Price</th>
+						<th class="text-right">Fund Price</th>
 						<th class="text-right">Shares</th>
-						<th>Execution Date</th>
 						<th class="text-right">Dollar Amount</th>
 					</tr>
 				</thead>
@@ -96,6 +92,7 @@
 						<tr>
 							<c:choose>
 								<c:when test="${trans.transactionType == 'buy'}">
+									<td>${trans.executeDate}</td>
 									<td>${trans.transactionType}</td>
 									<td><a
 										href="viewcustomer.do?custId=${customersExecuted[status.index].customerId}">${customersExecuted[status.index].username}</a></td>
@@ -103,10 +100,11 @@
 									<td>${trans.fundName}</td>
 									<td class="text-right">$${trans.price}</td>
 									<td class="text-right">${trans.shares}</td>
-									<td>${trans.executeDate}</td>
+									
 									<td class="text-right">$${trans.amount}</td>
 								</c:when>
 								<c:when test="${trans.transactionType == 'sell'}">
+									<td>${trans.executeDate}</td>
 									<td>${trans.transactionType}</td>
 									<td><a
 										href="viewcustomer.do?custId=${customersExecuted[status.index].customerId}">${customersExecuted[status.index].username}</a></td>
@@ -114,10 +112,10 @@
 									<td>${trans.fundName}</td>
 									<td class="text-right">$${trans.price}</td>
 									<td class="text-right">${trans.shares}</td>
-									<td>${trans.executeDate}</td>
 									<td class="text-right">$${trans.amount}</td>
 								</c:when>
 								<c:otherwise>
+									<td>${trans.executeDate}</td>
 									<td>${trans.transactionType}</td>
 									<td><a
 										href="viewcustomer.do?custId=${customersExecuted[status.index].customerId}">${customersExecuted[status.index].username}</a></td>
@@ -125,7 +123,6 @@
 									<td></td>
 									<td></td>
 									<td></td>
-									<td>${trans.executeDate}</td>
 									<td class="text-right">$${trans.amount}</td>
 								</c:otherwise>
 							</c:choose>
