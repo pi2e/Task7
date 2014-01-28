@@ -61,7 +61,7 @@ import com.cfs.databean.Fund;
 			Fund[] funds;
 			
 			try {
-				funds = match(MatchArg.equals("symbol", ticker));
+				funds = match(MatchArg.equalsIgnoreCase("symbol", ticker));
 
 			} catch (RollbackException e) {
 				// TODO Auto-generated catch block
