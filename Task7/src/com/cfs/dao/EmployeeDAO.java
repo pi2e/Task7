@@ -7,6 +7,7 @@ import org.genericdao.MatchArg;
 import org.genericdao.RollbackException;
 import org.genericdao.Transaction;
 
+import com.cfs.databean.Customer;
 import com.cfs.databean.Employee;
 
 public class EmployeeDAO extends GenericDAO<Employee>{
@@ -25,6 +26,24 @@ public class EmployeeDAO extends GenericDAO<Employee>{
 		} finally {
 			if (Transaction.isActive())
 				Transaction.rollback();
+		}
+
+	}
+	
+	public boolean checkcreate(Employee employee) throws DAOException {
+
+		try {
+
+			Employee[] custData = match(MatchArg.equals("username",
+					employee.getUsername()));
+			if (custData != null && custData.length != 0) {
+				return false;
+			} else {
+				create(employee);
+				return true;
+			}
+		} catch (RollbackException e) {
+			throw new DAOException(e);
 		}
 
 	}

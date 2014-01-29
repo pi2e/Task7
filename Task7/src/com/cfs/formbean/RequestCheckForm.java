@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.mybeans.form.FormBean;
 
+import com.cfs.utility.CommonUtilities;
+
 public class RequestCheckForm extends FormBean {
 
 	private String withdrawAmount;
@@ -13,7 +15,8 @@ public class RequestCheckForm extends FormBean {
 	}
 
 	public void setWithdrawAmount(String withdrawAmount) {
-		this.withdrawAmount = trimAndConvert(withdrawAmount, "<>\"");
+		String amt = CommonUtilities.removeCommas(withdrawAmount);
+		this.withdrawAmount = trimAndConvert(amt, "<>\"");
 	}
 
 	public ArrayList<String> getValidationErrors() {
