@@ -1,6 +1,7 @@
 package com.cfs.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,14 @@ public class ViewFundAction extends Action {
 
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
+		String period = (String)request.getParameter("period");
+		String action = (String)request.getParameter("subaction");
+		if(action != null && action.equals("view")){
+			return "viewHistory.do";
+		}
+		if(period == null){
+			period = "1";
+		}
 
 		Fund fund = null;
 		String price = null;
@@ -52,12 +61,12 @@ public class ViewFundAction extends Action {
 			}
 			request.setAttribute("price", price);
 
-			//price difference
+			// price difference
 			String priceDifference = null;
 			request.setAttribute("priceDifference", priceDifference);
-			
-			FundPriceData fundData = fundPriceHistoryDAO
-					.fetchLatestPrice(fund.getFundId());
+
+			FundPriceData fundData = fundPriceHistoryDAO.fetchLatestPrice(fund
+					.getFundId());
 
 			if (fundData == null) {
 				priceDifference = "";
@@ -82,6 +91,36 @@ public class ViewFundAction extends Action {
 					priceDifference = "";
 				}
 
+				// Set the Min and Max for an year
+				
+				request.setAttribute("period", period);
+				FundHistoryService fundService = new FundHistoryService();
+				if (latestPrices != null) {
+					 Calendar cal = Calendar.getInstance();
+					 cal.setTime(latestPrices[0].getPriceDate());
+					 int latestyear = cal.get(Calendar.YEAR);
+					 
+					Long maxValue = fundService.findMaxFundValue(latestPrices,
+							latestyear);
+					Long minValue = fundService.findMinFundValue(latestPrices,
+							latestyear);
+					String min = minValue != null ? CommonUtilities
+							.convertToMoney(minValue)
+							: "No Price Found";
+					String max = maxValue != null ? CommonUtilities
+							.convertToMoney(maxValue)
+							: "No Price Found";
+					request.setAttribute("year", latestyear);
+					request.setAttribute("maxValue", max);
+					request.setAttribute("minValue", min);
+					request.setAttribute("priceDifference", priceDifference);
+				}
+
+			// Populate the graph
+				
+				List<Object[]> arrayData = fundService.populateGraph(latestPrices, period);
+				request.setAttribute("arrayData", arrayData);
+				
 			}
 
 		} catch (DAOException e) {
