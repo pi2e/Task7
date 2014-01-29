@@ -67,9 +67,17 @@ public class TransitionDayAction extends Action{
 			Fund[] funds = fundDAO.getFunds();
 			request.setAttribute("funds", funds);
 			
+			Double[] lastprices = new Double[funds.length];
+			request.setAttribute("lastprices", lastprices);
+			
+			
 			String[] inputprice = new String[funds.length];
 			for(int i = 0; i < funds.length; i++) {
 				inputprice[i] = request.getParameter(Long.toString(funds[i].getFundId()));
+				FundPriceData lastdata = fundpriceDAO.fetchLatestPrice(funds[i].getFundId());
+				if(lastdata == null) lastprices[i] = null;
+				else 
+				lastprices[i] = CommonUtilities.longToMoney(lastdata.getPrice());
 				
 			}
 			request.setAttribute("inputprice", inputprice);
@@ -101,18 +109,23 @@ public class TransitionDayAction extends Action{
 			
 			
 			LinkedList<FundPriceData> price = new LinkedList<FundPriceData>();
-			for(Fund fund : funds) {
+			for(int i = 0; i < funds.length; i++) {
+				Fund fund = funds[i];
 				FundPriceData fundprice = new FundPriceData();
 				fundprice.setFundId(fund.getFundId());
 				String input = request.getParameter(Long.toString(fund.getFundId()));
 				int decimal = input.lastIndexOf('.');
 				if (decimal != -1 && input.length() - decimal > 3) {
-					errors.add("You can not specify more the two decimal");
-					break;
+						errors.add("You can not specify more the two decimal");
+						break;
+					
 				}
 				if(input == null || input.length() == 0)  {
-					errors.add("Must input price of every fund");
-					break;
+					if(lastprices[i] == null) {
+						errors.add("You must input the price if the fund doesn't have current price");
+						break;
+					}
+					input = CommonUtilities.formatPrice(lastprices[i]);
 				}
 				double tmp = Double.parseDouble(input);
 				if(tmp > 10000) {
@@ -179,6 +192,14 @@ public class TransitionDayAction extends Action{
 					customerDAO.update(customerid, tran.getAmount(), tran.getAmount());
 				}
 				transactionDAO.update(tran);
+			}
+			
+			for(int i = 0; i < funds.length; i++) {
+				FundPriceData lastdata = fundpriceDAO.fetchLatestPrice(funds[i].getFundId());
+				if(lastdata == null) lastprices[i] = null;
+				else 
+				lastprices[i] = CommonUtilities.longToMoney(lastdata.getPrice());
+				
 			}
 			
 			
