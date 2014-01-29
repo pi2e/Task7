@@ -6,6 +6,7 @@
 
 <div class="container">
 	<jsp:include page="errors.jsp" />
+	<jsp:include page="success.jsp" />
 
 	<form method="post" action="transitionday.do">
 

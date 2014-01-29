@@ -67,7 +67,7 @@ public class TransitionDayAction extends Action{
 			Fund[] funds = fundDAO.getFunds();
 			request.setAttribute("funds", funds);
 			
-			Double[] lastprices = new Double[funds.length];
+			String[] lastprices = new String[funds.length];
 			request.setAttribute("lastprices", lastprices);
 			
 			
@@ -77,7 +77,7 @@ public class TransitionDayAction extends Action{
 				FundPriceData lastdata = fundpriceDAO.fetchLatestPrice(funds[i].getFundId());
 				if(lastdata == null) lastprices[i] = null;
 				else 
-				lastprices[i] = CommonUtilities.longToMoney(lastdata.getPrice());
+				lastprices[i] = CommonUtilities.convertToMoney(lastdata.getPrice());
 				
 			}
 			request.setAttribute("inputprice", inputprice);
@@ -125,7 +125,7 @@ public class TransitionDayAction extends Action{
 						errors.add("You must input the price if the fund doesn't have current price");
 						break;
 					}
-					input = CommonUtilities.formatPrice(lastprices[i]);
+					input = lastprices[i].replace(",", "");
 				}
 				double tmp = Double.parseDouble(input);
 				if(tmp > 10000) {
@@ -198,7 +198,7 @@ public class TransitionDayAction extends Action{
 				FundPriceData lastdata = fundpriceDAO.fetchLatestPrice(funds[i].getFundId());
 				if(lastdata == null) lastprices[i] = null;
 				else 
-				lastprices[i] = CommonUtilities.longToMoney(lastdata.getPrice());
+				lastprices[i] = CommonUtilities.convertToMoney(lastdata.getPrice());
 				
 			}
 			
@@ -206,7 +206,7 @@ public class TransitionDayAction extends Action{
 			request.setAttribute("lastdate", newdate);
 			request.setAttribute("inputdate", null);
 			request.setAttribute("inputprice", null);
-			errors.add("Prices have been updated!");
+			request.setAttribute("successMessage", "Prices have been updated!");
 			
 			return "transitionday.jsp";
 			
@@ -217,7 +217,7 @@ public class TransitionDayAction extends Action{
 			e.printStackTrace();
 			return "transitionday.jsp";
 		} catch (NumberFormatException e) {
-			errors.add("Inpute price must be valid integer");
+			errors.add("Inpute price must be valid number");
 			e.printStackTrace();
 			return "transitionday.jsp";
 		} catch (DAOException e) {
