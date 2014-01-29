@@ -86,7 +86,7 @@
 									</c:when>
 									<c:otherwise>
 										<form method="post" action="buyFund.do">
-											<input type="hidden" name="buyFund" value="${fund.fundName}" />
+											<input type="hidden" name="buyFund" value="${fund.symbol}" />
 											<input type="submit" class="btn btn-primary" name="submit"
 												id="submit" value="Buy" />
 										</form>

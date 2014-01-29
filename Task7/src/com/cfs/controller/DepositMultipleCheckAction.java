@@ -92,19 +92,13 @@ public class DepositMultipleCheckAction extends Action {
 					transaction.setCustomerId(id);
 					transaction.setAmount(CommonUtilities.moneyToLong(Double.parseDouble(amount)));
 					transactionDAO.create(transaction);
+					request.setAttribute("successMessage", "Deposits queued successfully");
 					
-					//update balance
-					/*
-					customers[i].setBalance(customers[i].getBalance()
-							+ CommonUtilities.moneyToLong(Double.parseDouble(amount)));
-					customerDAO.update(customers[i]);
-					*/
 				}
 
 			}
 			
 			depositList.clear();
-			request.setAttribute("successMessage", "Deposits queued successfully");
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

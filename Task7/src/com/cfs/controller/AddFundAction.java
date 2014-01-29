@@ -48,7 +48,7 @@ public class AddFundAction extends Action{
 			if (errors.size() != 0) {
 				return "addFund.jsp";
 			}
-			
+						
 			Fund fund = new Fund();
 			fund.setFundName(form.getFundName());
 			fund.setSymbol(form.getTicker());
