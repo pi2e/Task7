@@ -98,8 +98,10 @@ public class ViewCustomerAction extends Action {
 						.getAvailableShares()));
 				fundVO.setPositionValue(CommonUtilities.calculatePosition(
 						fundData.getPrice(), positions[i].getShares()));
-
-				fundVOList.add(fundVO);
+				
+				if (positions[i].getShares() != 0) {
+					fundVOList.add(fundVO);
+				}
 			}
 
 			request.setAttribute("fundVOList", fundVOList);
