@@ -1,10 +1,13 @@
 package com.cfs.dao;
 
+import java.util.Arrays;
+
 import org.genericdao.ConnectionPool;
 import org.genericdao.DAOException;
 import org.genericdao.GenericDAO;
 import org.genericdao.MatchArg;
 import org.genericdao.RollbackException;
+
 import com.cfs.databean.FundTransaction;
 
 public class TransactionDAO extends GenericDAO<FundTransaction> {
@@ -25,7 +28,7 @@ public class TransactionDAO extends GenericDAO<FundTransaction> {
 		try {
 			FundTransaction[] transactionList = match(MatchArg.notEquals(
 					"executeDate", null));
-
+						
 			return transactionList;
 		} catch (RollbackException e) {
 			e.printStackTrace();
