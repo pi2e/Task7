@@ -76,7 +76,7 @@ public class DepositMultipleCheckAction extends Action {
 
 			// if any errors, return 
 			if (inputError) {
-				errors.add("Deposits must be positive numeric amounts with up to 2 decimal places and less than 1,000,000,000,000 dollars");
+				errors.add("Deposits must be positive numeric amounts with up to 2 decimal places and less than 1,000,000,000 dollars");
 				return "customerlist.jsp";
 			}
 			
