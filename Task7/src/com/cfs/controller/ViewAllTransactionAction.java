@@ -55,7 +55,7 @@ public class ViewAllTransactionAction extends Action {
 			List<Customer> customersExecuted = new ArrayList<Customer>();
 
 			// pending transactions
-			for (int i = 0; i < pendingTransactionsAll.length; i++) {
+			for (int i = pendingTransactionsAll.length-1; i>=0 ; i--) {
 
 				FundTransaction transaction = pendingTransactionsAll[i];
 
@@ -73,12 +73,13 @@ public class ViewAllTransactionAction extends Action {
 					TransactionVO t = new TransactionVO(transaction, fund);
 					pendingTransactions.add(t);
 				}
-				
-				customersPending.add(customerDAO.read(transaction.getCustomerId()));
+
+				customersPending.add(customerDAO.read(transaction
+						.getCustomerId()));
 			}
 
 			// executed transactions
-			for (int i = 0; i < executedTransactionsAll.length; i++) {
+			for (int i = executedTransactionsAll.length-1; i>=0 ; i--) {
 
 				FundTransaction transaction = executedTransactionsAll[i];
 
@@ -91,7 +92,9 @@ public class ViewAllTransactionAction extends Action {
 				}
 
 				if (transaction.getTransactionType().equals("buy")
-						|| transaction.getTransactionType().equals("sell")) {
+						|| transaction.getTransactionType().equals("sell")
+						|| transaction.getTransactionType().equals(
+								"sell cancelled")) {
 
 					Fund fund = fundDAO.read(transaction.getFundId());
 
@@ -104,8 +107,9 @@ public class ViewAllTransactionAction extends Action {
 					executedTransactions.add(t);
 
 				}
-				
-				customersExecuted.add(customerDAO.read(transaction.getCustomerId()));
+
+				customersExecuted.add(customerDAO.read(transaction
+						.getCustomerId()));
 
 			}
 

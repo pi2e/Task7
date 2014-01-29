@@ -64,7 +64,7 @@ public class ViewCustomerTransactionAction extends Action {
 			List<TransactionVO> executedTransactions = new ArrayList<TransactionVO>();
 
 			// pending transactions
-			for (int i = 0; i < pendingTransactionsAll.length; i++) {
+			for (int i = pendingTransactionsAll.length-1; i >= 0 ; i--) {
 
 				FundTransaction transaction = pendingTransactionsAll[i];
 
@@ -86,10 +86,10 @@ public class ViewCustomerTransactionAction extends Action {
 			}
 
 			// executed transactions
-			for (int i = 0; i < executedTransactionsAll.length; i++) {
+			for (int i = executedTransactionsAll.length-1; i >= 0; i--) {
 
 				FundTransaction transaction = executedTransactionsAll[i];
-
+				
 				if (transaction.getTransactionType().equals("deposit")
 						|| transaction.getTransactionType().equals("withdraw")) {
 
