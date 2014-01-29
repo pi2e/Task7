@@ -52,7 +52,7 @@
 							<tr>
 								<td><a href="#">${fund.getSymbol()}</a></td>
 								<td>${fund.getFundName()}</td>
-								<td>current price</td>
+								<td>${lastprices[status.index]}</td>
 								<td><input type="text" name="${fund.fundId}"
 									value="${inputprice[status.index]}" size="10"></td>
 							</tr>
