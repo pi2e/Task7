@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.mybeans.form.FormBean;
 
+import com.cfs.utility.CommonUtilities;
+
 public class BuyFundForm extends FormBean {
 	private String ticker;
 	private String amount;
@@ -21,8 +23,8 @@ public class BuyFundForm extends FormBean {
 	}
 
 	public void setAmount(String amount) {
-		amount.replace(",", "");
-		this.amount = trimAndConvert(amount, "<>\"");
+		String amt = CommonUtilities.removeCommas(amount);
+		this.amount = trimAndConvert(amt, "<>\"");
 	}
 
 	public ArrayList<String> getValidationErrors() {
