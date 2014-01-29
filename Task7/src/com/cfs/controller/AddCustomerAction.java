@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.genericdao.DAOException;
-import org.genericdao.RollbackException;
 import org.mybeans.form.FormBeanException;
 import org.mybeans.form.FormBeanFactory;
 
@@ -36,24 +35,19 @@ public class AddCustomerAction extends Action {
 
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
-		
+
 		try {
 			CustomerForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
-			
+
 			if (!form.isPresent()) {
 				return "createcustomer.jsp";
 			}
-			
+
 			System.out.println("check errors");
 			errors.addAll(form.getValidationErrors());
-			
+
 			if (errors.size() != 0) {
-				return "createcustomer.jsp";
-			}
-			
-			if (customerDAO.getCustomer(form.getUsername()) != null) {
-				errors.add("Username has already been registered");
 				return "createcustomer.jsp";
 			}
 
@@ -68,15 +62,16 @@ public class AddCustomerAction extends Action {
 			cust.setState(form.getState());
 			cust.setCity(form.getCity());
 			cust.setZipCode(Integer.parseInt(form.getZipcode()));
-				
-			customerDAO.create(cust);
-			
-			request.setAttribute("successMessage", "Customer " + cust.getUsername() + " created successfully");
-			
-		} catch (RollbackException e) {
-			// TODO Auto-generated catch block
-			errors.add(e.getMessage());
-			return "createcustomer.jsp";
+
+			if (!customerDAO.checkcreate(cust)) {
+				errors.add("Username has already been registered");
+				return "createcustomer.jsp";
+			} else {
+				request.setAttribute("successMessage",
+						"Customer " + cust.getUsername()
+								+ " created successfully");
+			}
+
 		} catch (FormBeanException e) {
 			// TODO Auto-generated catch block
 			errors.add(e.getMessage());

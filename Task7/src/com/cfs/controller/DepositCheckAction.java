@@ -60,7 +60,9 @@ public class DepositCheckAction extends Action {
 			if (errors.size() != 0) {
 				return "depositcheck.jsp";
 			}
-
+			
+			if (!form.getAmount().equals("") && !form.getAmount().equals("0")) {
+			
 			// create transaction
 			FundTransaction transaction = new FundTransaction();
 			transaction.setTransactionType("deposit");
@@ -72,6 +74,8 @@ public class DepositCheckAction extends Action {
 			request.setAttribute("successMessage", "Deposit queued successfully.");
 			
 			return "viewCustomerTransaction.do?custId=" + customer.getCustomerId();
+			
+			}
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

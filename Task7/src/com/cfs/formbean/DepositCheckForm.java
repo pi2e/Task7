@@ -47,7 +47,7 @@ public class DepositCheckForm extends FormBean{
         
         try {
         	
-        	if(Double.parseDouble(amount) <= 0) {
+        	if(Double.parseDouble(amount) < 0) {
         		errors.add("Amount must be positive");
         	}
         	

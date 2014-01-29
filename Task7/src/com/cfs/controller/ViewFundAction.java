@@ -56,7 +56,7 @@ public class ViewFundAction extends Action {
 			if (fundPriceHistoryDAO.fetchLatestPrice(fundId) == null) {
 				price = "price unavailable";
 			} else {
-				price = CommonUtilities.convertToMoney(fundPriceHistoryDAO
+				price = "$" + CommonUtilities.convertToMoney(fundPriceHistoryDAO
 						.fetchLatestPrice(fundId).getPrice());
 			}
 			request.setAttribute("price", price);
