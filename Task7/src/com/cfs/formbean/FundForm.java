@@ -39,6 +39,10 @@ public class FundForm extends FormBean{
 			errors.add("Ticker can only be up to 5 characters");
 		}
 		
+		if (fundName.length() > 30) {
+			errors.add("Fund name can only be up to 30 characters");
+		}
+		
 		if(errors.size() != 0) {
 			return errors;
 		}

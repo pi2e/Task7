@@ -122,13 +122,25 @@ public class CustomerForm extends FormBean{
         	errors.add("Username is required");
         }
         
+        if (username.length() > 15) {
+			errors.add("Username can only be up to 15 characters");
+		}
+        
         if (firstName == null || firstName.length() == 0) {
         	errors.add("First name is required");
         }
         
+        if (firstName.length() > 15) {
+			errors.add("First name can only be up to 15 characters");
+		}
+        
         if (lastName == null || lastName.length() == 0) {
         	errors.add("Last name is required");
         }
+        
+        if (lastName.length() > 15) {
+			errors.add("Last name can only be up to 15 characters");
+		}
         
         if (address1 == null || address1.length() == 0) {
         	errors.add("Address is required");

@@ -50,6 +50,10 @@ public class LoginForm extends FormBean{
         	errors.add("Username is required");
         }
         
+        if (username.length() > 15) {
+			errors.add("Username can only be up to 15 characters");
+		}
+        
         if (password == null || password.length() == 0) {
         	errors.add("Password is required");
         }
