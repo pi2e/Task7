@@ -49,12 +49,30 @@ public class CustomerDAO extends GenericDAO<Customer> {
 		return customers;
 	}
 
-	public Customer getCustomer(String username) throws DAOException {
-		
-		Customer cust = null;
-		
+	public boolean checkcreate(Customer customer) throws DAOException {
+
 		try {
-			
+
+			Customer[] custData = match(MatchArg.equals("username",
+					customer.getUsername()));
+			if (custData != null && custData.length != 0) {
+				return false;
+			} else {
+				create(customer);
+				return true;
+			}
+		} catch (RollbackException e) {
+			throw new DAOException(e);
+		}
+
+	}
+
+	public Customer getCustomer(String username) throws DAOException {
+
+		Customer cust = null;
+
+		try {
+
 			Customer[] custData = match(MatchArg.equals("username", username));
 			if (custData == null || custData.length == 0) {
 				cust = null;
@@ -64,22 +82,27 @@ public class CustomerDAO extends GenericDAO<Customer> {
 		} catch (RollbackException e) {
 			throw new DAOException(e);
 		}
-		
+
 		return cust;
 	}
-	
-	public synchronized boolean update(int customerId, long balance, long cash) throws DAOException {
+
+	public synchronized boolean update(int customerId, long balance, long cash)
+			throws DAOException {
 		try {
-			Customer[] customers = match(MatchArg.equals("customerId", customerId));
+			Customer[] customers = match(MatchArg.equals("customerId",
+					customerId));
 			Customer customer;
-			
-			if(customers == null || customers.length == 0) return false;
-			else customer = customers[0];
-			
+
+			if (customers == null || customers.length == 0)
+				return false;
+			else
+				customer = customers[0];
+
 			customer.setBalance(customer.getBalance() + balance);
 			customer.setCash(customer.getCash() + cash);
-			
-			if(customer.getBalance() < 0 || customer.getCash() < 0) return false;
+
+			if (customer.getBalance() < 0 || customer.getCash() < 0)
+				return false;
 			else {
 				update(customer);
 				return true;
@@ -87,8 +110,7 @@ public class CustomerDAO extends GenericDAO<Customer> {
 		} catch (RollbackException e) {
 			throw new DAOException(e);
 		}
-		
-		
+
 	}
 
 	public synchronized void update(Customer bean) {
