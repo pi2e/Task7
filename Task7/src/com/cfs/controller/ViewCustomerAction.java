@@ -107,11 +107,9 @@ public class ViewCustomerAction extends Action {
 			request.setAttribute("fundVOList", fundVOList);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
 			errors.add(e.getMessage());
 			return "customerinfo.jsp";
 		} catch (RollbackException e) {
-			e.printStackTrace();
 			errors.add(e.getMessage());
 			return "customerinfo.jsp";
 		}

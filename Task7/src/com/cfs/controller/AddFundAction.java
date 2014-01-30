@@ -64,10 +64,10 @@ public class AddFundAction extends Action {
 
 		} catch (DAOException e) {
 			errors.add(e.getMessage());
-			return "error.jsp";
+			return "viewFundList.do";
 		} catch (FormBeanException e) {
 			errors.add(e.getMessage());
-			return "error.jsp";
+			return "viewFundList.do";
 		}
 	}
 

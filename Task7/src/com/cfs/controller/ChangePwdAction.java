@@ -81,13 +81,13 @@ public class ChangePwdAction extends Action {
 			// presented (we assume for the first time).
 			System.out.println(!form.isPresent());
 			if (!form.isPresent()) {
-				return "changePwd.jsp";
+				return "changePwd.do";
 			}
 
 			// Check for any validation errors
 			errors.addAll(form.getValidationErrors());
 			if (errors.size() != 0) {
-				return "changePwd.jsp";
+				return "changePwd.do";
 			}
 
 			if (request.getAttribute("c").toString().equals("c")) {
@@ -102,16 +102,13 @@ public class ChangePwdAction extends Action {
 					"Password changed successfully");
 
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			errors.add(e.toString());
 		} catch (RollbackException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FormBeanException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			errors.add(e.toString());
+		} catch (FormBeanException e) {
+			errors.add(e.toString());
 		}
 
-		return "changePwd.jsp";
+		return "changePwd.do";
 	}
 }

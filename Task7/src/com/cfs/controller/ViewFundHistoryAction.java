@@ -89,8 +89,9 @@ public class ViewFundHistoryAction extends Action {
 			}
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			return "viewFundHistory.jsp";
 		}
+		
 
 		return "viewFundHistory.jsp";
 	}

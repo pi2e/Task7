@@ -49,7 +49,6 @@ public class ViewCustomerListAction extends Action {
 			return "customerlist.jsp";
 
 		} catch (DAOException e) {
-
 			return "customerlist.jsp";
 		}
 
