@@ -96,7 +96,7 @@ public class SellFundAction extends Action {
 				fundVO.setPositionValue(CommonUtilities.calculatePosition(
 						fundData.getPrice(), positions[i].getShares()));
 
-				if(positions[i].getShares() != 0) {
+				if (positions[i].getShares() != 0) {
 					fundVOList.add(fundVO);
 				}
 			}
@@ -105,15 +105,15 @@ public class SellFundAction extends Action {
 
 			SellFundForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
-			
-			if(request.getParameter("sellFund") != null) {
+
+			if (request.getParameter("sellFund") != null) {
 				form.setTicker(request.getParameter("sellFund").toString());
 				form.setShares("");
 				form.setPresent(true);
-				
+
 				return "sellfund.jsp";
 			}
-			
+
 			if (!form.isPresent()) {
 				return "sellfund.jsp";
 			}
@@ -138,17 +138,12 @@ public class SellFundAction extends Action {
 
 			// check position
 			/*
-			Position position = positionDAO.getPosition(userID,
-					fundSell.getFundId());
-			if (position == null
-					|| amount > CommonUtilities.longToShares(position
-							.getAvailableShares())) {
-				errors.add("You do not have sufficient shares");
-			}
-			if (errors.size() != 0) {
-				return "sellfund.jsp";
-			}
-			*/
+			 * Position position = positionDAO.getPosition(userID,
+			 * fundSell.getFundId()); if (position == null || amount >
+			 * CommonUtilities.longToShares(position .getAvailableShares())) {
+			 * errors.add("You do not have sufficient shares"); } if
+			 * (errors.size() != 0) { return "sellfund.jsp"; }
+			 */
 
 			// update share balance
 			if (!positionDAO.update(customer.getCustomerId(),
@@ -157,9 +152,9 @@ public class SellFundAction extends Action {
 				errors.add("You do not have sufficient shares");
 				return "sellfund.jsp";
 			}
-			//	position.setAvailableShares(position.getAvailableShares()
-			//			- CommonUtilities.shareToLong(amount));
-			//positionDAO.update(position);
+			// position.setAvailableShares(position.getAvailableShares()
+			// - CommonUtilities.shareToLong(amount));
+			// positionDAO.update(position);
 
 			// create transaction
 			FundTransaction transaction = new FundTransaction();

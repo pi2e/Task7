@@ -5,20 +5,20 @@ import javax.servlet.http.HttpSession;
 
 import com.cfs.databean.Model;
 
-
 public class LogoutAction extends Action {
 
-	public LogoutAction(Model model) { }
+	public LogoutAction(Model model) {
+	}
 
-	public String getName() { 
-		return "logout.do"; 
+	public String getName() {
+		return "logout.do";
 	}
 
 	public String perform(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        session.setAttribute("user",null);
-        session.setAttribute("accountType",null);
-        session.invalidate();
-        return "login.do";
-    }
+		HttpSession session = request.getSession();
+		session.setAttribute("user", null);
+		session.setAttribute("accountType", null);
+		session.invalidate();
+		return "login.do";
+	}
 }

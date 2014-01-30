@@ -29,21 +29,17 @@ public class FundForm extends FormBean {
 
 		if (fundName == null || fundName.length() == 0) {
 			errors.add("Fundname is required");
-		} 
-		else if (!fundName.matches("[a-zA-Z0-9\\s]+")) {
+		} else if (!fundName.matches("[a-zA-Z0-9\\s]+")) {
 			errors.add("Fund name should be alphanumeric");
-		} 
-		else if (fundName.length() > 30) {
+		} else if (fundName.length() > 30) {
 			errors.add("Fund name can only be up to 30 characters");
 		}
 
 		if (ticker == null || ticker.length() == 0) {
 			errors.add("Ticker is required");
-		}
-		else if (!ticker.matches("[A-Z]+")) {
+		} else if (!ticker.matches("[A-Z]+")) {
 			errors.add("Ticker must be capital letters only");
-		}
-		else if (ticker.length() > 5) {
+		} else if (ticker.length() > 5) {
 			errors.add("Ticker can only be up to 5 characters");
 		}
 

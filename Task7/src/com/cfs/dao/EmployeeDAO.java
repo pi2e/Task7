@@ -7,13 +7,12 @@ import org.genericdao.MatchArg;
 import org.genericdao.RollbackException;
 import org.genericdao.Transaction;
 
-import com.cfs.databean.Customer;
 import com.cfs.databean.Employee;
 
-public class EmployeeDAO extends GenericDAO<Employee>{
+public class EmployeeDAO extends GenericDAO<Employee> {
 
 	public EmployeeDAO(ConnectionPool cp, String tableName) throws DAOException {
-		
+
 		super(Employee.class, tableName, cp);
 	}
 
@@ -29,7 +28,7 @@ public class EmployeeDAO extends GenericDAO<Employee>{
 		}
 
 	}
-	
+
 	public boolean checkcreate(Employee employee) throws DAOException {
 
 		try {
@@ -47,7 +46,7 @@ public class EmployeeDAO extends GenericDAO<Employee>{
 		}
 
 	}
-	
+
 	public Employee checkUserExist(String username) throws DAOException {
 
 		try {
@@ -56,16 +55,13 @@ public class EmployeeDAO extends GenericDAO<Employee>{
 			Employee[] empData = match(MatchArg.equals("username", username));
 			if (empData == null || empData.length == 0) {
 				emp = null;
-			}
-			else
+			} else
 				emp = empData[0];
 			Transaction.commit();
 			return emp;
-		} 
-		catch (RollbackException e) {
+		} catch (RollbackException e) {
 			throw new DAOException(e);
-		}
-		finally {
+		} finally {
 			if (Transaction.isActive())
 				Transaction.rollback();
 		}
