@@ -161,7 +161,7 @@ public class CustomerForm extends FormBean{
 			errors.add("Address Line 1 can only be up to 40 characters");
 		}
 		
-		if ((address2!= null || address2.length() > 0) && !address2.matches("[a-zA-Z0-9]+")) {
+		if ((address2.length() > 0) && !address2.matches("[a-zA-Z0-9]+")) {
 			errors.add("Address Line 2 should be alphanumeric");
 		}
 		else if (address2.length() > 40) {
