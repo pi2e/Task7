@@ -24,9 +24,13 @@
           <%} %>
 
 		]);
+		
+		var formatter = new google.visualization.DateFormat({ pattern: "dd MMM yyyy" });
+		formatter.format(data,0);
+		
 		var options = {
 			title : 'Fund Performance',
-			hAxis:{format:'MMM d, y',slantedText:true },
+			hAxis:{format:'MMM, d yyyy',slantedText:true },
 			pointSize:2
 		};
 
