@@ -55,7 +55,7 @@ public class ViewAllTransactionAction extends Action {
 			List<Customer> customersExecuted = new ArrayList<Customer>();
 
 			// pending transactions
-			for (int i = pendingTransactionsAll.length-1; i>=0 ; i--) {
+			for (int i = pendingTransactionsAll.length - 1; i >= 0; i--) {
 
 				FundTransaction transaction = pendingTransactionsAll[i];
 
@@ -79,7 +79,7 @@ public class ViewAllTransactionAction extends Action {
 			}
 
 			// executed transactions
-			for (int i = executedTransactionsAll.length-1; i>=0 ; i--) {
+			for (int i = executedTransactionsAll.length - 1; i >= 0; i--) {
 
 				FundTransaction transaction = executedTransactionsAll[i];
 

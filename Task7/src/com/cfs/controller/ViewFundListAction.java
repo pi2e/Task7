@@ -54,20 +54,23 @@ public class ViewFundListAction extends Action {
 
 					fundPrices.add(CommonUtilities.convertToMoney((fundData
 							.getPrice())));
-					
+
 					FundPriceData[] latestPrices = fundPriceHistoryDAO
 							.fetchLatestPrices(funds[i].getFundId());
-					
-					//get price difference
+
+					// get price difference
 					if (latestPrices.length > 1) {
 						String price = CommonUtilities
 								.convertToMoney(latestPrices[0].getPrice()
 										- latestPrices[1].getPrice());
-						
-						String percentage = CommonUtilities.formatPrice((double)(((latestPrices[0].getPrice() - latestPrices[1].getPrice())*100 / 
-								latestPrices[1].getPrice())));
-						
-						priceDifference.add(price + "  (" + percentage +"%) ");
+
+						String percentage = CommonUtilities
+								.formatPrice((double) (((latestPrices[0]
+										.getPrice() - latestPrices[1]
+										.getPrice()) * 100 / latestPrices[1]
+										.getPrice())));
+
+						priceDifference.add(price + "  (" + percentage + "%) ");
 					} else {
 						priceDifference.add("");
 					}

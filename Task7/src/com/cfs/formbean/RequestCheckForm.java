@@ -26,20 +26,20 @@ public class RequestCheckForm extends FormBean {
 			errors.add("Amount is required");
 			return errors;
 		}
-		 try {
-	        	
-	        	if(Double.parseDouble(withdrawAmount) <= 0) {
-	        		errors.add("Amount must be positive");
-	        	}
-	        	
-	        	int decimal = withdrawAmount.lastIndexOf('.');
-				if (decimal != -1 && withdrawAmount.length() - decimal > 3) {
-					errors.add("You can not specify more the two decimal places");
-				}
-	        	
-			} catch (NumberFormatException e) { 
-				errors.add("Amount must be numeric");
+		try {
+
+			if (Double.parseDouble(withdrawAmount) <= 0) {
+				errors.add("Amount must be positive");
 			}
+
+			int decimal = withdrawAmount.lastIndexOf('.');
+			if (decimal != -1 && withdrawAmount.length() - decimal > 3) {
+				errors.add("You can not specify more the two decimal places");
+			}
+
+		} catch (NumberFormatException e) {
+			errors.add("Amount must be numeric");
+		}
 		return errors;
 	}
 }

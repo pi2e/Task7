@@ -57,7 +57,7 @@ public class FundDAO extends GenericDAO<Fund> {
 		return funds[0];
 	}
 
-	public boolean checkcreate(Fund fund) throws DAOException{
+	public boolean checkcreate(Fund fund) throws DAOException {
 		Fund[] funds;
 
 		try {
@@ -74,7 +74,6 @@ public class FundDAO extends GenericDAO<Fund> {
 			throw new DAOException(e);
 		}
 
-		
 	}
 
 	public Fund getFund(String ticker) throws DAOException {

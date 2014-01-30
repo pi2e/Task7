@@ -42,7 +42,7 @@
 
 							<th>Fund Ticker</th>
 							<th>Fund Name</th>
-							<th>Current Price</th>
+							<th class="text-right">Current Price</th>
 							<th>New Price</th>
 						</tr>
 
@@ -53,7 +53,7 @@
 							<tr>
 								<td><a href="#">${fund.getSymbol()}</a></td>
 								<td>${fund.getFundName()}</td>
-								<td>${lastprices[status.index]}</td>
+								<td class="text-right">${lastprices[status.index]}</td>
 								<td><input type="text" name="${fund.fundId}"
 									value="${inputprice[status.index]}" size="10"></td>
 							</tr>

@@ -19,7 +19,7 @@ public class Model {
 	private EmployeeDAO employeeDAO;
 	private FundDAO fundDAO;
 	private FundPriceHistoryDAO fundPriceDAO;
-	
+
 	public CustomerDAO getCustomerDAO() {
 		return customerDAO;
 	}

@@ -29,7 +29,7 @@ public class BuyFundAction extends Action {
 	private TransactionDAO transactionDAO;
 	private FundDAO fundDAO;
 	private FundPriceHistoryDAO fundPriceHistoryDAO;
-	
+
 	private FormBeanFactory<BuyFundForm> formBeanFactory = FormBeanFactory
 			.getInstance(BuyFundForm.class);
 
@@ -47,16 +47,16 @@ public class BuyFundAction extends Action {
 	}
 
 	@Override
-	public String perform(HttpServletRequest request){
+	public String perform(HttpServletRequest request) {
 
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
-		
+
 		Customer customer = null;
-		
+
 		try {
-			
-			//fund list
+
+			// fund list
 			Fund[] funds = fundDAO.getFunds();
 			List<String> fundPrices = new ArrayList<String>();
 			List<String> priceDifference = new ArrayList<String>();
@@ -72,20 +72,23 @@ public class BuyFundAction extends Action {
 
 					fundPrices.add(CommonUtilities.convertToMoney((fundData
 							.getPrice())));
-					
+
 					FundPriceData[] latestPrices = fundPriceHistoryDAO
 							.fetchLatestPrices(funds[i].getFundId());
-					
-					//get price difference
+
+					// get price difference
 					if (latestPrices.length > 1) {
 						String price = CommonUtilities
 								.convertToMoney(latestPrices[0].getPrice()
 										- latestPrices[1].getPrice());
-						
-						String percentage = CommonUtilities.formatPrice((double)(((latestPrices[0].getPrice() - latestPrices[1].getPrice())*100 / 
-								latestPrices[1].getPrice())));
-						
-						priceDifference.add(price + "  (" + percentage +"%) ");
+
+						String percentage = CommonUtilities
+								.formatPrice((double) (((latestPrices[0]
+										.getPrice() - latestPrices[1]
+										.getPrice()) * 100 / latestPrices[1]
+										.getPrice())));
+
+						priceDifference.add(price + "  (" + percentage + "%) ");
 					} else {
 						priceDifference.add("");
 					}
@@ -97,81 +100,81 @@ public class BuyFundAction extends Action {
 			request.setAttribute("funds", funds);
 			request.setAttribute("fundPrices", fundPrices);
 			request.setAttribute("priceDifference", priceDifference);
-			
-			
+
 			HttpSession session = request.getSession();
-			customer = (Customer)session.getAttribute("user");
-			
+			customer = (Customer) session.getAttribute("user");
+
 			int userID = customer.getCustomerId();
 			customer = customerDAO.read(userID);
-			
-			String balance = CommonUtilities.convertToMoney(customer.getBalance());
+
+			String balance = CommonUtilities.convertToMoney(customer
+					.getBalance());
 			request.setAttribute("balance", balance);
-			
+
 			BuyFundForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
-			
-			if(request.getParameter("buyFund") != null) {
+
+			if (request.getParameter("buyFund") != null) {
 				form.setTicker(request.getParameter("buyFund").toString());
 				form.setAmount("");
 				form.setPresent(true);
-				
+
 				return "buyfund.jsp";
 			}
-			
+
 			if (!form.isPresent()) {
 				return "buyfund.jsp";
 			}
-			
+
 			errors.addAll(form.getValidationErrors());
-			
+
 			if (errors.size() != 0) {
 				return "buyfund.jsp";
 			}
-			
-			//check balance
-			
+
+			// check balance
+
 			double amount = Double.parseDouble(form.getAmount());
-			//String balanceStr = CommonUtilities.removeCommas(balance);
+			// String balanceStr = CommonUtilities.removeCommas(balance);
 			/*
-			if(amount > Double.parseDouble(balanceStr)) {
-				errors.add("You do not have sufficient balance");
-			}
-			if(errors.size() != 0) {
-				return "buyfund.jsp";
-			}
-			*/
-			
-			//find fund
+			 * if(amount > Double.parseDouble(balanceStr)) {
+			 * errors.add("You do not have sufficient balance"); }
+			 * if(errors.size() != 0) { return "buyfund.jsp"; }
+			 */
+
+			// find fund
 			Fund fund = fundDAO.getFund(form.getTicker());
 			request.setAttribute("fund", fund);
-			if(fund == null) {
+			if (fund == null) {
 				errors.add("Fund not found");
 			}
-			if(errors.size() != 0) {
+			if (errors.size() != 0) {
 				return "buyfund.jsp";
 			}
-			
-			//update balance
-			//customer.setBalance(customer.getBalance() - CommonUtilities.moneyToLong(amount));
-			//customerDAO.update(customer);
-			if (!customerDAO.update(customer.getCustomerId(), -CommonUtilities.moneyToLong(amount), 0)) {
-				
+
+			// update balance
+			// customer.setBalance(customer.getBalance() -
+			// CommonUtilities.moneyToLong(amount));
+			// customerDAO.update(customer);
+			if (!customerDAO.update(customer.getCustomerId(),
+					-CommonUtilities.moneyToLong(amount), 0)) {
+
 				errors.add("You do not have sufficient balance");
 				return "buyfund.jsp";
 			}
-			
-			//create transaction
+
+			// create transaction
 			FundTransaction transaction = new FundTransaction();
 			transaction.setTransactionType("buy");
 			transaction.setCustomerId(customer.getCustomerId());
 			transaction.setAmount(CommonUtilities.moneyToLong(amount));
 			transaction.setFundId(fund.getFundId());
 			transactionDAO.create(transaction);
-			
-			request.setAttribute("successMessage", "Buy order queued successfully");
+
+			request.setAttribute("successMessage",
+					"Buy order queued successfully");
 			return "viewCustomerTransaction.do";
-			
+
 		} catch (DAOException e) {
 			errors.add(e.toString());
 			return "buyfund.jsp";

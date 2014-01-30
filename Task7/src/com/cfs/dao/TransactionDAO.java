@@ -1,7 +1,5 @@
 package com.cfs.dao;
 
-import java.util.Arrays;
-
 import org.genericdao.ConnectionPool;
 import org.genericdao.DAOException;
 import org.genericdao.GenericDAO;
@@ -28,14 +26,14 @@ public class TransactionDAO extends GenericDAO<FundTransaction> {
 		try {
 			FundTransaction[] transactionList = match(MatchArg.notEquals(
 					"executeDate", null));
-						
+
 			return transactionList;
 		} catch (RollbackException e) {
 			e.printStackTrace();
 			throw new DAOException(e);
 		}
 	}
-	
+
 	public synchronized FundTransaction[] getTransactions(int customerID)
 			throws DAOException {
 		try {
@@ -48,7 +46,7 @@ public class TransactionDAO extends GenericDAO<FundTransaction> {
 			throw new DAOException(e);
 		}
 	}
-	
+
 	public FundTransaction[] getExecutedTransactions(int customerID)
 			throws DAOException {
 
@@ -62,7 +60,7 @@ public class TransactionDAO extends GenericDAO<FundTransaction> {
 			throw new DAOException(e);
 		}
 	}
-	
+
 	public FundTransaction[] getPendingTransaction(int customerID)
 			throws DAOException {
 

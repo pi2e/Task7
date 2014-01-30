@@ -48,7 +48,7 @@ public class BuyFundForm extends FormBean {
 			if (amt < 10) {
 				errors.add("Amount must be more than ten dollars");
 			}
-			
+
 			int decimal = amount.lastIndexOf('.');
 			if (decimal != -1 && amount.length() - decimal > 3) {
 				errors.add("You can not specify more the two decimal");

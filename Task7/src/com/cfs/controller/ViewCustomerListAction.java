@@ -36,12 +36,13 @@ public class ViewCustomerListAction extends Action {
 			List<String> balance = new ArrayList<String>();
 
 			for (int i = 0; i < customers.length; i++) {
-				
+
 				cash.add(CommonUtilities.convertToMoney(customers[i].getCash()));
-				balance.add(CommonUtilities.convertToMoney(customers[i].getBalance()));
+				balance.add(CommonUtilities.convertToMoney(customers[i]
+						.getBalance()));
 
 			}
-			
+
 			request.setAttribute("cash", cash);
 			request.setAttribute("balance", balance);
 			request.setAttribute("customers", customers);

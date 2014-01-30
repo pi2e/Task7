@@ -12,14 +12,14 @@ public class HomePageAction extends Action {
 
 	@Override
 	public String getName() {
-		
+
 		return "home.do";
 	}
 
 	@Override
 	public String perform(HttpServletRequest request) {
 
-		return  "../jsp/home.jsp";
+		return "../jsp/home.jsp";
 	}
 
 }

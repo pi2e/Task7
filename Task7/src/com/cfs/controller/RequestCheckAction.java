@@ -77,15 +77,13 @@ public class RequestCheckAction extends Action {
 			double amount = Double.parseDouble(form.getWithdrawAmount());
 			// Check if the withdraw amount is more than the balance
 			/*
-			if (balance != null) {
-				String balanceStr = CommonUtilities.removeCommas(balance);
-
-				if (Double.parseDouble(balanceStr) < amount) {
-					errors.add("You do not have sufficient balance");
-					return "requestCheck.jsp";
-				}
-			}
-			*/
+			 * if (balance != null) { String balanceStr =
+			 * CommonUtilities.removeCommas(balance);
+			 * 
+			 * if (Double.parseDouble(balanceStr) < amount) {
+			 * errors.add("You do not have sufficient balance"); return
+			 * "requestCheck.jsp"; } }
+			 */
 
 			// update balance
 			if (!customerDAO.update(customer.getCustomerId(),
@@ -93,9 +91,9 @@ public class RequestCheckAction extends Action {
 				errors.add("You do not have sufficient balance");
 				return "requestCheck.jsp";
 			}
-			//	customer.setBalance(customer.getBalance()
-			//			- CommonUtilities.moneyToLong(amount));
-			//customerDAO.update(customer);
+			// customer.setBalance(customer.getBalance()
+			// - CommonUtilities.moneyToLong(amount));
+			// customerDAO.update(customer);
 
 			// create transaction
 			FundTransaction transaction = new FundTransaction();

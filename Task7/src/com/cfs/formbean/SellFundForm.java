@@ -48,7 +48,7 @@ public class SellFundForm extends FormBean {
 			if (amt < 0) {
 				errors.add("Number of shares must be positive");
 			}
-			
+
 			int decimal = shares.lastIndexOf('.');
 			if (decimal != -1 && shares.length() - decimal > 4) {
 				errors.add("You can not specify more than 3 decimal places");

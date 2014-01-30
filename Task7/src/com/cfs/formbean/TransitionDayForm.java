@@ -2,7 +2,7 @@ package com.cfs.formbean;
 
 import org.mybeans.form.FormBean;
 
-public class TransitionDayForm extends FormBean{
+public class TransitionDayForm extends FormBean {
 	private String inputdate;
 
 	public String getInputdate() {
@@ -12,7 +12,5 @@ public class TransitionDayForm extends FormBean{
 	public void setInputdate(String inputdate) {
 		this.inputdate = inputdate;
 	}
-
-	
 
 }

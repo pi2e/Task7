@@ -42,11 +42,10 @@ public class LoginAction extends Action {
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
 
-
 		try {
 			LoginForm form = formBeanFactory.create(request);
 			request.setAttribute("form", form);
-			//request.setAttribute("accountType", form.getAccountType());
+			// request.setAttribute("accountType", form.getAccountType());
 
 			if (!form.isPresent()) {
 				return "home.jsp";
@@ -58,7 +57,7 @@ public class LoginAction extends Action {
 				return "home.jsp";
 			}
 
-			if(form.getAccountType().equals("C")){
+			if (form.getAccountType().equals("C")) {
 				Customer customer = customerDAO.getCustomer(form.getUsername());
 				if (customer == null) {
 					errors.add("Username not found");
@@ -76,11 +75,12 @@ public class LoginAction extends Action {
 				session.setAttribute("accountType", form.getAccountType());
 				return "viewcustomer.do";
 
-			} 
+			}
 
-			else{
+			else {
 
-				Employee employee = employeeDAO.checkUserExist(form.getUsername());
+				Employee employee = employeeDAO.checkUserExist(form
+						.getUsername());
 				if (employee == null) {
 					errors.add("Username not found");
 					return "home.jsp";
@@ -98,7 +98,7 @@ public class LoginAction extends Action {
 
 				return "viewFundList.do";
 			}
-		}catch (DAOException e) {
+		} catch (DAOException e) {
 			errors.add(e.getMessage());
 			return "home.jsp";
 		} catch (FormBeanException e) {
@@ -109,7 +109,3 @@ public class LoginAction extends Action {
 	}
 
 }
-
-
-
-

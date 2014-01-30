@@ -2,17 +2,15 @@ package com.cfs.utility;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 
 public class CommonUtilities {
 
 	private static DecimalFormat priceFormat = new DecimalFormat("#,##0.00");
 	private static DecimalFormat shareFormat = new DecimalFormat("#,##0.000");
-	private static SimpleDateFormat sf = new SimpleDateFormat("MM/dd/yyyy");
 
 	public static String convertToMoney(long amount) {
-		
-		return formatPrice((double)amount / 100);
+
+		return formatPrice((double) amount / 100);
 
 	}
 
@@ -31,7 +29,7 @@ public class CommonUtilities {
 	public static Long moneyToLong(double amount) {
 
 		BigDecimal value = BigDecimal.valueOf(amount);
-		value = value.setScale(2, BigDecimal.ROUND_HALF_UP); 
+		value = value.setScale(2, BigDecimal.ROUND_HALF_UP);
 		return (long) (value.doubleValue() * 1000 / 10);
 
 	}
@@ -39,7 +37,7 @@ public class CommonUtilities {
 	public static long shareToLong(double share) {
 
 		BigDecimal value = BigDecimal.valueOf(share);
-		value = value.setScale(3, BigDecimal.ROUND_HALF_UP); 
+		value = value.setScale(3, BigDecimal.ROUND_HALF_UP);
 		return (long) (value.doubleValue() * 1000);
 
 	}
@@ -50,9 +48,8 @@ public class CommonUtilities {
 	}
 
 	public static String convertToShare(long amount) {
-		
-		
-		return formatShare((double)amount / 1000);
+
+		return formatShare((double) amount / 1000);
 
 	}
 

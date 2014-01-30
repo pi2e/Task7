@@ -44,19 +44,18 @@ public class DepositMultipleCheckAction extends Action {
 			request.setAttribute("depositList", depositList);
 
 			boolean inputError = false;
-			
+
 			List<String> cash = new ArrayList<String>();
 			List<String> balance = new ArrayList<String>();
-			
+
 			request.setAttribute("cash", cash);
 			request.setAttribute("balance", balance);
-			
-			
-			//check for input errors
+
+			// check for input errors
 			for (int i = 0; i < customers.length; i++) {
 				long id = customers[i].getCustomerId();
 				String amount = request.getParameter(String.valueOf(id)).trim();
-				amount.replace("," , "");
+				amount.replace(",", "");
 
 				if (amount.length() == 0) {
 					amount = "0";
@@ -67,38 +66,41 @@ public class DepositMultipleCheckAction extends Action {
 				form.setAmount(amount);
 				depositList.add(amount);
 
-				if(form.getValidationErrors().size() != 0) {
+				if (form.getValidationErrors().size() != 0) {
 					inputError = true;
 				}
-				
+
 				cash.add(CommonUtilities.convertToMoney(customers[i].getCash()));
-				balance.add(CommonUtilities.convertToMoney(customers[i].getBalance()));
+				balance.add(CommonUtilities.convertToMoney(customers[i]
+						.getBalance()));
 			}
 
-			// if any errors, return 
+			// if any errors, return
 			if (inputError) {
 				errors.add("Deposits must be positive numeric amounts with up to 2 decimal places and less than 1,000,000,000 dollars");
 				return "customerlist.jsp";
 			}
-			
+
 			// if no errors, create transaction
 			for (int i = 0; i < customers.length; i++) {
 				int id = customers[i].getCustomerId();
 				String amount = request.getParameter(String.valueOf(id)).trim();
-				
+
 				if (!amount.equals("") && !amount.equals("0")) {
-					
+
 					FundTransaction transaction = new FundTransaction();
 					transaction.setTransactionType("deposit");
 					transaction.setCustomerId(id);
-					transaction.setAmount(CommonUtilities.moneyToLong(Double.parseDouble(amount)));
+					transaction.setAmount(CommonUtilities.moneyToLong(Double
+							.parseDouble(amount)));
 					transactionDAO.create(transaction);
-					request.setAttribute("successMessage", "Deposits queued successfully");
-					
+					request.setAttribute("successMessage",
+							"Deposits queued successfully");
+
 				}
 
 			}
-			
+
 			depositList.clear();
 
 		} catch (Exception e) {

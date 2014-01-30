@@ -73,7 +73,7 @@ public class Controller extends HttpServlet {
 
 		if (nextPage.endsWith(".do")) {
 			request.getRequestDispatcher(nextPage).forward(request, response);
-			//response.sendRedirect(nextPage);
+			// response.sendRedirect(nextPage);
 			return;
 		}
 

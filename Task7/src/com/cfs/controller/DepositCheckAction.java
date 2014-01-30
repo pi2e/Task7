@@ -60,21 +60,23 @@ public class DepositCheckAction extends Action {
 			if (errors.size() != 0) {
 				return "depositcheck.jsp";
 			}
-			
+
 			if (!form.getAmount().equals("") && !form.getAmount().equals("0")) {
-			
-			// create transaction
-			FundTransaction transaction = new FundTransaction();
-			transaction.setTransactionType("deposit");
-			transaction.setCustomerId(customer.getCustomerId());
-			transaction.setAmount(CommonUtilities.moneyToLong(Double
-					.parseDouble(form.getAmount())));
-			transactionDAO.create(transaction);
-			
-			request.setAttribute("successMessage", "Deposit queued successfully.");
-			
-			return "viewCustomerTransaction.do?custId=" + customer.getCustomerId();
-			
+
+				// create transaction
+				FundTransaction transaction = new FundTransaction();
+				transaction.setTransactionType("deposit");
+				transaction.setCustomerId(customer.getCustomerId());
+				transaction.setAmount(CommonUtilities.moneyToLong(Double
+						.parseDouble(form.getAmount())));
+				transactionDAO.create(transaction);
+
+				request.setAttribute("successMessage",
+						"Deposit queued successfully.");
+
+				return "viewCustomerTransaction.do?custId="
+						+ customer.getCustomerId();
+
 			}
 
 		} catch (Exception e) {

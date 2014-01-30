@@ -49,14 +49,14 @@ public class ViewCustomerAction extends Action {
 		Customer customer = null;
 
 		try {
-			
+
 			if (request.getSession().getAttribute("user") instanceof Customer) {
-				
+
 				customer = (Customer) request.getSession().getAttribute("user");
 				customer = customerDAO.read(customer.getCustomerId());
-				
+
 				System.out.println(customer);
-				
+
 			} else if (request.getParameter("custId") != null) {
 
 				String userID = (String) request.getParameter("custId");
@@ -94,11 +94,11 @@ public class ViewCustomerAction extends Action {
 						.getPrice()));
 				fundVO.setShares(CommonUtilities.convertToShare(positions[i]
 						.getShares()));
-				fundVO.setAvailableShares(CommonUtilities.convertToShare(positions[i]
-						.getAvailableShares()));
+				fundVO.setAvailableShares(CommonUtilities
+						.convertToShare(positions[i].getAvailableShares()));
 				fundVO.setPositionValue(CommonUtilities.calculatePosition(
 						fundData.getPrice(), positions[i].getShares()));
-				
+
 				if (positions[i].getShares() != 0) {
 					fundVOList.add(fundVO);
 				}
