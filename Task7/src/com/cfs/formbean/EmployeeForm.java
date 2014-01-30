@@ -69,8 +69,8 @@ public class EmployeeForm extends FormBean{
 	        if (firstName == null || firstName.length() == 0) {
 	        	errors.add("First name is required");
 	        }
-	        else if (!firstName.matches("[a-zA-Z0-9]+")) {
-				errors.add("First name should be alphanumeric");
+	        else if (!firstName.matches("[a-zA-Z]+")) {
+				errors.add("First name should only contain alphabets");
 			} 
 			else if (firstName.length() > 15) {
 				errors.add("First name can only be up to 15 characters");
@@ -79,8 +79,8 @@ public class EmployeeForm extends FormBean{
 	        if (lastName == null || lastName.length() == 0) {
 	        	errors.add("Last name is required");
 	        }
-	        else if (!lastName.matches("[a-zA-Z0-9]+")) {
-				errors.add("Last name should be alphanumeric");
+	        else if (!lastName.matches("[a-zA-Z]+")) {
+				errors.add("Last name should only contain alphabets");
 			}
 
 			else if (lastName.length() > 15) {

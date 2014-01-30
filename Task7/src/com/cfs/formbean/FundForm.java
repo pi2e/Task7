@@ -30,7 +30,7 @@ public class FundForm extends FormBean {
 		if (fundName == null || fundName.length() == 0) {
 			errors.add("Fundname is required");
 		} 
-		else if (!fundName.matches("[a-zA-Z0-9]+")) {
+		else if (!fundName.matches("[a-zA-Z0-9\\s]+")) {
 			errors.add("Fund name should be alphanumeric");
 		} 
 		else if (fundName.length() > 30) {

@@ -134,8 +134,8 @@ public class CustomerForm extends FormBean{
 		if (firstName == null || firstName.length() == 0) {
 			errors.add("First name is required");
 		} 
-		else if (!firstName.matches("[a-zA-Z0-9]+")) {
-			errors.add("First name should be alphanumeric");
+		else if (!firstName.matches("[a-zA-Z\\s]+")) {
+			errors.add("First name should only contain alphabets");
 		} 
 		else if (firstName.length() > 15) {
 			errors.add("First name can only be up to 15 characters");
@@ -143,8 +143,8 @@ public class CustomerForm extends FormBean{
 		if (lastName == null || lastName.length() == 0) {
 			errors.add("Last name is required");
 		} 
-		else if (!lastName.matches("[a-zA-Z0-9]+")) {
-			errors.add("Last name should be alphanumeric");
+		else if (!lastName.matches("[a-zA-Z\\s]+")) {
+			errors.add("Last name should only contain alphabets");
 		}
 
 		else if (lastName.length() > 15) {
@@ -154,14 +154,14 @@ public class CustomerForm extends FormBean{
 		if (address1 == null || address1.length() == 0) {
 			errors.add("Address Line 1 is required");
 		}
-		else if (!address1.matches("[a-zA-Z0-9]+")) {
+		else if (!address1.matches("[a-zA-Z0-9\\s]+")) {
 			errors.add("Address Line 1 should be alphanumeric");
 		}
 		else if (address1.length() > 40) {
 			errors.add("Address Line 1 can only be up to 40 characters");
 		}
 		
-		if ((address2.length() > 0) && !address2.matches("[a-zA-Z0-9]+")) {
+		if ((address2.length() > 0) && !address2.matches("[a-zA-Z0-9\\s]+")) {
 			errors.add("Address Line 2 should be alphanumeric");
 		}
 		else if (address2.length() > 40) {
@@ -171,7 +171,7 @@ public class CustomerForm extends FormBean{
 		if (city == null || city.length() == 0) {
 			errors.add("City is required");
 		}
-		else if (!city.matches("[a-zA-Z0-9]+")) {
+		else if (!city.matches("[a-zA-Z0-9\\s]+")) {
 			errors.add("City should be alphanumeric");
 		}
 		else if (city.length() > 20) {
@@ -196,9 +196,7 @@ public class CustomerForm extends FormBean{
 		if (password2 == null || password2.length() == 0) {
 			errors.add("Password confirmation is required");
 		}
-		if (!password1.matches("[a-zA-Z0-9]+")) {
-			errors.add("Password must be alphanumeric");
-		} 
+		
 		else if (password1.length() < 6) {
 			errors.add("Password should contain at least 6 characters");
 		}
