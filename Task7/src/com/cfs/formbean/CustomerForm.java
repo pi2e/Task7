@@ -129,14 +129,14 @@ public class CustomerForm extends FormBean {
 
 		if (firstName == null || firstName.length() == 0) {
 			errors.add("First name is required");
-		} else if (!firstName.matches("[a-zA-Z\\s]+")) {
+		} else if (!firstName.matches("[a-zA-Z]+")) {
 			errors.add("First name should only contain alphabets");
 		} else if (firstName.length() > 15) {
 			errors.add("First name can only be up to 15 characters");
 		}
 		if (lastName == null || lastName.length() == 0) {
 			errors.add("Last name is required");
-		} else if (!lastName.matches("[a-zA-Z\\s]+")) {
+		} else if (!lastName.matches("[a-zA-Z]+")) {
 			errors.add("Last name should only contain alphabets");
 		}
 
@@ -160,7 +160,7 @@ public class CustomerForm extends FormBean {
 
 		if (city == null || city.length() == 0) {
 			errors.add("City is required");
-		} else if (!city.matches("[a-zA-Z0-9\\s]+")) {
+		} else if (!city.matches("[a-zA-Z\\s]+")) {
 			errors.add("City should be alphanumeric");
 		} else if (city.length() > 20) {
 			errors.add("City name can only be up to 20 characters");
