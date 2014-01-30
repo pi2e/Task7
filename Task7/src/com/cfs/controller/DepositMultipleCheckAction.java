@@ -56,6 +56,7 @@ public class DepositMultipleCheckAction extends Action {
 			for (int i = 0; i < customers.length; i++) {
 				long id = customers[i].getCustomerId();
 				String amount = request.getParameter(String.valueOf(id)).trim();
+				amount.replace("," , "");
 
 				if (amount.length() == 0) {
 					amount = "0";
