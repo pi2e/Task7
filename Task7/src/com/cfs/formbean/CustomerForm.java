@@ -152,11 +152,30 @@ public class CustomerForm extends FormBean{
 		}
 
 		if (address1 == null || address1.length() == 0) {
-			errors.add("Address is required");
+			errors.add("Address Line1 is required");
+		}
+		else if (!address1.matches("[a-zA-Z0-9]+")) {
+			errors.add("Address Line1 should be alphanumeric");
+		}
+		else if (address1.length() > 40) {
+			errors.add("Address Line1 can only be up to 40 characters");
+		}
+		
+		if (!address2.matches("[a-zA-Z0-9]+")) {
+			errors.add("Address Line2 should be alphanumeric");
+		}
+		else if (address2.length() > 40) {
+			errors.add("Address Line2 can only be up to 40 characters");
 		}
 
 		if (city == null || city.length() == 0) {
 			errors.add("City is required");
+		}
+		else if (!city.matches("[a-zA-Z0-9]+")) {
+			errors.add("City should be alphanumeric");
+		}
+		else if (city.length() > 20) {
+			errors.add("City name can only be up to 20 characters");
 		}
 
 		if (state == null || state.length() == 0) {
