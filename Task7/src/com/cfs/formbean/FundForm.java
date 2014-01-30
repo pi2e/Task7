@@ -40,9 +40,6 @@ public class FundForm extends FormBean {
 		if (ticker == null || ticker.length() == 0) {
 			errors.add("Ticker is required");
 		}
-		else if (!ticker.matches("[a-zA-Z0-9]+")) {
-			errors.add("Ticker name should be alphanumeric");
-		}
 		else if (!ticker.matches("[A-Z]+")) {
 			errors.add("Ticker must be capital letters only");
 		}
