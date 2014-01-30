@@ -59,6 +59,7 @@ public class TransitionDayAction extends Action {
 		try {
 
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+			formatter.setLenient(false);
 
 			request.setAttribute("inputdate", request.getParameter("inputdate"));
 
