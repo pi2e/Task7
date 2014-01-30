@@ -115,98 +115,96 @@ public class CustomerForm extends FormBean{
 		zipcode = trimAndConvert(e, "<>\""); 
 	}
 
-    public ArrayList<String> getValidationErrors() {
-        ArrayList<String> errors = new ArrayList<String>();
+	public ArrayList<String> getValidationErrors() {
+		ArrayList<String> errors = new ArrayList<String>();
 
-        if (username == null || username.length() == 0) {
-        	errors.add("Username is required");
-        }
-        
-        if (username.length() > 15) {
+		if (username == null || username.length() == 0) {
+			errors.add("Username is required");
+		} 
+		else if (!username.matches("[a-zA-Z0-9]+")) {
+			errors.add("Username should be alphanumeric");
+		} 
+		else if (username.length() > 15) {
 			errors.add("Username can only be up to 15 characters");
+		} 
+		else if (username.length() < 6) {
+			errors.add("Username should contain at least 6 characters");
 		}
-        
-        if (firstName == null || firstName.length() == 0) {
-        	errors.add("First name is required");
-        }
-        
-        if (firstName.length() > 15) {
+
+		if (firstName == null || firstName.length() == 0) {
+			errors.add("First name is required");
+		} 
+		else if (!firstName.matches("[a-zA-Z0-9]+")) {
+			errors.add("First name should be alphanumeric");
+		} 
+		else if (firstName.length() > 15) {
 			errors.add("First name can only be up to 15 characters");
 		}
-        
-        if (lastName == null || lastName.length() == 0) {
-        	errors.add("Last name is required");
-        }
-        
-        if (lastName.length() > 15) {
+		if (lastName == null || lastName.length() == 0) {
+			errors.add("Last name is required");
+		} 
+		else if (!lastName.matches("[a-zA-Z0-9]+")) {
+			errors.add("Last name should be alphanumeric");
+		}
+
+		else if (lastName.length() > 15) {
 			errors.add("Last name can only be up to 15 characters");
 		}
-        
-        if (address1 == null || address1.length() == 0) {
-        	errors.add("Address is required");
-        }
-        
-        if (city == null || city.length() == 0) {
-        	errors.add("City is required");
-        }
-        
-        if (state == null || state.length() == 0) {
-        	errors.add("State is required");
-        }
-        
-        if (zipcode == null || zipcode.length() == 0) {
-        	errors.add("Zipcode is required");
-        }
-        
-        if (password1 == null || password1.length() == 0) {
-        	errors.add("Password is required");
-        }
-        
-        if (password2 == null || password2.length() == 0) {
-        	errors.add("Password confirmation is required");
-        }
-        
-        //end of missing field checks
-        if(errors.size() > 0) {
-        	return errors;
-        }
-        
-        if (username.length() < 6) {
-        	errors.add("Username should contain at least 6 characters");
-        }
-        
-        if (password1.length() < 6) {
-        	errors.add("Password should contain at least 6 characters");
-        }
-        
-        if (zipcode.length() != 5) {
-        	errors.add("Zipcode should be 5 digits");
-        }
-        
-        //end of field size check
-        if(errors.size() > 0) {
-        	return errors;
-        }
-        
-        if (!username.matches("[a-zA-Z0-9]+")) {
-        	errors.add("Username should be alphanumeric");
-        }
-        
-        if (!password1.matches("[a-zA-Z0-9]+")) {
-			errors.add("Password must be alphanumeric");
+
+		if (address1 == null || address1.length() == 0) {
+			errors.add("Address is required");
 		}
-        
-        try {
+
+		if (city == null || city.length() == 0) {
+			errors.add("City is required");
+		}
+
+		if (state == null || state.length() == 0) {
+			errors.add("State is required");
+		}
+
+		if (zipcode == null || zipcode.length() == 0) {
+			errors.add("Zipcode is required");
+		} 
+		else if (zipcode.length() != 5) {
+			errors.add("Zipcode should be 5 digits");
+		}
+
+		if (password1 == null || password1.length() == 0) {
+			errors.add("Password is required");
+		}
+
+		if (password2 == null || password2.length() == 0) {
+			errors.add("Password confirmation is required");
+		}
+		if (!password1.matches("[a-zA-Z0-9]+")) {
+			errors.add("Password must be alphanumeric");
+		} 
+		else if (password1.length() < 6) {
+			errors.add("Password should contain at least 6 characters");
+		}
+		// end of missing field checks
+		if (errors.size() > 0) {
+			return errors;
+		}
+
+		// end of field size check
+		if (errors.size() > 0) {
+			return errors;
+		}
+
+		try {
 			Integer.parseInt(zipcode);
 		} catch (NumberFormatException e) {
 			errors.add("Zipcode should be an integer");
 		}
-        
-        if (!password1.equals(password2)) {
-        	errors.add("Passwords do not match");
-        }
-        
-        return errors;
-    }
+
+		if (!password1.equals(password2)) {
+			errors.add("Passwords do not match");
+		}
+
+		return errors;
+	}
 }
+
 
