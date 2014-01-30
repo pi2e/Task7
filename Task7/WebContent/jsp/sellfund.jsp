@@ -51,6 +51,7 @@
 						<th class="text-right">Number of Shares</th>
 						<th class="text-right">Available Shares</th>
 						<th class="text-right">Position Value</th>
+						<th></th>
 					</tr>
 
 				</thead>
@@ -64,6 +65,18 @@
 							<td class="text-right">${fundVO.shares}</td>
 							<td class="text-right">${fundVO.availableShares}</td>
 							<td class="text-right">$${fundVO.positionValue}</td>
+							<td class="text-right"><c:choose>
+									<c:when test="${accountType == 'E'}">
+									</c:when>
+									<c:otherwise>
+										<form method="post" action="sellFund.do">
+											<input type="hidden" name="sellFund" value="${fundVO.ticker}" /> 
+											<input
+												type="submit" class="btn btn-primary" name="submit"
+												id="submit" value="Sell"/>
+										</form>
+									</c:otherwise>
+								</c:choose></td>
 						</tr>
 					</c:forEach>
 				</tbody>

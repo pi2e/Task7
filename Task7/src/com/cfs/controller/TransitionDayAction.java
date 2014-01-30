@@ -132,6 +132,10 @@ public class TransitionDayAction extends Action{
 					errors.add("fund price can't be more than 10000 dollars");
 					break;
 				}
+				if(tmp <= 0) {
+					errors.add("fund price must be positive");
+					break;
+				}
 				fundprice.setPrice(CommonUtilities.moneyToLong(tmp));
 				fundprice.setPriceDate(newdate);
 				price.add(fundprice);
