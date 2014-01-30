@@ -31,7 +31,7 @@
 			</div>
 			<div class="panel-body">
 <c:choose>
-				<c:when	test="${price ne null || price ne ''}">
+				<c:when	test="${price ne null || price ne '' || price ne 'price unavailable'}">
 				<div class="form-group">
 					<label class="col-sm-2 control-label"> Highest for Year
 						${year }</label>
