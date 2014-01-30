@@ -56,6 +56,7 @@ public class DepositMultipleCheckAction extends Action {
 			for (int i = 0; i < customers.length; i++) {
 				long id = customers[i].getCustomerId();
 				String amount = request.getParameter(String.valueOf(id)).trim();
+				amount.replace("," , "");
 
 				if (amount.length() == 0) {
 					amount = "0";
@@ -76,7 +77,7 @@ public class DepositMultipleCheckAction extends Action {
 
 			// if any errors, return 
 			if (inputError) {
-				errors.add("Deposits must be positive numeric amounts with up to 2 decimal places and less than 1,000,000,000,000 dollars");
+				errors.add("Deposits must be positive numeric amounts with up to 2 decimal places and less than 1,000,000,000 dollars");
 				return "customerlist.jsp";
 			}
 			

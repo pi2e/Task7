@@ -113,7 +113,7 @@ public class TransitionDayAction extends Action{
 				Fund fund = funds[i];
 				FundPriceData fundprice = new FundPriceData();
 				fundprice.setFundId(fund.getFundId());
-				String input = request.getParameter(Long.toString(fund.getFundId()));
+				String input = request.getParameter(Long.toString(fund.getFundId())).trim().replaceAll(",", "");
 				int decimal = input.lastIndexOf('.');
 				if (decimal != -1 && input.length() - decimal > 3) {
 						errors.add("You can not specify more the two decimal");
