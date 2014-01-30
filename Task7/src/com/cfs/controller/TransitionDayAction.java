@@ -222,22 +222,19 @@ public class TransitionDayAction extends Action {
 			return "transitionday.jsp";
 
 		} catch (RollbackException e) {
+			errors.add(e.getMessage());
 			return "transitionday.jsp";
 		} catch (FormBeanException e) {
-
-			e.printStackTrace();
+			errors.add(e.getMessage());
 			return "transitionday.jsp";
 		} catch (NumberFormatException e) {
 			errors.add("Inpute price must be valid number");
-			e.printStackTrace();
 			return "transitionday.jsp";
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			errors.add(e.getMessage());
 			return "transitionday.jsp";
 		} catch (ParseException e) {
 			errors.add("Inpute date is not a valid date format");
-			e.printStackTrace();
 			return "transitionday.jsp";
 		}
 
