@@ -53,8 +53,8 @@
 							<tr>
 								<td><a href="#">${fund.getSymbol()}</a></td>
 								<td>${fund.getFundName()}</td>
-								<td>${lastprices[status.index]}</td>
-								<td class="text-right"><input type="text" name="${fund.fundId}"
+								<td class="text-right">${lastprices[status.index]}</td>
+								<td><input type="text" name="${fund.fundId}"
 									value="${inputprice[status.index]}" size="10"></td>
 							</tr>
 						</c:forEach>
