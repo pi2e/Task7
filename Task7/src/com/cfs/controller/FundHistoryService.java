@@ -68,23 +68,16 @@ public class FundHistoryService {
 	public List<Object[]> populateGraph(FundPriceData[] latestPrices,
 			String period) {
 		List<Object[]> array = new ArrayList<Object[]>();
-		calendar.setTime(latestPrices[0].getPriceDate());
-		int year = calendar.get(Calendar.YEAR);
 		if (period.equals("1")) {
-			array.add(new Object[] { "Date for Year " + year, "Fund Value" });
+			array.add(new Object[] { "Date", "Fund Value" });
 			for (int i = latestPrices.length -1; i >= 0; i--) {
-				System.out.println(latestPrices[i].getPriceDate());
 				if(i >= 10){
 					continue;
 				}
-				calendar.setTime(latestPrices[i].getPriceDate());
-				int yearRecord = calendar.get(Calendar.YEAR);
-				if (yearRecord == year) {
 					array.add(new Object[] {
 							(Date) latestPrices[i].getPriceDate(),
-							CommonUtilities.convertToMoney(latestPrices[i]
-									.getPrice()) });
-				}
+							CommonUtilities.removeCommas(CommonUtilities.convertToMoney(latestPrices[i]
+									.getPrice()))});
 			}
 
 		}

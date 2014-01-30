@@ -19,17 +19,20 @@
 		   
          <% for(int i = 1; i < arrayData.size(); i++) { %>
          
-          ['<%=(Date)arrayData.get(i)[0]%>', <%=arrayData.get(i)[1]%>],
+          [new Date('<%=arrayData.get(i)[0]%>'), <%=arrayData.get(i)[1]%>],
           
           <%} %>
 
 		]);
 		var options = {
-			title : 'Fund Performance'
+			title : 'Fund Performance',
+			hAxis:{format:'MMM d, y',slantedText:true },
+			pointSize:2
 		};
 
 		var chart = new google.visualization.LineChart(document
 				.getElementById('chart_div'));
+				
 		chart.draw(data, options);
 		}
 		
