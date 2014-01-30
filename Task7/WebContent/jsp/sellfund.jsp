@@ -47,10 +47,10 @@
 					<tr>
 						<th>Ticker</th>
 						<th>Fund Name</th>
-						<th>Current Price</th>
-						<th>Number of Shares</th>
-						<th>Available Shares</th>
-						<th>Position Value</th>
+						<th class="text-right">Current Price</th>
+						<th class="text-right">Number of Shares</th>
+						<th class="text-right">Available Shares</th>
+						<th class="text-right">Position Value</th>
 					</tr>
 
 				</thead>
@@ -60,10 +60,10 @@
 						<tr>
 							<td><a href="viewFund.do?fundId=${fundVO.fundId}">${fundVO.ticker}</a></td>
 							<td>${fundVO.fundName}</td>
-							<td>$${fundVO.currentPrice}</td>
-							<td>${fundVO.shares}</td>
-							<td>${fundVO.availableShares}</td>
-							<td>$${fundVO.positionValue}</td>
+							<td class="text-right">$${fundVO.currentPrice}</td>
+							<td class="text-right">${fundVO.shares}</td>
+							<td class="text-right">${fundVO.availableShares}</td>
+							<td class="text-right">$${fundVO.positionValue}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
