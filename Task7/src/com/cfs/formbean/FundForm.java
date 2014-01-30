@@ -31,7 +31,7 @@ public class FundForm extends FormBean {
 			errors.add("Fundname is required");
 		} 
 		else if (!fundName.matches("[a-zA-Z0-9]+")) {
-			errors.add("Last name should be alphanumeric");
+			errors.add("Fund name should be alphanumeric");
 		} 
 		else if (fundName.length() > 30) {
 			errors.add("Fund name can only be up to 30 characters");
@@ -41,7 +41,7 @@ public class FundForm extends FormBean {
 			errors.add("Ticker is required");
 		}
 		else if (!ticker.matches("[a-zA-Z0-9]+")) {
-			errors.add("Last name should be alphanumeric");
+			errors.add("Ticker name should be alphanumeric");
 		}
 		else if (!ticker.matches("[A-Z]+")) {
 			errors.add("Ticker must be capital letters only");
