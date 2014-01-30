@@ -120,6 +120,16 @@
 									<td class="text-right">${trans.shares}</td>
 									<td class="text-right">$${trans.amount}</td>
 								</c:when>
+								<c:when test="${trans.transactionType == 'sell cancelled'}">
+									<td>${trans.executeDate}</td>
+									<td>${trans.transactionType}</td>
+									<td><a
+										href="viewcustomer.do?custId=${customersExecuted[status.index].customerId}">${customersExecuted[status.index].username}</a></td>
+									<td>${trans.fundTicker}</td>
+									<td class="text-right">$${trans.price}</td>
+									<td class="text-right">${trans.shares}</td>
+									<td class="text-right">$${trans.amount}</td>
+								</c:when>
 								<c:otherwise>
 									<td>${trans.executeDate}</td>
 									<td>${trans.transactionType}</td>
