@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.cfs.controller.Action;
+import com.cfs.databean.Customer;
+import com.cfs.databean.Employee;
 import com.cfs.databean.Model;
 
 public class Controller extends HttpServlet {
@@ -58,6 +60,20 @@ public class Controller extends HttpServlet {
 
 		if (session.getAttribute("user") == null) {
 			return Action.perform("login.do", request);
+		}
+		
+		if(session.getAttribute("user") instanceof Customer && 
+				( action == "addCustomer.do" || action == "addEmployee.do"
+				|| action == "addFund.do" || action == "depositCheck.do"
+				|| action == "transitionday.do" || action == "viewAllTransactions.do"
+				|| action == "viewCustomerList.do")) {
+			return "viewcustomer.do";
+		} 
+		
+		if(session.getAttribute("user") instanceof Employee && 
+				( action == "buyFund.do" || action == "requestCheck.do"
+				|| action == "sellFund.do" )) {
+			return "viewFundList.do";
 		}
 
 		return Action.perform(action, request);
