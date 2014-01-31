@@ -13,7 +13,7 @@
 	</div>
 
 	<form class="form-horizontal" method="post"
-		action="${c == 'c' ? 'changePwd.do?custId=${customer.customerId}' : 'changePwd.do'}">
+		action="${c == 'c' ? 'changePwd.do?custId=customer.customerId' : 'changePwd.do'}">
 
 		<c:choose>
 			<c:when test="${c == 'c'}">
