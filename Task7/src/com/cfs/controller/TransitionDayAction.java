@@ -94,7 +94,6 @@ public class TransitionDayAction extends Action {
 			TransitionDayForm form = formBeanFactory.create(request);
 
 			if (!form.isPresent()) {
-				;
 				return "transitionday.jsp";
 			}
 
@@ -102,9 +101,14 @@ public class TransitionDayAction extends Action {
 
 			java.util.Date date = formatter.parse(form.getInputdate());
 			Date newdate = new Date(date.getTime());
+			
 
 			if (lastdate != null && newdate.compareTo(lastdate) < 1) {
 				errors.add("Inpute date must be after last date");
+			}
+			
+			if(newdate.compareTo(formatter.parse("2000/01/01")) < 1) {
+				errors.add("Inpute date must be after 2000/01/01");
 			}
 
 			LinkedList<FundPriceData> price = new LinkedList<FundPriceData>();
