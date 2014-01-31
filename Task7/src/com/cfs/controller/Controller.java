@@ -63,16 +63,16 @@ public class Controller extends HttpServlet {
 		}
 		
 		if(session.getAttribute("user") instanceof Customer && 
-				( action == "addCustomer.do" || action == "addEmployee.do"
-				|| action == "addFund.do" || action == "depositCheck.do"
-				|| action == "transitionday.do" || action == "viewAllTransactions.do"
-				|| action == "viewCustomerList.do")) {
+				( action.equals("addCustomer.do") || action.equals("addEmployee.do") 
+				|| action.equals("addFund.do") || action.equals("depositCheck.do")
+				|| action.equals("transitionday.do") || action.equals("viewAllTransactions.do")
+				|| action.equals("viewCustomerList.do"))) {
 			return "viewcustomer.do";
 		} 
 		
 		if(session.getAttribute("user") instanceof Employee && 
-				( action == "buyFund.do" || action == "requestCheck.do"
-				|| action == "sellFund.do" )) {
+				( action.equals("buyFund.do") || action.equals("requestCheck.do")
+				|| action.equals("sellFund.do") )) {
 			return "viewFundList.do";
 		}
 
