@@ -38,7 +38,16 @@ public class LoginAction extends Action {
 
 	@Override
 	public String perform(HttpServletRequest request) {
-
+		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("user") != null) {
+			if(session.getAttribute("user") instanceof Customer) {
+				return "viewcustomer.do";
+			} else {
+				return "viewFundList.do";
+			}
+		}
+		
 		List<String> errors = new ArrayList<String>();
 		request.setAttribute("errors", errors);
 
@@ -70,7 +79,6 @@ public class LoginAction extends Action {
 					return "home.jsp";
 				}
 
-				HttpSession session = request.getSession();
 				session.setAttribute("user", customer);
 				session.setAttribute("accountType", form.getAccountType());
 				return "viewcustomer.do";
@@ -92,7 +100,6 @@ public class LoginAction extends Action {
 					return "home.jsp";
 				}
 
-				HttpSession session = request.getSession();
 				session.setAttribute("user", employee);
 				session.setAttribute("accountType", form.getAccountType());
 
