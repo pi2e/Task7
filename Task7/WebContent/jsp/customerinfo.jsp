@@ -23,7 +23,7 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label">Last Trading Day</label>
 							<div class="col-md-6">
-								<p class="form-control-static">last trading day</p>
+								<p class="form-control-static">${lastTradingDay}</p>
 							</div>
 						</div>
 

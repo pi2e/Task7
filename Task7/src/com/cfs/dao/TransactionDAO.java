@@ -88,4 +88,26 @@ public class TransactionDAO extends GenericDAO<FundTransaction> {
 		}
 	}
 
+	public String getLastTradingDay(int custId) throws DAOException {
+
+		FundTransaction[] trans = getExecutedTransactions(custId);
+		String date = "";
+
+		if (trans != null) {
+
+			for (int i = 0; i < trans.length; i++) {
+
+				if (trans[i].getTransactionType().equals("buy")
+						|| trans[i].getTransactionType().equals("sell")
+						|| trans[i].getTransactionType().equals(
+								"sell cancelled")) {
+					date = trans[i].getExecuteDate().toString();
+					break;
+				}
+			}
+		} else {
+			return null;
+		}
+		return date;
+	}
 }

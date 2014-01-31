@@ -81,13 +81,13 @@ public class ChangePwdAction extends Action {
 			// presented (we assume for the first time).
 			System.out.println(!form.isPresent());
 			if (!form.isPresent()) {
-				return "changePwd.do";
+				return "changePwd.jsp";
 			}
 
 			// Check for any validation errors
 			errors.addAll(form.getValidationErrors());
 			if (errors.size() != 0) {
-				return "changePwd.do";
+				return "changePwd.jsp";
 			}
 
 			if (request.getAttribute("c").toString().equals("c")) {
@@ -109,6 +109,6 @@ public class ChangePwdAction extends Action {
 			errors.add(e.toString());
 		}
 
-		return "changePwd.do";
+		return "changePwd.jsp";
 	}
 }

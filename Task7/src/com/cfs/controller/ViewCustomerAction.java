@@ -12,6 +12,7 @@ import com.cfs.dao.CustomerDAO;
 import com.cfs.dao.FundDAO;
 import com.cfs.dao.FundPriceHistoryDAO;
 import com.cfs.dao.PositionDAO;
+import com.cfs.dao.TransactionDAO;
 import com.cfs.databean.Customer;
 import com.cfs.databean.Fund;
 import com.cfs.databean.FundPriceData;
@@ -26,6 +27,7 @@ public class ViewCustomerAction extends Action {
 	private FundDAO fundDAO;
 	private PositionDAO positionDAO;
 	private FundPriceHistoryDAO fundPriceHistoryDAO;
+	private TransactionDAO transactionDAO;
 
 	public ViewCustomerAction(Model model) {
 
@@ -33,6 +35,7 @@ public class ViewCustomerAction extends Action {
 		fundDAO = model.getFundDAO();
 		positionDAO = model.getPositionDAO();
 		fundPriceHistoryDAO = model.getFundPriceDAO();
+		transactionDAO = model.getTransactionDAO();
 	}
 
 	@Override
@@ -62,10 +65,21 @@ public class ViewCustomerAction extends Action {
 				String userID = (String) request.getParameter("custId");
 				customer = customerDAO.read(Integer.parseInt(userID));
 			}
+
 			if (customer == null) {
 				errors.add("Unexpected error occured.");
 				return "home.jsp";
 			}
+			
+			String date;
+			
+			if (transactionDAO.getLastTradingDay(customer.getCustomerId()) != null) {
+				date = transactionDAO.getLastTradingDay(customer.getCustomerId());
+			} else {
+				date = "no trading day found";
+			}
+			
+			request.setAttribute("lastTradingDay", date);
 			request.setAttribute("customer", customer);
 			request.setAttribute("balance",
 					CommonUtilities.convertToMoney((customer.getBalance())));
