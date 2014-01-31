@@ -71,13 +71,11 @@ public class ViewCustomerAction extends Action {
 				return "home.jsp";
 			}
 			
-			String date;
+			String date = "no trading day found";
 			
 			if (transactionDAO.getLastTradingDay(customer.getCustomerId()) != null) {
 				date = transactionDAO.getLastTradingDay(customer.getCustomerId());
-			} else {
-				date = "no trading day found";
-			}
+			} 
 			
 			request.setAttribute("lastTradingDay", date);
 			request.setAttribute("customer", customer);
