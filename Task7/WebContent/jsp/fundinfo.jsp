@@ -64,8 +64,6 @@
 					Select Period: <select name="period" onchange="javascript:submitForm('change');"
 							id="period">
 							<option value="1">Last 10</option>
-							<option value="2">Previous Month</option>
-							
 						</select>
 						<br/><br/><br/>
 				<c:choose>
